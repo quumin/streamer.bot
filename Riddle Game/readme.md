@@ -8,10 +8,16 @@ TlM0RR+LCAAAAAAABADtW1tzqlq2fj9V/R9SqdrnZW9Wc1Xpqn5QIogmJmIEpLOri8lEIEzEI2rEPvu/
 ```
 2. Place "external_files" inside of your Streamer.bot folder.
 3. Make a non-repeatable and disabled timer called RiddleTimer.
+![image](https://user-images.githubusercontent.com/65921104/217902802-538619a0-61f1-4da0-b199-c470223fcc31.png)
 4. Attach "Riddles - Check Chat" to your chat event for Twitch.
 
-# I Already Have a Chat Event, though?
-- Coming Soon
+# What if I Already Have a Chat Event, though?
+
+If you have an active Chat Event, you can adapt your chat event utilizing the `chatState` Global Variable, "riddle_on" is the state to check for riddles. 
+
+See below for an example!
+![image](https://user-images.githubusercontent.com/65921104/217902891-94722155-87d1-45da-86ff-6fb24af5e265.png)
+
 
 # Important to Know
 - Always run the Action "Riddles - Load" before trying to post a riddle.
