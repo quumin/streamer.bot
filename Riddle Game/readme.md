@@ -16,6 +16,7 @@ TlM0RR+LCAAAAAAABADtW1tzqlq2fj9V/R9SqdrnZW9Wc1Xpqn5QIogmJmIEpLOri8lEIEzEI2rEPvu/
 If you have an active Chat Event, you can adapt your chat event utilizing the `chatState` Global Variable, "riddle_on" is the state to check for riddles. 
 
 See below for an example!
+
 ![image](https://user-images.githubusercontent.com/65921104/217902891-94722155-87d1-45da-86ff-6fb24af5e265.png)
 
 
