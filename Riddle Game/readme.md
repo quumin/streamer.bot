@@ -14,6 +14,6 @@ TlM0RR+LCAAAAAAABADtW1tzqlq2fj9V/R9SqdrnZW9Wc1Xpqn5QIogmJmIEpLOri8lEIEzEI2rEPvu/
 - Coming Soon
 
 # Important to Know
-- Always "Riddles - Load" before trying to post a riddle.
+- Always run the Action "Riddles - Load" before trying to post a riddle.
   - Ideally, you load at the start of your stream.
   - Riddles are removed so they are not re-posted.
