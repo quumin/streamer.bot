@@ -1,2 +1,2 @@
-# riddles mini-game
+# Riddles Mini-Game with Chat
 This will generate riddles from a csv file. The riddles can be used for Channel Points redeems, comamnds, etc.
