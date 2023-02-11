@@ -11,11 +11,11 @@ TlM0RR+LCAAAAAAABADtW1tzqlq2fj9V/R9SqdrnZW9Wc1Xpqn5QIogmJmIEpLOri8lEIEzEI2rEPvu/
 ![image](https://user-images.githubusercontent.com/65921104/217902802-538619a0-61f1-4da0-b199-c470223fcc31.png)
 	- You can set the riddle timer to whatever time you'd like, just remember to update the text in `Riddles - Start`.
 	- I haven't figured out how to make this smarter yet.
-		
+4. Attach `Riddles - Check Chat` to your chat event for Twitch.
+
 # Want to change the .csv location?
 Be sure to update the location in `Riddles - Load`.
 
-4. Attach `Riddles - Check Chat` to your chat event for Twitch.
 
 # What if I Already Have a Chat Event, though?
 
