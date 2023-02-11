@@ -11,18 +11,17 @@ TlM0RR+LCAAAAAAABADtfWlvG7ua5vcB+j8YB7iNGdzLMySLtbCB/mAplizZVizJWqzJxQG3kioqLVeL
 ![image](https://user-images.githubusercontent.com/65921104/217902802-538619a0-61f1-4da0-b199-c470223fcc31.png)
 	- You can set the riddle timer to whatever time you'd like, just remember to update the text in `Riddles - Start`.
 	- I haven't figured out how to make this smarter yet.
-4. Attach `Riddles - Check Chat` to your chat event for Twitch.
+4. Attach `Riddles - Chat Event` to your Chat Event for Twitch.
 
-# Want to change the .csv location?
+## Want to change the .csv location?
 Be sure to update the location in `Riddles - Load`.
 
+## What if I Already Have a Chat Event, though?
 
-# What if I Already Have a Chat Event, though?
+If you have an active Chat Event that you want to preserve, you can adapt `Riddles - Chat Event` or your own existing chat event by utilizing the `chatState` Global Variable.
+ - `riddle_on` is the state to check for riddles. 
 
-If you have an active Chat Event that you want to preserve, you can adapt your chat event utilizing the `chatState` Global Variable, `riddle_on` is the state to check for riddles. 
-
-See below for an example!
-
+### Example
 ![image](https://user-images.githubusercontent.com/65921104/217902891-94722155-87d1-45da-86ff-6fb24af5e265.png)
 
 
