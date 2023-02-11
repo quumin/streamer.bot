@@ -1,5 +1,5 @@
 # Riddles Mini-Game with Chat
-This will generate riddles from a csv file. The riddles can be used for Channel Points redeems, comamnds, etc.
+This will generate riddles inside the chat using a csv file. The riddles can be activated by Channel Points redeems, commands, etc.
 
 # How to Install
 1. Import this string using Import in Streamerbot.
