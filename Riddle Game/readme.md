@@ -9,11 +9,17 @@ TlM0RR+LCAAAAAAABADtW1tzqlq2fj9V/R9SqdrnZW9Wc1Xpqn5QIogmJmIEpLOri8lEIEzEI2rEPvu/
 2. Place "external_files" inside of your Streamer.bot folder.
 3. Make a non-repeatable and disabled timer called RiddleTimer.
 ![image](https://user-images.githubusercontent.com/65921104/217902802-538619a0-61f1-4da0-b199-c470223fcc31.png)
-4. Attach "Riddles - Check Chat" to your chat event for Twitch.
+	- You can set the riddle timer to whatever time you'd like, just remember to update the text in `Riddles - Start`.
+	- I haven't figured out how to make this smarter yet.
+		
+# Want to change the .csv location?
+Be sure to update the location in `Riddles - Load`.
+
+4. Attach `Riddles - Check Chat` to your chat event for Twitch.
 
 # What if I Already Have a Chat Event, though?
 
-If you have an active Chat Event, you can adapt your chat event utilizing the `chatState` Global Variable, `riddle_on` is the state to check for riddles. 
+If you have an active Chat Event that you want to preserve, you can adapt your chat event utilizing the `chatState` Global Variable, `riddle_on` is the state to check for riddles. 
 
 See below for an example!
 
@@ -23,4 +29,4 @@ See below for an example!
 # Important to Know
 - Always run the Action "Riddles - Load" before trying to post a riddle.
   - Ideally, you load at the start of your stream.
-  - Riddles are removed so they are not re-posted.
+- Riddles are removed so they are not re-posted.
