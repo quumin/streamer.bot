@@ -8,69 +8,91 @@ public class CPHInline
     {
         //Declarations
         Random rnd = new Random();
-        List<string>[] question = new List<string>[7];
-        List<string> ans = new List<string>();
         string bld_response = "";
-		string correct = "";
+        string correct = "";
+        int index = 0;
+        List<string>[] riddle = new List<string>[8];
+
+        //Init array
+        for (int b = 0; b < riddle.Length; b++)
+            riddle[b] = new List<string>();
+
+        riddle = LoadRiddles();
         
-		//Init question array
-        for (int b = 0; b < question.Length; b++)
-            question[b] = new List<string>();
-        
-		//Fetch Q&A
-        question[0] = CPH.GetGlobalVar<List<string>>("questionsOne");
-        question[1] = CPH.GetGlobalVar<List<string>>("questionsTwo");
-        question[2] = CPH.GetGlobalVar<List<string>>("questionsThr");
-        question[3] = CPH.GetGlobalVar<List<string>>("questionsFou");
-        question[4] = CPH.GetGlobalVar<List<string>>("questionsFiv");
-        question[5] = CPH.GetGlobalVar<List<string>>("questionsSix");
-        question[6] = CPH.GetGlobalVar<List<string>>("questionsSev");
-        ans = CPH.GetGlobalVar<List<string>>("ansWer");
-        
-		//Get Random Index
-		int index = rnd.Next(question[0].Count);
-		correct = ans[index];
-		ans.RemoveAt(index);
-		
+        //Get Random Index, Set answer, and delete answer to prevent re-posting
+        index = rnd.Next(riddle[0].Count);
+        correct = riddle[7][index];
+        riddle[7].RemoveAt(index);
+
+
         //Generate Response
         CPH.SendMessage("Answer the riddle to prove you're better, it can be words or a single letter:");
         for (int i = 0; i < 7; i++)
         {
-            if (!string.IsNullOrEmpty(question[i][index]))
+            if (!string.IsNullOrEmpty(riddle[i][index]))
             {
-                bld_response = "[Line " + (i + 1) + "] " + question[i][index];
+                bld_response = "[Line " + (i + 1) + "] " + riddle[i][index];
             }
 
             if (i + 1 < 7)
             {
-                if (!string.IsNullOrEmpty(question[i + 1][index]) && !question[i][index].EndsWith("?") && !question[i][index].EndsWith(",") && !question[i][index].EndsWith("!") && !question[i][index].EndsWith("."))
+                if (!string.IsNullOrEmpty(riddle[i + 1][index]) && !riddle[i][index].EndsWith("?") && !riddle[i][index].EndsWith(",") && !riddle[i][index].EndsWith("!") && !riddle[i][index].EndsWith("."))
                 {
                     bld_response += ",";
                 }
             }
 
-            if (!string.IsNullOrEmpty(question[i][index]))
+            if (!string.IsNullOrEmpty(riddle[i][index]))
             {
                 CPH.SendMessage(bld_response);
             }
-			//Delete Riddle to Prevent Duplicates
-			question[i].RemoveAt(index);
+            //Delete Riddle to Prevent Duplicates
+            riddle[i].RemoveAt(index);
         }
-		//Update deleted Lists in Globals
-		CPH.SetGlobalVar("questionsOne", question[0]);
-        CPH.SetGlobalVar("questionsTwo", question[1]);
-		CPH.SetGlobalVar("questionsThr", question[2]);
-        CPH.SetGlobalVar("questionsFou", question[3]);
-        CPH.SetGlobalVar("questionsFiv", question[4]);
-        CPH.SetGlobalVar("questionsSix", question[5]);
-        CPH.SetGlobalVar("questionsSev", question[6]);
-			
-		CPH.LogInfo("『R I D D L E S』 Riddle posted succesfully - answer is: " +
-			correct);
-		CPH.SetGlobalVar("correctAnswer", correct);
-		CPH.SetGlobalVar("chatState", "riddle_on");
+        //Update deleted Lists in Globals
+        CPH.SetGlobalVar("questionsOne", riddle[0]);
+        CPH.SetGlobalVar("questionsTwo", riddle[1]);
+        CPH.SetGlobalVar("questionsThr", riddle[2]);
+        CPH.SetGlobalVar("questionsFou", riddle[3]);
+        CPH.SetGlobalVar("questionsFiv", riddle[4]);
+        CPH.SetGlobalVar("questionsSix", riddle[5]);
+        CPH.SetGlobalVar("questionsSev", riddle[6]);
+        CPH.SetGlobalVar("ansWer", riddle[7]);
+
+        CPH.LogInfo("『R I D D L E S』 Riddle posted succesfully - answer is: " +
+            correct);
+        CPH.SetGlobalVar("correctAnswer", correct);
+        CPH.SetGlobalVar("chatState", "riddle_on");
         CPH.SendMessage("You have 60 seconds to respond. Glory to the victor!");
-		CPH.EnableTimer("RiddleTimer");
+        CPH.EnableTimer("RiddleTimer");
         return true;
+    }
+    List<String>[] LoadRiddles()
+    {
+        //Init array
+        List<string>[] riddle = new List<string>[8];
+        for (int b = 0; b < riddle.Length; b++)
+            riddle[b] = new List<string>();
+
+        //Catch unloaded Riddles to prevent Error
+        if (CPH.GetGlobalVar<List<string>>("questionsOne").Count <= 0)
+        {
+            CPH.LogWarn("『R I D D L E S』 Riddles were not loaded in advance!");
+            CPH.RunActionById("b33919ae-dea7-4b51-9460-8b9a4e7ad96d");
+        }
+
+        //Question Lines
+        riddle[0] = CPH.GetGlobalVar<List<string>>("questionsOne");
+        riddle[1] = CPH.GetGlobalVar<List<string>>("questionsTwo");
+        riddle[2] = CPH.GetGlobalVar<List<string>>("questionsThr");
+        riddle[3] = CPH.GetGlobalVar<List<string>>("questionsFou");
+        riddle[4] = CPH.GetGlobalVar<List<string>>("questionsFiv");
+        riddle[5] = CPH.GetGlobalVar<List<string>>("questionsSix");
+        riddle[6] = CPH.GetGlobalVar<List<string>>("questionsSev");
+
+        //Answer
+        riddle[7] = CPH.GetGlobalVar<List<string>>("ansWer");
+
+        return riddle;
     }
 }
