@@ -26,6 +26,6 @@ If you have an active Chat Event that you want to preserve, you can adapt `Riddl
 
 
 # Important to Know
-- It is recommend to run the Action "Riddles - Load" before trying to post a riddle, but that is no longer strictly required as of 02371ec
+- It is recommend to run the Action "Riddles - Load" before trying to post a riddle, but that is no longer strictly required as of Commit [02371ec](https://github.com/quumin/streamer.bot/commit/02371ec51e8e7f7e9ce177983e4bd0b63b85703c)
   - Ideally, you load at the start of your stream.
 - Riddles are removed so they are not re-posted.
