@@ -18,7 +18,7 @@ public class CPHInline
             riddle[b] = new List<string>();
 
         riddle = LoadRiddles();
-        
+
         //Get Random Index, Set answer, and delete answer to prevent re-posting
         index = rnd.Next(riddle[0].Count);
         correct = riddle[7][index];
@@ -78,7 +78,7 @@ public class CPHInline
         if (CPH.GetGlobalVar<List<string>>("questionsOne").Count <= 0)
         {
             CPH.LogWarn("『R I D D L E S』 Riddles were not loaded in advance!");
-            CPH.RunActionById("b33919ae-dea7-4b51-9460-8b9a4e7ad96d");
+            CPH.RunAction("Riddles - Load File");
         }
 
         //Question Lines
