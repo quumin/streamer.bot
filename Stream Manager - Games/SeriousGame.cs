@@ -1,36 +1,49 @@
 using System;
+using System.IO;
+using System.Collections.Generic;
 
 public class CPHInline
 {
-	public bool Execute()
-	{
-		//Enable Serious mode.
-		CPH.SetGlobalVar("seriousMode", true, true);
+    public bool Execute()
+    {
+        //Declarations
+        List<string> list_actions;
+        string[] str_rewardGroups;
+        string str_art, str_scene;
 
-		//Disable Sound Actions.
-		CPH.DisableAction("Best of Both Worlds");
-		CPH.DisableAction("BingChilling");
-		CPH.DisableAction("Kira");
-		CPH.DisableAction("KEKW");
-		CPH.DisableAction("Torture Dance");
-		CPH.DisableAction("Unlurk");
-		CPH.DisableAction("EZ Clap");
-		CPH.DisableAction("Fuck You Data");
-		CPH.DisableAction("Oh No!");
-		CPH.DisableAction("OMT");
-		CPH.DisableAction("Thanks Data");
-		CPH.DisableAction("YareYare");
+        //Initializations
+        list_actions = CPH.GetGlobalVar<List<string>>("soundInteractActions");
+        str_rewardGroups = new string[] {"Standard",
+            "Standard - Sounds",
+            "GS - DD2",
+            "GS - PoE" };
+        str_art = args["oldGameBoxArt"].ToString();
+        str_scene = "SS_MidScreen";
 
-		//Disable all Rewards.
-		CPH.TwitchRewardGroupDisable("Standard");
-		CPH.TwitchRewardGroupDisable("Standard - Sounds");
-		CPH.TwitchRewardGroupDisable("Game - Specific");
-		CPH.TwitchRewardGroupDisable("GS - PoE");
+        //Show the old game Box Art.
+        CPH.ObsSetBrowserSource(str_scene, "Old GameBox Art", str_art);
+        CPH.ObsShowSource(str_scene, "Old GameBox Art");
 
-		//Show Serious Visualizer.
-		CPH.ObsShowSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Serious");
-		CPH.ObsHideSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Normal");
-		CPH.ObsHideSource("SS_MidScreen", "soPlayer");
-		return true;
-	}
-}
+        //Show Serious Visualizer.
+        CPH.ObsShowSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Serious");
+        CPH.ObsHideSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Normal");
+        CPH.ObsHideSource("SS_MidScreen", "soPlayer");
+
+        //Enable Serious mode.
+        CPH.SetGlobalVar("seriousMode", true, true);
+
+        //Disable Sound Actions.
+        foreach (string s in list_actions)
+        {
+            CPH.DisableAction(s);
+        }//foreach
+
+        //Disable all Rewards.
+        for (int i = 0; i < str_rewardGroups.Length - 1; i++)
+        {
+            CPH.TwitchRewardGroupDisable(str_rewardGroups[i]);
+        }//for
+
+        return true;
+    }//public bool Execute()
+}//public class CPHInline

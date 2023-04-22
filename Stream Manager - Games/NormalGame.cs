@@ -1,39 +1,87 @@
-using System;
+﻿using System;
+using System.IO;
+using System.Collections.Generic;
 
 public class CPHInline
 {
-	public bool Execute()
-	{
-		//Disable Serious Mode.
-		CPH.SetGlobalVar("seriousMode", false, true);
+    public bool Execute()
+    {
+        //Declarations
+        List<string> list_actions;
+        List<TwitchReward> list_rewards;
+        string[] str_rewardGroups;
+        string str_art, str_scene;
+        int int_id;
 
-		//Enable Normal Rewards.
-		CPH.TwitchRewardGroupEnable("Standard");
-		CPH.TwitchRewardGroupEnable("Standard - Sounds");
+        //Initializations
+        list_actions = CPH.GetGlobalVar<List<string>>("soundInteractActions");
+        list_rewards = CPH.TwitchGetRewards();
+        str_rewardGroups = new string[] {"Standard",
+            "Standard - Sounds",
+            "GS - DD2",
+            "GS - PoE" };
+        str_art = args["oldGameBoxArt"].ToString();
+        str_scene = "SS_MidScreen";
+        int_id = 0;
 
-		//Disable Game Specific Rewards.
-		CPH.TwitchRewardGroupDisable("Game - Specifc");
-		CPH.TwitchRewardGroupDisable("GS - PoE");
+        //Get Game ID Global
+        int_id = Convert.ToInt32(args["gameId"].ToString());
 
-		//Enable Sound Actions.
-		CPH.EnableAction("Best of Both Worlds");
-		CPH.EnableAction("BingChilling");
-		CPH.EnableAction("Graphic Design");
-		CPH.EnableAction("KEKW");
-		CPH.EnableAction("Kira");
-		CPH.EnableAction("Torture Dance");
-		CPH.EnableAction("Unlurk");
-		CPH.EnableAction("EZ Clap");
-		CPH.EnableAction("Fuck You Data");
-		CPH.EnableAction("Oh No!");
-		CPH.EnableAction("OMT");
-		CPH.EnableAction("Thanks Data");
-		CPH.EnableAction("YareYare");
+        //Show the old game Box Art.
+        CPH.ObsSetBrowserSource(str_scene, "Old GameBox Art", str_art);
+        CPH.ObsShowSource(str_scene, "Old GameBox Art");
+        
+        //Show Normal Visualizer.
+        CPH.ObsHideSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Serious");
+        CPH.ObsShowSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Normal");
+        CPH.ObsShowSource("SS_MidScreen", "soPlayer");
 
-		//Show Normal Visualizer.
-		CPH.ObsHideSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Serious");
-		CPH.ObsShowSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Normal");
-		CPH.ObsShowSource("SS_MidScreen", "soPlayer");
-		return true;
-	}
-}
+        //Disable Serious Mode
+        CPH.SetGlobalVar("seriousMode", false, true);
+
+        //Check if Standard Rewards are Already Enabled
+        if (!list_rewards[0].Enabled)
+        {
+            //	Enable Normal Rewards.
+            CPH.TwitchRewardGroupEnable(str_rewardGroups[0]);
+            CPH.TwitchRewardGroupEnable(str_rewardGroups[1]);
+            //	Enable Sound Actions.
+            foreach (string s in list_actions)
+            {
+                CPH.EnableAction(s);
+            }//foreach
+        }//if
+
+        //Disable Game Specific Rewards.
+        switch (int_id)
+        {
+            //	Path of Exile
+            case 29307:
+                if (list_rewards[3].Enabled)
+                {
+                    CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
+                }//if
+                break;
+            //	Darkest Dungeon II
+            case 511471:
+                if (list_rewards[30].Enabled)
+                {
+                    CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
+                }//if
+                break;
+            //	Every other Game
+            default:
+                if (list_rewards[3].Enabled)
+                {
+                    CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
+                }//if
+                if (list_rewards[30].Enabled)
+                {
+                    CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
+                }//if
+                break;
+        }//switch(int_id)
+
+        return true;
+    }//Execute()
+}//CPHInline
