@@ -25,10 +25,6 @@ public class CPHInline
         int_index = rnd.Next(list_riddles[0].Count);
         str_ans = list_riddles[7][int_index];
 
-        //Get Random Index, Set answer, and delete answer to prevent re-posting
-        index = rnd.Next(riddle[0].Count);
-        correct = riddle[7][index];
-
         //Generate Response
         CPH.SendMessage("Answer the riddle to prove you're better, it can be words or a single letter:");
 
