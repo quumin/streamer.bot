@@ -22,8 +22,6 @@ public class CPHInline
         //Get Random Index, Set answer, and delete answer to prevent re-posting
         index = rnd.Next(riddle[0].Count);
         correct = riddle[7][index];
-        riddle[7].RemoveAt(index);
-
 
         //Generate Response
         CPH.SendMessage("Answer the riddle to prove you're better, it can be words or a single letter:");
@@ -36,7 +34,11 @@ public class CPHInline
 
             if (i + 1 < 7)
             {
-                if (!string.IsNullOrEmpty(riddle[i + 1][index]) && !riddle[i][index].EndsWith("?") && !riddle[i][index].EndsWith(",") && !riddle[i][index].EndsWith("!") && !riddle[i][index].EndsWith("."))
+                if (!string.IsNullOrEmpty(riddle[i + 1][index]) &&
+                    !riddle[i][index].EndsWith("?") && 
+                    !riddle[i][index].EndsWith(",") && 
+                    !riddle[i][index].EndsWith("!") && 
+                    !riddle[i][index].EndsWith("."))
                 {
                     bld_response += ",";
                 }
@@ -46,6 +48,7 @@ public class CPHInline
             {
                 CPH.SendMessage(bld_response);
             }
+
             //Delete Riddle to Prevent Duplicates
             riddle[i].RemoveAt(index);
         }

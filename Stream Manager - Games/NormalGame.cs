@@ -30,7 +30,7 @@ public class CPHInline
         //Show the old game Box Art.
         CPH.ObsSetBrowserSource(str_scene, "Old GameBox Art", str_art);
         CPH.ObsShowSource(str_scene, "Old GameBox Art");
-        
+
         //Show Normal Visualizer.
         CPH.ObsHideSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Serious");
         CPH.ObsShowSource("SS_KiyoPro_FancyCam", "VM_Visualizer_Normal");
@@ -61,6 +61,7 @@ public class CPHInline
                 {
                     CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
                 }//if
+                CPH.SetGlobalVar("specificMode", true, true);
                 break;
             //	Darkest Dungeon II
             case 511471:
@@ -68,6 +69,7 @@ public class CPHInline
                 {
                     CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
                 }//if
+                CPH.SetGlobalVar("specificMode", true, true);
                 break;
             //	Every other Game
             default:
@@ -79,6 +81,7 @@ public class CPHInline
                 {
                     CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
                 }//if
+                CPH.SetGlobalVar("specificMode", true, true);
                 break;
         }//switch(int_id)
 
