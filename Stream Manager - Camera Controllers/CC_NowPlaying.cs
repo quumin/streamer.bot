@@ -4,111 +4,111 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-
-		int camState = CPH.GetGlobalVar<int>("globalMove");
-		int lines = Int32.Parse(args["lineCount"].ToString());
-		string cam_sceneName = "SS_KiyoPro_FancyCam";
-		string np_sceneName = "SS_NowPlaying";
-		string currentScene = CPH.ObsGetCurrentScene();
-		string filterName = "";
-		string filterName_AT = "";
-		string postFix_AT = "";
-		string postFix = "_NP";
-
-		//Adjust Now Playing prefix
-		switch (camState)
+		//Declarations
+		int int_pos, int_ln;
+		string[] str_scene, str_filter, str_postfix;
+		
+		//Initializations
+		int_pos = CPH.GetGlobalVar<int>("globalMove");
+		int_ln = Int32.Parse(args["lineCount"].ToString());
+		str_scene = new string[]
 		{
-			case 1:
-				//TL
-				filterName = "TL";
-				break;
-			case 2:
-				//TM
-				filterName = "TM";
-				break;
-			case 3:
-				//TR
-				filterName = "TR";
-				break;
-			case 4:
-				//MR
-				filterName = "MR";
-				break;
-			case 5:
-				//BR
-				filterName = "BR";
-				break;
-			case 6:
-				//BM
-				filterName = "BM";
-				break;
-			case 7:
-				//BL
-				filterName = "BL";
-				break;
-			case 8:
-				//ML
-				filterName = "ML";
-				break;
-		}
+			"SS_KiyoPro_FancyCam",
+			"SS_NowPlaying"
+		};
+        str_scene = new string[]
+		{
+			"SS_KiyoPro_FancyCam",
+			"SS_NowPlaying"
+		};
+		str_filter = new string[]
+		{
+			"",
+			""
+		};
+        str_filter = new string[]
+		{
+            "_NP",
+            ""
+		};
 
-		//Adjust Now Playing postfix
-		filterName += postFix;
+        //Check Position
+        switch (int_pos)
+        {
+            //	Top Left
+            case 1:
+				str_filter[0] = "TL";
+                str_filter[1] = "TL";
+                break;
+            //	Top Middle
+            case 2:
+                str_filter[0] = "TM";
+                break;
+            //	Top Right
+            case 3:
+                str_filter[0] = "TR";
+                str_filter[1] = "TR";
+                break;
+            //	Middle Right
+            case 4:
+                str_filter[0] = "MR";
+                break;
+            //	Bottom Right
+            case 5:
+                str_filter[0] = "BR";
+                str_filter[1] = "BR";
+                break;
+            //	Bottom Middle
+            case 6:
+                str_filter[0] = "BM";
+                break;
+            //	Bottom Left
+            case 7:
+                str_filter[0] = "BL";
+                str_filter[1] = "BL";
+                break;
+            //	Middle Left
+            case 8:
+                str_filter[0] = "ML";
+                break;
+        }//switch
 
-		//If filterName is not just the postFix...
-		if (filterName != postFix)
+        //Adjust Now Playing postfix
+        str_filter[0] += str_postfix[0];
+
+		//If NP Filter is not just the postfix...
+		if (str_filter[0] != str_postfix[0])
 		{
 			//... update the filter.
-			CPH.ObsShowFilter(cam_sceneName, filterName);
-		}
-
-		//Adjust Alerts_Text prefix
-		switch (camState)
-		{
-			case 1:
-				//TL
-				filterName_AT = "TL";
-				break;
-			case 3:
-				//TR
-				filterName_AT = "TR";
-				break;
-			case 5:
-				//BR
-				filterName_AT = "BR";
-				break;
-			case 7:
-				//BL
-				filterName_AT = "BL";
-				break;
-		}
-
+			CPH.ObsShowFilter(str_scene[0], str_filter[0]);
+		}//if
 
 		//If Snip.txt is empty...
-		if (lines == 0)
+		if (int_ln == 0)
 		{
 			//... hide Now Playing.
-			CPH.ObsHideSource(cam_sceneName, np_sceneName);
+			CPH.ObsHideSource(str_scene[0], str_scene[1]);
 			//... move Alerts_Text away from cam.
-			postFix_AT = "_NP-Gone";
-		}
+			str_postfix[1] = "_NP-Gone";
+		}//if
 		else
 		{
 			//... show Now Playing.
-			CPH.ObsShowSource(cam_sceneName, np_sceneName);
+			CPH.ObsShowSource(str_scene[0], str_scene[1]);
 			//... bring Alerts_Text closer to cam.
-			postFix_AT = "_AT-NP";
-		}
+			str_postfix[1] = "_AT-NP";
+		}//else
 
-		filterName_AT += postFix_AT;
+		//Adjust Alerts Text Postfix
+		str_filter[1] += str_postfix[1];
 
-		//If filterName is not just the postFix...
-		if (filterName_AT != postFix_AT)
+		//If AT Filter is not just the postfix...
+		if (str_filter[1] != str_postfix[1])
 		{
 			//... update the filter.
-			CPH.ObsShowFilter(cam_sceneName, filterName_AT);
-		}
+			CPH.ObsShowFilter(str_scene[0], str_filter[1]);
+		}//if
 
-		return true;
-	}
-}
+        return true;
+    }//Execute()
+}//CPHInline

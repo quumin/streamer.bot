@@ -5,26 +5,40 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_event, str_img, str_usr, str_path, str_snd, str_msg, str_alias;
+        string str_event, str_snd, str_img, str_alias, str_usr, str_msg, str_path;
         string[] str_ss, str_src, str_txt;
-        bool bool_sers, bool_event;
+        bool bool_sers;
         int[] int_wait;
         int int_tcl;
         float f_vol;
+
         //Initializations
-        str_ss = new string[] { "SS_Alerts_Text", "SS_Alerts", "SS_KP_PreHex" };
-        str_src = new string[] { "Username", "Action", "Sub_Gotcha", "quuminL" };
-        str_snd = str_img = str_alias = str_usr = str_msg = "";
-        bool_sers = CPH.GetGlobalVar<bool>("seriousMode");
-        str_path = "W:\\Streaming\\Media\\Sounds\\";
-        int_wait = new int[] { 2000, 2000, 2000 };
         str_event = args["__source"].ToString();
+        str_snd = str_img = str_alias = str_usr = str_msg = "";
+        str_path = "W:\\Streaming\\Media\\Sounds\\";
+        str_ss = new string[]
+        {
+            "SS_Alerts_Text",
+            "SS_Alerts",
+            "SS_KP_PreHex"
+        };
+        str_src = new string[]
+        {
+            "Username",
+            "Action",
+            "Sub_Gotcha",
+            "quuminL"
+        };
         str_txt = new string[3];
-        bool_event = true;
+        bool_sers = CPH.GetGlobalVar<bool>("seriousMode");
+        int_wait = new int[] { 2000, 2000, 2000 };
         int_tcl = 200;
         f_vol = 0.15f;
+
+        //Check the event type.
         switch (str_event)
         {
+            //  Follow
             case "TwitchFollow":
                 //Defaults
                 str_usr = args["user"].ToString();
@@ -38,15 +52,16 @@ public class CPHInline
                 str_txt[0] = str_usr;
                 str_txt[1] = "just salted me with some ";
                 str_txt[2] = "quuminL";
-                str_msg = "SaltBae ";
+                str_msg = "/me SaltBae ";
                 // While message is less than character limit...
                 while (str_msg.Length < int_tcl)
                 {
                     //... add quuminL.
                     str_msg += "quuminL ";
-                } //while(str_msg.Length < int_tcl)
+                }//while
 
                 break;
+            //  Welcome
             case "TwitchFirstWord":
                 //Defaults
                 str_usr = args["userName"].ToString();
@@ -61,7 +76,7 @@ public class CPHInline
                     case "soundalerts":
                         return true;
                         break;
-                } //switch(str_usr)
+                }//switch
 
                 str_img = "Welcome";
                 //Wait
@@ -70,6 +85,7 @@ public class CPHInline
                 str_txt[0] = str_usr;
                 str_txt[1] = "welcome to the stream, son";
                 break;
+            //  Sub
             case "TwitchSub":
                 //Defaults
                 str_usr = args["user"].ToString();
@@ -84,6 +100,7 @@ public class CPHInline
                 str_txt[1] = "cooked up a " + str_tier + " sub";
                 str_txt[2] = "... BITCH.";
                 break;
+            //  Resub
             case "TwitchReSub":
                 //Defaults
                 str_usr = args["user"].ToString();
@@ -98,6 +115,7 @@ public class CPHInline
                 str_txt[1] = "returned for za spice";
                 str_txt[2] = "... BITCH.";
                 break;
+            //  Raid
             case "TwitchRaid":
                 //Defaults
                 str_usr = args["user"].ToString();
@@ -110,6 +128,7 @@ public class CPHInline
                 str_txt[0] = str_usr;
                 str_txt[1] = "thanks for bringing " + str_viewers;
                 break;
+            //  Bits
             case "TwitchCheer":
                 //Defaults
                 str_img = "Spare Change";
@@ -123,115 +142,122 @@ public class CPHInline
                 {
                     //... use the username.
                     str_usr = args["user"].ToString();
-                } //if(!bool_anon)
+                } //if
                 else
                 {
                     //... otherwise use anonymous.
                     str_usr = "Anonymous";
-                } //else
+                }//else
 
                 //Update Texts
                 str_txt[0] = str_usr + " gave Q-min";
                 str_txt[1] = str_bit;
-                // If plural...
+                //If plural...
                 if (str_bit == "1")
                 {
                     //... single bit.
                     str_txt[1] += " SPICY bit to nom";
-                } //if(str_bit == "1")
+                }//if
                 else
                 {
                     //... multi bits.
                     str_txt[1] += " SPICY bits to nom";
-                } //else
+                }//else
 
                 break;
+            //  Other
             default:
                 //Event not recognized.
-                bool_event = false;
+                return true;
                 break;
-        } //switch(str_event)
+        }//switch
 
-        //If the event is recognized...
-        if (bool_event)
+
+        //Check if Serious Mode is inactive...
+        if (!bool_sers)
         {
-            //... check if Serious Mode is inactive...
-            if (!bool_sers)
+            //... update the common text.
+            CPH.ObsSetGdiText(str_ss[0], str_src[0], str_txt[0]); //Username
+            CPH.ObsSetGdiText(str_ss[0], str_src[1], str_txt[1]); //Action
+            //... show the sources.
+            CPH.ObsShowSource(str_ss[0], str_src[0]); //Username
+            CPH.ObsShowSource(str_ss[0], str_src[1]); //Action
+            CPH.ObsShowSource(str_ss[1], str_img); //Alert Media
+            //... show event specifics.
+            switch (str_event)
             {
-                //... update the common text.
-                CPH.ObsSetGdiText(str_ss[0], str_src[0], str_txt[0]); //Username
-                CPH.ObsSetGdiText(str_ss[0], str_src[1], str_txt[1]); //Action
-                //... show the sources.
-                CPH.ObsShowSource(str_ss[0], str_src[0]); //Username
-                CPH.ObsShowSource(str_ss[0], str_src[1]); //Action
-                CPH.ObsShowSource(str_ss[1], str_img); //Alert Media
-                //... show event specifics.
-                switch (str_event)
-                {
-                    case "TwitchFollow":
-                        //Show quuminL and SaltBae
-                        CPH.ObsShowSource(str_ss[0], str_src[3]);
-                        CPH.ObsShowSource(str_ss[2], str_img);
-                        //Play Sound
-                        CPH.PlaySound(str_path + str_snd, f_vol);
-                        //Wait until the Salt Appears & Send Message		
-                        CPH.Wait(int_wait[1]);
-                        CPH.SendMessage(str_msg, true);
-                        break;
-                    case "TwitchSub":
-                    case "TwitchReSub":
-                        //Update, Wait, & Show Gotcha
-                        CPH.ObsSetGdiText(str_ss[0], str_src[2], str_txt[2]);
-                        CPH.Wait(int_wait[1]);
-                        CPH.ObsShowSource(str_ss[0], str_src[2]);
-                        CPH.TtsSpeak(str_alias, str_msg, true);
-                        break;
-                    default:
-                        // Sounds & Image/Video
-                        CPH.PlaySound(str_path + str_snd, f_vol, true);
-                        CPH.TtsSpeak(str_alias, str_msg, true);
-                        break;
-                } //switch(str_event)
+                //  Follow
+                case "TwitchFollow":
+                    //Show quuminL and SaltBae
+                    CPH.ObsShowSource(str_ss[0], str_src[3]);
+                    CPH.ObsShowSource(str_ss[2], str_img);
+                    //Play Sound
+                    CPH.PlaySound(str_path + str_snd, f_vol);
+                    //Wait until the Salt Appears & Send Message		
+                    CPH.Wait(int_wait[1]);
+                    CPH.SendMessage(str_msg, true);
+                    break;
+                //  Sub
+                case "TwitchSub":
+                //  Resub
+                case "TwitchReSub":
+                    //Update, Wait, & Show Gotcha
+                    CPH.ObsSetGdiText(str_ss[0], str_src[2], str_txt[2]);
+                    CPH.Wait(int_wait[1]);
+                    CPH.ObsShowSource(str_ss[0], str_src[2]);
+                    CPH.TtsSpeak(str_alias, str_msg, true);
+                    break;
+                //  Other
+                default:
+                    //Sounds & Image/Video
+                    CPH.PlaySound(str_path + str_snd, f_vol, true);
+                    CPH.TtsSpeak(str_alias, str_msg, true);
+                    break;
+            } //switch
 
-                //... use common delay.
-                CPH.Wait(int_wait[0]);
-                //... hide the common media.
-                CPH.ObsHideSource(str_ss[1], str_img);
-                //... hide event specifics.
-                switch (str_event)
-                {
-                    case "TwitchFollow":
-                        //Hide SaltBae on cam & wait to let quuminL linger
-                        CPH.ObsHideSource(str_ss[2], str_img);
-                        CPH.Wait(int_wait[2]);
-                        CPH.ObsHideSource(str_ss[0], str_src[3]);
-                        break;
-                    case "TwitchSub":
-                    case "TwitchReSub":
-                        //Hide Gotcha
-                        CPH.ObsHideSource(str_ss[0], str_src[2]);
-                        break;
-                } //switch(str_event)
-
-                //... hide the common text.
-                CPH.ObsHideSource(str_ss[0], str_src[1]);
-                CPH.ObsHideSource(str_ss[0], str_src[0]);
-            } //if(!bool_sers)
-            else
+            //... use common delay.
+            CPH.Wait(int_wait[0]);
+            //... hide the common media.
+            CPH.ObsHideSource(str_ss[1], str_img);
+            //... hide event specifics.
+            switch (str_event)
             {
-                //... show event specifics.
-                switch (str_event)
-                {
-                    case "TwitchFollow":
-                        CPH.TwitchAnnounce("『SERIOUS ALERT』 " + str_txt[0] + " " + str_txt[1] + " " + str_txt[2] + "!", true, "orange");
-                        break;
-                    default:
-                        CPH.TwitchAnnounce("『SERIOUS ALERT』 " + str_txt[0] + " " + str_txt[1] + "!", true, "orange");
-                        break;
-                }//switch (str_event)
-            } //else
-        } //if(bool_event)
+                //  Follow
+                case "TwitchFollow":
+                    //Hide SaltBae on cam & wait to let quuminL linger
+                    CPH.ObsHideSource(str_ss[2], str_img);
+                    CPH.Wait(int_wait[2]);
+                    CPH.ObsHideSource(str_ss[0], str_src[3]);
+                    break;
+                //  Sub
+                case "TwitchSub":
+                //  Resub
+                case "TwitchReSub":
+                    //Hide Gotcha
+                    CPH.ObsHideSource(str_ss[0], str_src[2]);
+                    break;
+            }//switch
+
+            //... hide the common text.
+            CPH.ObsHideSource(str_ss[0], str_src[1]);
+            CPH.ObsHideSource(str_ss[0], str_src[0]);
+        } //if
+        else
+        {
+            //... show event specifics.
+            switch (str_event)
+            {
+                //  Follow
+                case "TwitchFollow":
+                    CPH.SendMessage("/me 『SERIOUS ALERT』 " + str_txt[0] + " " + str_txt[1] + " " + str_txt[2] + "!");
+                    break;
+                //  Other
+                default:
+                    CPH.SendMessage("/me 『SERIOUS ALERT』 " + str_txt[0] + " " + str_txt[1] + "!");
+                    break;
+            }//switch
+        } //else
 
         return true;
-    }
-}
+    }//Execute()
+}//CPHInline

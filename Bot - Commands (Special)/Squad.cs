@@ -5,35 +5,53 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		List<string> squad = new List<string>();
-		squad = CPH.GetGlobalVar<List<string>>("squadCurrent");
-		if (squad.Count > 0)
+		//Declarations
+		List<string> list_squad;
+		string str_build;
+		int int_total;
+        
+		//Initializations
+        list_squad = CPH.GetGlobalVar<List<string>>("squadCurrent");
+		str_build = "/me ";
+		int_total = list_squad.Count;
+
+        //If the list has entries...
+		if (int_total > 0)
 		{
-			string squadBuild = "hmmMeeting The Q-mander is playing with ";
-			int total = squad.Count;
-			for (int i = 0; i < total; i++)
+            //... build the message.
+            str_build += "hmmMeeting The Q-mander is playing with ";
+
+			//... iterate through the list...
+			for (int i = 0; i < int_total; i++)
 			{
-				if (i == 0 && total == 1)
+				//... first/only entry.
+				if (i == 0 && 
+					int_total == 1)
 				{
-					squadBuild += squad[i] + " ";
-				}
-				else if (i == total - 1)
+					str_build += list_squad[i] + " ";
+				}//if
+				//... last entry.
+				else if (i == int_total - 1)
 				{
-					squadBuild += " & " + squad[i] + " ";
-				}
+					str_build += " & " + list_squad[i] + " ";
+				}//else if
+				//... subsequent entries.
 				else
 				{
-					squadBuild += squad[i] + ", ";
-				}
-			}
-			squadBuild += "ButtBooty";
-			CPH.TwitchAnnounce(squadBuild, true, "purple");
-		}
+					str_build += list_squad[i] + ", ";
+				}//else
+			}//for
+			str_build += "ButtBooty";
+		}//if
 		else
 		{
-			CPH.TwitchAnnounce("The Q-mander did not add anybody to the squad! LULdata", true, "purple");
-		}
+			str_build += "/me The Q-mander did not add anybody to the squad! LULdata";
 
-		return true;
-	}
-}
+        }//else
+
+		//Send message.
+        CPH.SendMessage(str_build);
+
+        return true;
+    }//Execute()
+}//CPHInline

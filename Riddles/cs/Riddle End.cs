@@ -9,5 +9,5 @@ public class CPHInline
 			CPH.GetGlobalVar<string>("correctAnswer") +
 			",\" foolish meatbags LUL");
         return true;
-    }
-}
+    }//Execute()
+}//CPHInline

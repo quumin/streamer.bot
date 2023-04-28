@@ -4,80 +4,81 @@ using System.Collections.Generic;
 
 public class CPHInline
 {
-	public bool Execute()
-	{
-		//Declarations
-		List<string> games = new List<string>();
-		string usr_choice = "";
-		string usr = "";
-		string usr_redemption = "";
-		string usr_reward = "";
+    public bool Execute()
+    {
+        //Declarations
+        List<string> list_games;
+        string str_choice, str_usr, str_redeem, str_reward, str_msg;
 
-		//Assignments
-		games = CPH.GetGlobalVar<List<string>>("gamesList");
+        //Initializations
+        list_games = gameLoad();
+        str_choice = args["rawInput"].ToString();
+        str_usr = args["userName"].ToString();
+        str_redeem = str_reward = "";
+        str_msg = "/me ";
 
-		if (CPH.ObsIsStreaming())
-		{
-			usr_redemption = args["redemptionId"].ToString();
-			usr_reward = args["rewardId"].ToString();
-		}
+        //If streaming...
+        if (CPH.ObsIsStreaming())
+        {
+            //... get reward info.
+            str_redeem = args["redemptionId"].ToString();
+            str_reward = args["rewardId"].ToString();
+        }//if
 
-		usr = args["userName"].ToString();
-		usr_choice = args["rawInput"].ToString();
+        //If that choice is in the Installed Games List...
+        if (list_games.Contains(str_choice))
+        {
+            CPH.LogInfo("『G A M E S』 \'" + str_choice + "\' found!");
+            str_msg += "thinkingJojo so uh... Q, you gonna change to " + str_choice + " like @" + str_usr + " asked, or...? Ghost";
+            CPH.SetChannelGame(str_choice);
+            CPH.EnableTimer("GameChanger");
+        }//if
+        else
+        {
+            CPH.LogInfo("『G A M E S』 \'" + str_choice + "\' not found!");
+            str_msg += "WTFF Sorry @" + str_usr + " , \"" + str_choice + "\" was not found! dataHuh Don't worry, your points have been refunded! Saved Please check the list below PointDown and try again.";
+            //... if streaming...
+            if (CPH.ObsIsStreaming())
+            {
+                //... cancel the redemption.
+                CPH.TwitchRedemptionCancel(str_reward, str_redeem);
+            }//if
+        }//else
 
-		games = gameLoad();
+        //Send message.
+        CPH.SendMessage(str_msg);
 
+        return true;
+    }//Execute()
+    List<string> gameLoad()
+    {
+        //Declarations
+        List<string> list_games;
 
-		if (games.Contains(usr_choice))
-		{
-			CPH.SendMessage("thinkingJojo so uh... Q, you gonna change to " + usr_choice + " like @" + usr + " asked, or...? Ghost", true);
-			CPH.SetChannelGame(usr_choice);
-			CPH.EnableTimer("GameChanger");
-		}
-		else
-		{
-			CPH.LogDebug("『G A M E S』 " + usr_choice + " not found!");
-			CPH.SendMessage("WTFF Sorry @" + usr + " , \"" + usr_choice + "\" was not found! dataHuh Don't worry, your points have been refunded! Saved Please check the list below PointDown and try again.", true);
-			if (CPH.ObsIsStreaming())
-			{
-				CPH.TwitchRedemptionCancel(usr_reward, usr_redemption);
-			}
-		}
+        //Initializations
+        list_games = new List<string>();
 
-		return true;
-	}
-	List<string> gameLoad()
-	{
-		List<string> games = new List<string>();
-		try
-		{
-			using (var reader = new StreamReader(@".\\external_files\\GamesList.csv"))
-			{
-				//Try to find the file
-				//Decalarations
+        try
+        {
+            //Try to find the file and read from it...
+            using (var reader = new StreamReader(@".\\external_files\\GamesList.csv"))
+            {
+                //Populate the List
+                while (!reader.EndOfStream)
+                {
+                    var line = reader.ReadLine();
+                    list_games.Add(line);
+                }//while
 
-
-				//Populate the Lists
-				while (!reader.EndOfStream)
-				{
-					var line = reader.ReadLine();
-					games.Add(line);
-				}
-
-				//Store the Globals
-				CPH.SetGlobalVar("gamesList", games);
-				CPH.LogInfo("『G A M E S』 Loaded Successfully.");
-				//Announcement
-			}
-		}
-		catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-		{
-			//Catch when the directory and/or file is incorrect.
-			CPH.LogWarn("『G A M E S』 Game file failed to load! Is the directory correctly set?");
-			CPH.TwitchAnnounce("dataHuh The Games file could not be found, sir.", true,
-				"orange");
-
-		}
-		return games;
-	}
-}
+                CPH.LogInfo("『G A M E S』 Loaded Successfully.");
+            }//using
+        }//try
+        catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
+        {
+            //Catch when the directory and/or file is incorrect.
+            CPH.LogWarn("『G A M E S』 Games File failed to load!");
+            CPH.SendMessage("/me dataHuh The Games file could not be found, sir.");
+        }//catch
+        return list_games;
+    }//gameLoad()
+}//CPHInline

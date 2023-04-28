@@ -7,18 +7,23 @@ public class CPHInline
 	{
 		checkAnswer(CPH.GetGlobalVar<string>("correctAnswer"));
 		return true;
-	}
-	void checkAnswer(string correctAns)
+    }//Execute()
+    void checkAnswer(string str_ans)
 	{
-		string usr_ans = args["rawInput"].ToString();
-		string usr_nam = args["user"].ToString();
+		//Declarations
+		string usr_ri, str_usr;
 
-		if(string.Compare(usr_ans, correctAns, StringComparison.CurrentCultureIgnoreCase) == 0)
+        //Initializations
+        usr_ri = args["rawInput"].ToString();
+        str_usr = args["user"].ToString();
+
+        //If the answer is correct...
+		if (string.Compare(usr_ri, str_ans, StringComparison.CurrentCultureIgnoreCase) == 0)
 		{
-			CPH.SendMessage(usr_nam + " wins! Nerdge The correct answer was: \"" + correctAns + "!\" EZ");
+			//... end the game.
+			CPH.SendMessage("/me " + str_usr + " wins! Nerdge The correct answer was: \"" + str_ans + "!\" EZ");
 			CPH.SetGlobalVar("chatState", "default");
 			CPH.DisableTimer("RiddleTimer");
-		}
-		
-	}
-}
+		}//if
+	}//checkAnswer
+}//CPHInline

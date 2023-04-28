@@ -8,13 +8,14 @@ public class CPHInline
     {
         //Declarations
         Random rnd;
-        string str_ridOut, str_ans = "";
+        string str_ridOut, str_ans;
         int int_index;
         List<string>[] list_riddles;
 
         //Initializations
         rnd = new Random();
-        str_ridOut = str_ans = "/me ";
+        str_ridOut = "/me 『RIDDLE』 ";
+        str_ans = "";
         int_index = 0;
         list_riddles = new List<string>[8];
         for (int b = 0; b < list_riddles.Length; b++)
@@ -23,7 +24,7 @@ public class CPHInline
 
         //Get Random Index and Set Answer
         int_index = rnd.Next(list_riddles[0].Count);
-        str_ans += list_riddles[7][int_index];
+        str_ans = list_riddles[7][int_index];
 
         //Generate Response
         CPH.SendMessage("/me Answer the riddle to prove you're better, it can be words or a single letter:");
@@ -36,7 +37,7 @@ public class CPHInline
                 i != 7)
             {   
                 //... add it to the response.
-                str_ridOut = "/me [Line " + (i + 1) + "] " + list_riddles[i][int_index];
+                str_ridOut += list_riddles[i][int_index];
             }//if
 
             //Check if the index is less than the maximum indices of riddle...
@@ -54,17 +55,11 @@ public class CPHInline
                 }//if
             }//if
 
-            //Check if the string is not empty and not the answer...
-            if (!string.IsNullOrEmpty(list_riddles[i][int_index]) &&
-                i != 7)
-            {
-                //... send the (comma-delimited) response.
-                CPH.SendMessage(str_ridOut);
-            }//if
-
             //Delete Riddle to Prevent Duplicates during stream.
             list_riddles[i].RemoveAt(int_index);
         }//for
+
+        CPH.SendMessage(str_ridOut);
 
         //Update lists in Globals to deal with deleted riddle.
         CPH.SetGlobalVar("questionsOne", list_riddles[0]);

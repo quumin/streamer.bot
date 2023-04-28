@@ -1,59 +1,68 @@
 ﻿using System;
+using System.IO;
+using System.Collections.Generic;
 
 public class CPHInline
 {
 	public bool Execute()
 	{
-		string stateObs = args["obsEvent.outputState"].ToString();
-		string workOut = "AdultRemind";
-		string upTime = "Uptime Watcher";
-		string shouts = "Random Shouts";
+        //Declarations
+        List<string> list_actions;
+        string[] str_timers;
+		string str_state, str_msg;
 
-		switch (stateObs)
+        //Initializations
+        list_actions = CPH.GetGlobalVar<List<string>>("autoShouts"); 
+		str_timers = new string[]
 		{
+            "AdultRemind",
+            "Uptime Watcher",
+            "Random Shouts"
+        };
+		str_state = args["obsEvent.outputState"].ToString();
+		str_msg = "/me ";
+
+		//Check the state of OBS
+		switch (str_state)
+		{
+			//	Output Starting
 			case "OBS_WEBSOCKET_OUTPUT_STARTING":
 				CPH.ObsSetScene("Starter");
 				CPH.TwitchEmoteOnly(false);
 
-				//Enable all Shoutouts
-				CPH.EnableAction("aypoci");
-				CPH.EnableAction("bobotucci");
-				CPH.EnableAction("cactuarmike");
-				CPH.EnableAction("claymorefenrir");
-				CPH.EnableAction("earthtothien");
-				CPH.EnableAction("galaxy19");
-				CPH.EnableAction("gryze_wolf");
-				CPH.EnableAction("grzajabarkus");
-				CPH.EnableAction("harukunsama");
-				CPH.EnableAction("hots_for_kuku");
-				CPH.EnableAction("mechamayfly");
-				CPH.EnableAction("muhgoop");
-				CPH.EnableAction("ogweirdbear");
-				CPH.EnableAction("owsgt");
-				CPH.EnableAction("sharkiemarki3");
-				CPH.EnableAction("thepenguinbean");
-				CPH.EnableAction("toothpicksforrobots");
-				CPH.EnableAction("whymusticryy");
+                //Enable all Shoutouts
+                //... Disable Sound Actions.
+                foreach (string s in list_actions)
+                {
+                    CPH.EnableAction(s);
+                }//foreach
 
-				//Load the Riddles
-				CPH.RunAction("Riddles - Load File");
+                //Load the Riddles
+                CPH.RunAction("Riddles - Load File");
 
 				//Start Timers
-				//CPH.EnableTimer(workOut);
-				CPH.EnableTimer(upTime);
-				CPH.EnableTimer(shouts);
+				for(int i = 0; i < str_timers.Length; i++)
+					CPH.EnableTimer(str_timers[i]);
 
-				//Let me know it went well
-				CPH.TwitchAnnounce("All systems go Q-Mander! DataFingerbang", true, "purple");
+				//Feedback
+				str_msg += "All systems go Q-Mander! DataFingerbang";
 				CPH.LogInfo("『MARKER』: START_OF_STREAM");
 				break;
+			//	Output Stopping
 			case "OBS_WEBSOCKET_OUTPUT_STOPPING":
-				CPH.TwitchAnnounce("It was a pleasure to serve you Q-mander, see you next time!", true, "purple");
-				//CPH.DisableTimer(workOut);
-				CPH.DisableTimer(upTime);
-				CPH.DisableTimer(shouts);
-				break;
-		}
+				str_msg += "It was a pleasure to serve you Q-mander, see you next time!";
+                //Stop Timers
+                for (int i = 0; i < str_timers.Length; i++)
+                    CPH.DisableTimer(str_timers[i]);
+                break;
+			//	Other
+			default:
+				return true;
+		}//switch
+
+		//Send message
+		CPH.SendMessage(str_msg);
+
 		return true;
-	}
-}
+	}//Execute()
+}//CPHInline

@@ -4,9 +4,14 @@ public class CPHInline
 {
 	public bool Execute()
 	{
-		string usr = args["userName"].ToString();
-		CPH.RunAction(usr);
+		//Declarations
+		string usr;
+
+        //Initializations
+        usr = args["userName"].ToString();
+
+        CPH.RunAction(usr);
 		CPH.DisableAction(usr);
 		return true;
-	}
-}
+	}//Execute()
+}//CPHInline

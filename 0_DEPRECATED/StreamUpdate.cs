@@ -13,7 +13,7 @@ public class CPHInline
         //Initializations
         str_game = new string[3];
         str_stat = args["status"].ToString();
-        str_msg = "";
+        str_msg = "/me ";
         str_srs = "seriousMode";
         str_scene = "SS_MidScreen";
         bool_gam = Convert.ToBoolean(args["gameUpdate"]);
@@ -95,9 +95,7 @@ public class CPHInline
         }//if (bool_gam)
 
         //Feedback in Chat
-        CPH.TwitchAnnounce(str_msg,
-            true,
-            "purple");
+        CPH.SendMessage(str_msg);
 
         return true;
     }//public bool Execute()

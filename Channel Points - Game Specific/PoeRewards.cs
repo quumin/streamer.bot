@@ -9,21 +9,37 @@ public class CPHInline
         string str_msg, str_usr, str_ss, str_redeem, str_media, str_ri;
         string[] str_src, str_reward, str_path;
         int[] int_cnt;
+        int int_wait;
         float f_vol;
 
         //Initializations
-        str_msg = "『P O E』 ";
+        str_msg = "/me 『P O E』 ";
         str_usr = args["user"].ToString();
         str_ss = "SS_Alerts_Text";
         str_redeem = args["redemptionId"].ToString();
         str_media = "ChangePlaces";
         str_ri = "";
-        str_src = new string[] { "Username", "Action" };
-        str_reward = new string[] { args["rewardId"].ToString(), args["rewardName"].ToString() };
-        str_path = new string[] { "W:\\Streaming\\Media\\Sounds\\Channel Points\\ChangePlaces.mp3",
-            "W:\\Streaming\\PoE Log.txt"};
-        int_cnt = new int[] { Convert.ToInt32(args["counter"].ToString()),
-            Convert.ToInt32(args["userCounter"].ToString())};
+        str_src = new string[]
+        { 
+            "Username", 
+            "Action" 
+        };
+        str_reward = new string[]
+        { 
+            args["rewardId"].ToString(), 
+            args["rewardName"].ToString() 
+        };
+        str_path = new string[] 
+        { 
+            "W:\\Streaming\\Media\\Sounds\\Channel Points\\ChangePlaces.mp3",
+            "W:\\Streaming\\PoE Log.txt"
+        };
+        int_cnt = new int[] 
+        { 
+            Convert.ToInt32(args["counter"].ToString()),
+            Convert.ToInt32(args["userCounter"].ToString())
+        };
+        int_wait = 5000;
         f_vol = 0.15f;
 
         //Select the reward that's relevant
@@ -60,18 +76,14 @@ public class CPHInline
                 break;
         }//switch(str_reward[0])
 
-        //Feedback to Stream
-        //	Username
+        //Feedback
         CPH.ObsSetGdiText(str_ss, str_src[0], str_usr);
-        //	Action
         CPH.ObsSetGdiText(str_ss, str_src[1], str_reward[1]);
-        //	Show Feedback
         CPH.PlaySound(str_path[0], f_vol, false);
-        CPH.SendMessage(str_msg, true);
+        CPH.SendMessage(str_msg);
         CPH.ObsShowSource(str_ss, str_src[0]);
         CPH.ObsShowSource(str_ss, str_src[1]);
-        CPH.Wait(5000);
-        //	Hide Feedback
+        CPH.Wait(int_wait);
         CPH.ObsHideSource(str_ss, str_src[1]);
         CPH.ObsHideSource(str_ss, str_src[0]);
 
@@ -79,8 +91,8 @@ public class CPHInline
         using (StreamWriter sw = File.AppendText(str_path[1]))
         {
             sw.WriteLine("『" + str_reward[1] + "』:" + str_usr + "T[" + int_cnt[0] + "]|U[" + int_cnt[1] + "]| " + str_ri);
-        }//using (StreamWriter sw = File.AppendText(str_path[1]))
+        }//using
 
         return true;
-    }//public bool Execute()
-}//public class CPHInline
+    }//Execute()
+}//CPHInline

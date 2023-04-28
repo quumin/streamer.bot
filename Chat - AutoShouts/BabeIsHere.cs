@@ -4,23 +4,30 @@ public class CPHInline
 {
 	public bool Execute()
 	{
+		//Declarations
 		string str_ss, str_media;
-		int int_wait = 2300;
-		bool bool_serious = CPH.GetGlobalVar<bool>("seriousMode");
+		int int_wait;
+		bool bool_srs;
 
+		//Initializations
 		str_ss = "SS_Alerts";
 		str_media = "BabeHerePog";
+        int_wait = 2300;
+        bool_srs = CPH.GetGlobalVar<bool>("seriousMode");
 
-		CPH.SendMessage("Hey it's @whymusticryy! Thank-Q for coming by you sexy human quuminL you are Q's thiqq or die quuminL");
+		//Send message
+        CPH.SendMessage("/me Hey it's @whymusticryy! Thank-Q for coming by you sexy human quuminL you are Q's thiqq or die quuminL");
 
-		if (!bool_serious)
+        //If Serious Mode is disabled...
+        if (!bool_srs)
 		{
+			//... play video.
 			CPH.ObsShowSource(str_ss, str_media);
 			CPH.Wait(int_wait);
 			CPH.ObsHideSource(str_ss, str_media);
-		}//if(!bool_serious)
+		}//if
 
 		CPH.DisableAction("whymusticryy");
 		return true;
-	}
-}
+	}//Execute()
+}//CPHInline

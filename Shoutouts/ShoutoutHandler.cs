@@ -15,7 +15,7 @@ public class CPHInline
 		usr_rawIn = args["rawInput"].ToString();
 		soActive = CPH.GetGlobalVar<bool>("globalSoActive", false);
 
-		CPH.LogVerbose("SO Active? :" + soActive);
+		CPH.LogInfo("SO Active? :" + soActive);
 
 		//Check if the rawInput is a valid username...
 		try
@@ -28,33 +28,33 @@ public class CPHInline
 				usr_name = args["targetUserName"].ToString();
 				usr_id = args["targetUserId"].ToString();
 
-				//If you're streaming...
+				//If streaming...
 				if (CPH.ObsIsStreaming())
 				{
 					//... make sure that you don't try to run a shoutout until the previous one is done.
 					CPH.TwitchSendShoutoutById(usr_id);
 					CPH.SetGlobalVar("globalSoActive", true, false);
 					CPH.EnableTimer("soTimer");
-					CPH.SendMessage("DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @" + usr_target +
+					CPH.SendMessage("/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @" + usr_target +
 						" lickL , follow 'em at ​https://twitch.tv/" + usr_name +
 						" and improve your quuminL function.", true);
-				}
+				}//if
 
-			}
+			}//if
 			else
 			{
 				//... otherwise inform the broadcaster to wait.
-				CPH.SendMessage("DataFingerbang Shoutout is still ongoing! DataFingerbang", true);
-			}
-		}
+				CPH.SendMessage("/me DataFingerbang Shoutout is still ongoing! DataFingerbang", true);
+			}//else
+		}//try
 		//... catch if it's not.
 		catch (KeyNotFoundException ex)
 		{
 
-			CPH.SendMessage("DataFingerbang Oops, " + usr_rawIn +
+			CPH.SendMessage("/me DataFingerbang Oops, " + usr_rawIn +
 				" not found DataFingerbang", true);
-		}
+		}//catch
 
 		return true;
-	}
-}
+	}//Execute()
+}//CPHInline

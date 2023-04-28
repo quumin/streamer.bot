@@ -2,57 +2,53 @@ using System;
 
 public class CPHInline
 {
-	public bool Execute()
-	{
+    public bool Execute()
+    {
+        //Declarations
+        int int_pos;
+        string str_scene, str_filter, str_postfix;
 
-		int camState = CPH.GetGlobalVar<int>("globalMove");
-		string sceneName = "SS_KiyoPro_FancyCam";
-		string filterName = "";
-		string postFix = "_CYE";
+        //Initializations
+        int_pos = CPH.GetGlobalVar<int>("globalMove");
+        str_scene = "SS_KiyoPro_FancyCam";
+        str_filter = "";
+        str_postfix = "_CYE";
 
-		switch (camState)
-		{
-			case 1:
-				//TL
-				filterName = "L";
-				break;
-			case 2:
-				//TM
-				filterName = "L";
-				break;
-			case 3:
-				//TR
-				filterName = "R";
-				break;
-			case 4:
-				//MR
-				filterName = "R";
-				break;
-			case 5:
-				//BR
-				filterName = "R";
-				break;
-			case 6:
-				//BM
-				filterName = "R";
-				break;
-			case 7:
-				//BL
-				filterName = "L";
-				break;
-			case 8:
-				//ML
-				filterName = "L";
-				break;
-		}
+        //Check Position
+        switch (int_pos)
+        {
+            //	Top Left
+            case 1:
+            //	Top Middle
+            case 2:
+            //	Bottom Left
+            case 7:
+            //	Middle Left
+            case 8:
+                str_filter = "L";
+                break;
+            //	Top Right
+            case 3:
+            //	Middle Right
+            case 4:
+            //	Bottom Right
+            case 5:
+            //	Bottom Middle
+            case 6:
+                str_filter = "R";
+                break;
 
-		filterName += postFix;
+        }//switch
 
-		if (filterName != postFix)
-		{
-			CPH.ObsShowFilter(sceneName, filterName);
-		}
+        str_filter += str_postfix;
 
-		return true;
-	}
-}
+        //If the filter exists...
+        if (str_filter != str_postfix)
+        {
+            //... show it.
+            CPH.ObsShowFilter(str_scene, str_filter);
+        }//if
+
+        return true;
+    }//Execute()
+}//CPHInline
