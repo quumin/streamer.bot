@@ -5,13 +5,13 @@ public class CPHInline
 	public bool Execute()
 	{
 		//Declarations
-		string usr;
+		string str_usr;
 
         //Initializations
-        usr = args["userName"].ToString();
+        str_usr = args["userName"].ToString();
 
-        CPH.RunAction(usr);
-		CPH.DisableAction(usr);
+        CPH.RunAction(str_usr);
+		CPH.DisableAction(str_usr);
 		return true;
 	}//Execute()
 }//CPHInline

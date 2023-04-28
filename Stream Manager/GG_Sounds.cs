@@ -14,19 +14,17 @@ public class CPHInline
         {
             "Best of Both Worlds",
             "Bing Chilling",
-            "Graphic Design",
             "KEKW",
             "Kira",
             "Torture Dance",
             "Unlurk",
+            "Cozy Time",
             "EZ Clap",
             "Fuck you Data",
-            "Oh No!",
+            "Oh Shit!",
             "OMT",
             "Thanks Data",
-            "YareYare",
-            "Oh Shit!",
-            "Cozy Time"
+            "YareYare"
         };
 
         //Set Global
