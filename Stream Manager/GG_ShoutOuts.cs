@@ -2,6 +2,12 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+/*Generate Globals - Shout Outs
+ * 
+ *  Generate the global variable for all shoutouts.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

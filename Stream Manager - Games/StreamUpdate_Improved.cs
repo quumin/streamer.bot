@@ -203,7 +203,7 @@ public class CPHInline
         if (CPH.ObsIsStreaming())
         {
             //	... create a marker.
-            CPH.CreateStreamMarker("CHANGE - " + str_game[2]);
+            CPH.CreateStreamMarker("CHANGE - " + str_game[0]);
         }//if
 
         return str_msg;

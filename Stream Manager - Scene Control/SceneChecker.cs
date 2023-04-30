@@ -1,5 +1,11 @@
 using System;
 
+/*Scene Checker
+ * 
+ *	Check which scene we're currently in and make adjustments.
+ * 
+ */
+
 public class CPHInline
 {
 	public bool Execute()
@@ -19,13 +25,10 @@ public class CPHInline
 		
 		switch(str_scene)
 		{
-            //OVERLAYS
-            //	Starter
+            //	OVERLAYS
             case "Starter":
-            //	Chat
             case "Chat":
                 break;
-			//	BRB
 			case "Be Right Back":
                 //If I'm live...
                 if (CPH.ObsIsStreaming())
@@ -34,13 +37,11 @@ public class CPHInline
                     CPH.TwitchRunCommercial(int_com);
                 }//if
 				break;
-            //	Ender
             case "Ender":
                 bool_creds = true;
                 break;
-            
-			//CONTENT
-			//	Stream Raiders
+
+            //	CONTENT
             case "StreamRaiders":
 				CPH.RunAction("Cam Controller");
                 CPH.Wait(int_wait);
@@ -53,16 +54,13 @@ public class CPHInline
                     CPH.SendMessage("/me monkaW Uhm - Qmander, Streamraiders is still showing... is that intentional? LULdata");
                 }//if
 				break;
-            //	Capture Card
             case "Game_CC":
-            //	Screen Share
             case "ScreenShare":
-			//	Game
             case "PC_Game":
                 CPH.RunAction("Cam Controller");
 				break;
 			
-			// Other
+			// OTHER
 			default:
 				return true;
         }//switch

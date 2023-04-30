@@ -2,6 +2,11 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+/*Generate Globals - Sounds
+ * 
+ *  Generate the global variable for all sound interaction with viewers Actions.
+ * 
+ */
 public class CPHInline
 {
     public bool Execute()
@@ -10,7 +15,7 @@ public class CPHInline
         List<string> list_actions;
 
         //Initializations
-        list_actions = new List<string> 
+        list_actions = new List<string>
         {
             "Best of Both Worlds",
             "Bing Chilling",

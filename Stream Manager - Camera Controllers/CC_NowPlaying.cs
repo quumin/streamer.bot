@@ -1,5 +1,11 @@
 using System;
 
+/*Camera Controller - Now Playing
+ * 
+ *	Check if Spotify is playing and update the camera and/or alert text based on this.
+ * 
+ */
+
 public class CPHInline
 {
 	public bool Execute()
@@ -16,17 +22,12 @@ public class CPHInline
 			"SS_KiyoPro_FancyCam",
 			"SS_NowPlaying"
 		};
-        str_scene = new string[]
-		{
-			"SS_KiyoPro_FancyCam",
-			"SS_NowPlaying"
-		};
 		str_filter = new string[]
 		{
 			"",
 			""
 		};
-        str_filter = new string[]
+        str_postfix = new string[]
 		{
             "_NP",
             ""
@@ -73,16 +74,6 @@ public class CPHInline
                 break;
         }//switch
 
-        //Adjust Now Playing postfix
-        str_filter[0] += str_postfix[0];
-
-		//If NP Filter is not just the postfix...
-		if (str_filter[0] != str_postfix[0])
-		{
-			//... update the filter.
-			CPH.ObsShowFilter(str_scene[0], str_filter[0]);
-		}//if
-
 		//If Snip.txt is empty...
 		if (int_ln == 0)
 		{
@@ -99,15 +90,12 @@ public class CPHInline
 			str_postfix[1] = "_AT-NP";
 		}//else
 
-		//Adjust Alerts Text Postfix
-		str_filter[1] += str_postfix[1];
-
-		//If AT Filter is not just the postfix...
-		if (str_filter[1] != str_postfix[1])
-		{
-			//... update the filter.
-			CPH.ObsShowFilter(str_scene[0], str_filter[1]);
-		}//if
+        //Show
+        for (int i = 0; i < str_filter.Length; i++)
+        {
+            str_filter[i] += str_postfix[i];
+            CPH.ObsShowFilter(str_scene[i], str_filter[i]);
+        }//for
 
         return true;
     }//Execute()
