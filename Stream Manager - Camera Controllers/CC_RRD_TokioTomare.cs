@@ -1,5 +1,11 @@
 using System;
 
+/*Cam Controller - Road Rolla Da - Stop Time
+ * 
+ *	Stop Time and rule the world.
+ * 
+ */
+
 public class CPHInline
 {
 	public bool Execute()

@@ -1,6 +1,12 @@
 using System;
 using System.Collections.Generic;
 
+/*Update Special Commands
+ * 
+ *   Update beer, wine, and squad commands.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()
@@ -10,7 +16,6 @@ public class CPHInline
         string str_cmd, str_add, str_set, str_act;
 
         //Declarations
-        list_squad = new List<string>();
         str_cmd = args["command"].ToString();
         str_add = str_set = "";
         str_act = "Special - ";
@@ -54,10 +59,17 @@ public class CPHInline
                 if (s.Contains("!squad"))
                 {
                     //... then add to list and set list.
-                    list_squad = CPH.GetGlobalVar<List<string>>(str_set);
-                    list_squad.Add(str_add);
+                    try
+                    {
+                        list_squad = CPH.GetGlobalVar<List<string>>(str_set);
+                        list_squad.Add(str_add);
+                    }//try
+                    catch (Exception e)
+                    {
+                        list_squad = new List<string>() { str_add };
+                    }//catch
                     CPH.SetGlobalVar(str_set, list_squad);
-                }//if (s.Contains("!squad"))
+                }//if
                 else
                 {
                     //... else set global string.
@@ -65,14 +77,10 @@ public class CPHInline
                 }//else
                 CPH.EnableAction(str_act);
                 break;
-            //	Error
-            default:
-                return true;
-                break;
         }//switch (str_cmd)
 
         //Update the Title
-        CPH.RunAction("Set Title");
+        CPH.RunAction("Set Title", true);
 
         return true;
     }//public bool Execute()

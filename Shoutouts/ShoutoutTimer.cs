@@ -1,6 +1,11 @@
 using System;
 using System.Collections.Generic;
 
+/*Shoutout Timer
+ * 
+ *	When the timer runs out, allow ShoutOuts again.
+ * 
+ */
 
 public class CPHInline
 {

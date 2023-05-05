@@ -1,5 +1,11 @@
 ﻿using System;
 
+/*Cam Controller - Opacify
+ * 
+ *  Adjust opacity.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()
@@ -36,14 +42,14 @@ public class CPHInline
         }//for
 
         //If Opacify is enabled...
-        if(int_state != 4)
+        if (int_state != 4)
         {
             //... turn on Specific Opacity.
             for (int i = 0; i < str_src.Length; i++)
             {
                 CPH.ObsShowFilter(str_ss, str_src[i], str_filter[int_state - 1]);
             }//for
-            
+
             //Feedback
             CPH.LogInfo("『C C』 Opacity changed to \'" + str_filter[int_state - 1] + "\' successfully!");
         }//if

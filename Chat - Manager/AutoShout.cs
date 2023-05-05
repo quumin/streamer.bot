@@ -1,5 +1,11 @@
 using System;
 
+/*AutoShout Handler
+ * 
+ *	Run the action that matches the username.
+ * 
+ */
+
 public class CPHInline
 {
 	public bool Execute()

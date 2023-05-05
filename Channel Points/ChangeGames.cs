@@ -2,6 +2,12 @@
 using System.IO;
 using System.Collections.Generic;
 
+/*Change Games
+ * 
+ *  Change the game from the channel points.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

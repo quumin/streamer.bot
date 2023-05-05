@@ -2,6 +2,12 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 
+/*Riddle Post
+ * 
+ *  Grab & post a riddle.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()
@@ -75,10 +81,10 @@ public class CPHInline
         CPH.SetGlobalVar("questionsSix", list_riddles[5]);
         CPH.SetGlobalVar("questionsSev", list_riddles[6]);
         CPH.SetGlobalVar("ansWer", list_riddles[7]);
-        CPH.LogInfo("『R I D D L E S』 Riddle posted succesfully - answer is: " +
-            str_ans);
 
         //Logging
+        CPH.LogInfo("『R I D D L E S』 Riddle posted succesfully - answer is: " +
+            str_ans);
         CPH.LogVerbose("『R I D D L E S』 1: " + list_riddles[0]);
         CPH.LogVerbose("『R I D D L E S』 2: " + list_riddles[1]);
         CPH.LogVerbose("『R I D D L E S』 3: " + list_riddles[2]);

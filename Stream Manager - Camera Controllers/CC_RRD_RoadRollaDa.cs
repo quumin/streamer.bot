@@ -1,5 +1,11 @@
 using System;
 
+/*Cam Controller - Road Rolla Da
+ * 
+ *  Smash me into a pulp no matter which scene I'm in.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

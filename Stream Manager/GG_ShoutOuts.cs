@@ -28,6 +28,7 @@ public class CPHInline
             "grzajabarkus",
             "harukunsama",
             "hots_for_kuku",
+            "lolloer__1",
             "mechamayfly",
             "muhgoop",
             "ogweirdbeard",

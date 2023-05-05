@@ -1,6 +1,12 @@
 ﻿using System;
 using System.IO;
 
+/*Path of Exile Rewards Handler
+ * 
+ *  Handle the rewards when redeemed from PoE.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

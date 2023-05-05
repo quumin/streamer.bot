@@ -2,6 +2,12 @@
 using System.IO;
 using System.Collections.Generic;
 
+/*Riddle Clear
+ * 
+ *  Clear riddles for debugging.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

@@ -2,6 +2,12 @@
 using System.IO;
 using System.Collections.Generic;
 
+/*Stream Update
+ * 
+ *  An improved version of my previous handler - update the stream accordingly.
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

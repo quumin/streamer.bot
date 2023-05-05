@@ -1,5 +1,11 @@
 using System;
 
+/*Cam Controller - Curb your Enthusiasm
+ * 
+ *  Adjust the camera with Curb Your Enthusiasm. 
+ * 
+ */
+
 public class CPHInline
 {
     public bool Execute()

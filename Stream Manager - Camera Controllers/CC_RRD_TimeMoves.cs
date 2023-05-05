@@ -1,5 +1,11 @@
 using System;
 
+/*Cam Controller - Road Rolla Da - Time Moves
+ * 
+ *  Recover from Road Rolla Da.
+ * 
+ */
+
 public class CPHInline
 {
 	public bool Execute()
