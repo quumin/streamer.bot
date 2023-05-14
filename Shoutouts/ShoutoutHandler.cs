@@ -12,53 +12,43 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string usr_rawIn, usr_target, usr_name, usr_id;
-        bool soActive;
+        string[] str_usr;
+        bool bool_so;
 
         //Initializations
-        usr_target = usr_name = usr_id = "";
-        usr_rawIn = args["rawInput"].ToString();
-        soActive = CPH.GetGlobalVar<bool>("globalSoActive", false);
-
-        CPH.LogInfo("SO Active? :" + soActive);
-
-        //Check if the rawInput is a valid username...
-        try
+        str_usr = new string[]
         {
-            //If a shoutout is not active...
-            if (!soActive)
+            args["targetUserLogin"].ToString(),
+            args["targetUserDisplayName"].ToString()
+        };
+        bool_so = CPH.GetGlobalVar<bool>("globalSoActive", false);
+        
+        //Log it
+        CPH.LogInfo("『SHOUTOUT』Active: " + bool_so);
+
+        //If a shoutout is not active...
+        if (!bool_so)
+        {
+            //... if streaming...
+            if (CPH.ObsIsStreaming())
             {
-                //... run a shoutout.
-                usr_target = args["targetUser"].ToString();
-                usr_name = args["targetUserName"].ToString();
-                usr_id = args["targetUserId"].ToString();
-
-                //If streaming...
-                if (CPH.ObsIsStreaming())
-                {
-                    //... make sure that you don't try to run a shoutout until the previous one is done.
-                    CPH.TwitchSendShoutoutById(usr_id);
-                    CPH.SetGlobalVar("globalSoActive", true, false);
-                    CPH.EnableTimer("soTimer");
-                    CPH.SendMessage("/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @" + usr_target +
-                        " lickL , follow 'em at ​https://twitch.tv/" + usr_name +
-                        " and improve your quuminL function.", true);
-                }//if
-
+                //... send shoutout and start warning timer.
+                CPH.TwitchSendShoutoutByLogin(str_usr[0]);
+                CPH.SetGlobalVar("globalSoActive", true, false);
+                CPH.EnableTimer("soTimer");
             }//if
-            else
-            {
-                //... otherwise inform the broadcaster to wait.
-                CPH.SendMessage("/me DataFingerbang Shoutout is still ongoing! DataFingerbang", true);
-            }//else
-        }//try
-         //... catch if it's not.
-        catch (KeyNotFoundException ex)
-        {
 
-            CPH.SendMessage("/me DataFingerbang Oops, " + usr_rawIn +
-                " not found DataFingerbang", true);
-        }//catch
+        }//if
+        else
+        {
+            //... otherwise inform the broadcaster to wait.
+            CPH.SendMessage("/me DataFingerbang Shoutout is still ongoing! DataFingerbang", true);
+        }//else
+        
+        CPH.SendMessage("/me !so " + str_usr[1]);
+        CPH.SendMessage("/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @" + str_usr[0] +
+            " lickL , follow 'em at ​https://twitch.tv/" + str_usr[1] +
+            " and improve your quuminL function.", true);
 
         return true;
     }//Execute()
