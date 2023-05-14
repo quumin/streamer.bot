@@ -48,10 +48,10 @@ public class CPHInline
         //If the game updates...
         if (bool_status[0])
         {
-            //... run Game Handler.
-            str_msg += gameHandler();
             //... log stuff.
             CPH.LogInfo("『MARKER』: GAME_UPDATE");
+            //... run Game Handler.
+            str_msg += gameHandler();
         }//if (bool_gam)
 
         //Check Serious Mode Global
@@ -118,34 +118,28 @@ public class CPHInline
         //Disable Game Specific Rewards.
         switch (int_id)
         {
+            //	Unforgiving - A Northern Hymn
+            case 500453:
+            //	Bramble: The Mountain King
+            case 796671761:
             //	Resident Evil 4: Remake
             case 322503446:
                 bool_srs = true;
                 break;
             //	Path of Exile
             case 29307:
-                if (list_rewards[3].Enabled)
-                {
-                    CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
-                }//if
+                CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
+                CPH.TwitchRewardGroupEnable(str_rewardGroups[3]);
                 break;
             //	Darkest Dungeon II
             case 511471:
-                if (list_rewards[30].Enabled)
-                {
-                    CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
-                }//if
+                CPH.TwitchRewardGroupEnable(str_rewardGroups[2]);
+                CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
                 break;
             //	Every other Game
             default:
-                if (list_rewards[3].Enabled)
-                {
-                    CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
-                }//if
-                if (list_rewards[30].Enabled)
-                {
-                    CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
-                }//if
+                CPH.TwitchRewardGroupDisable(str_rewardGroups[2]);
+                CPH.TwitchRewardGroupDisable(str_rewardGroups[3]);
                 break;
         }//switch
 
@@ -195,7 +189,7 @@ public class CPHInline
 
         //Show the game box art change.
         CPH.ObsSetBrowserSource(str_scene[0], "New GameBox Art", str_game[1]);
-        //CPH.Wait(int_wait);
+        CPH.Wait(int_wait);
         CPH.ObsHideSource(str_scene[0], "Old GameBox Art");
         CPH.ObsShowSource(str_scene[0], "New GameBox Art");
         CPH.Wait(int_wait);
