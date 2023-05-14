@@ -160,7 +160,7 @@ public class CPHInline
 
         //Initializations
         str_path = "W:\\Streaming\\Media\\Sounds\\";
-        f_vol = 0.015f;
+        f_vol = 0.15f;
         
         //Set Global
         CPH.SetGlobalVar("mediaRoot", str_path, true);
