@@ -21,7 +21,7 @@ public class CPHInline
         //Initializations
         str_event = args["__source"].ToString();
         str_snd = str_img = str_alias = str_usr = str_msg = "";
-        str_path = "W:\\Streaming\\Media\\Sounds\\";
+        str_path = CPH.GetGlobalVar<string>("mediaRoot");
         str_ss = new string[]
         {
             "SS_Alerts_Text",
@@ -39,7 +39,7 @@ public class CPHInline
         bool_sers = CPH.GetGlobalVar<bool>("seriousMode");
         int_wait = new int[] { 2000, 2000, 2000 };
         int_tcl = 200;
-        f_vol = 0.15f;
+        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
         //Check the event type.
         switch (str_event)

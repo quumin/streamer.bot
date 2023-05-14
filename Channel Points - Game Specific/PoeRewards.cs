@@ -26,27 +26,27 @@ public class CPHInline
         str_media = "ChangePlaces";
         str_ri = "";
         str_src = new string[]
-        { 
-            "Username", 
-            "Action" 
+        {
+            "Username",
+            "Action"
         };
         str_reward = new string[]
-        { 
-            args["rewardId"].ToString(), 
-            args["rewardName"].ToString() 
+        {
+            args["rewardId"].ToString(),
+            args["rewardName"].ToString()
         };
-        str_path = new string[] 
-        { 
-            "W:\\Streaming\\Media\\Sounds\\Channel Points\\ChangePlaces.mp3",
+        str_path = new string[]
+        {
+            CPH.GetGlobalVar<string>("mediaRoot") + "Channel Points\\ChangePlaces.mp3",
             "W:\\Streaming\\PoE Log.txt"
         };
-        int_cnt = new int[] 
-        { 
+        int_cnt = new int[]
+        {
             Convert.ToInt32(args["counter"].ToString()),
             Convert.ToInt32(args["userCounter"].ToString())
         };
         int_wait = 5000;
-        f_vol = 0.15f;
+        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
         //Select the reward that's relevant
         switch (str_reward[0])

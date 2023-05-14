@@ -22,10 +22,10 @@ public class CPHInline
             "Freeze"
         };
         str_src = "UnWarudo";
-        str_path = "W:\\Streaming\\Media\\Sounds\\";
+        str_path = CPH.GetGlobalVar<string>("mediaRoot");
         str_scene = CPH.ObsGetCurrentScene();
         str_ss = "SS_Alerts";
-        f_vol = 0.15f;
+        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
         //Check the scene
         switch (str_scene)

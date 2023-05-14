@@ -27,9 +27,9 @@ public class CPHInline
             "SS_KP_NF"
         };
         str_src = "Road_Rolla_Da";
-        str_path = "W:\\Streaming\\Media\\Sounds\\";
+        str_path = CPH.GetGlobalVar<string>("mediaRoot");
         str_scene = CPH.ObsGetCurrentScene();
-        f_vol = 0.15f;
+        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
         switch (str_scene)
         {

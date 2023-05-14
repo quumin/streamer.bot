@@ -17,8 +17,8 @@ public class CPHInline
 
         //Initializations
         bool_srs = CPH.GetGlobalVar<bool>("seriousMode");
-        str_path = "W:\\Streaming\\Media\\Sounds\\";
-        f_vol = 0.025f;
+        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
         //If OBS is streaming...
         if (CPH.ObsIsStreaming())

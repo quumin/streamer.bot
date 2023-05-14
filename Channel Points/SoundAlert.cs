@@ -17,7 +17,7 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = "W:\\Streaming\\Media\\Sounds\\Channel Points\\";
+        str_path = CPH.GetGlobalVar<string>("mediaRoot") + "Channel Points\\";
         str_media = "";
         str_redeem = args["redemptionId"].ToString();
         str_msg = "/me ";
@@ -26,7 +26,7 @@ public class CPHInline
         str_src = new string[] { "Username", "Action" };
         str_reward = new string[] { args["rewardId"].ToString(), args["rewardName"].ToString() };
         int_wait = 5000;
-        f_vol = 0.15f;
+        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
         //See which reward it is...
         switch (str_reward[0])
