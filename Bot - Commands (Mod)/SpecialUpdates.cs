@@ -80,7 +80,7 @@ public class CPHInline
         }//switch (str_cmd)
 
         //Update the Title
-        CPH.RunAction("Set Title", true);
+        CPH.RunAction("Set Title");
 
         return true;
     }//public bool Execute()

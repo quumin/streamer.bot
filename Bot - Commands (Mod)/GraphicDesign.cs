@@ -38,7 +38,7 @@ public class CPHInline
         if (int_fa < 600)
         {
             //... send message & timeout.
-            CPH.SendMessage("/me Aware " + str_msg + " YEP ModTime");
+            CPH.SendMessage($"/me Aware {str_msg} YEP ModTime");
             CPH.TwitchTimeoutUser(str_usr, 5, "Mentioned followers/graphic design within first 10 minutes - you sicken me. Go peddle your shit somewhere else.");
 
             //... if Serious Mode is disabled...

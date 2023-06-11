@@ -17,7 +17,7 @@ public class CPHInline
 
         //Initializations
         bool_srs = CPH.GetGlobalVar<bool>("seriousMode");
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("mediaRoot") + "Adulting.mp3";
         str_msg = "/me marinHey ";
         f_vol = CPH.GetGlobalVar<float>("mediaVolume");
 
@@ -35,12 +35,12 @@ public class CPHInline
         if (CPH.ObsIsStreaming())
         {
             //... send the mesage.
-            CPH.SendMessage(str_msg + " peepoJoJo");
+            CPH.SendMessage($"{str_msg} peepoJoJo");
             //... if Serious Mode is disabled...
             if (!bool_srs)
             {
                 //... play the sound.
-                CPH.PlaySound(str_path + "Adulting.mp3", f_vol);
+                CPH.PlaySound($"{str_path}", f_vol);
             }//if
         }//if
 

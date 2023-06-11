@@ -23,9 +23,7 @@ public class CPHInline
             "WatchParty"
         };
 
-
         //Update Show
-        CPH.ObsShowSource(str_src[0], str_src[1]);
         CPH.SetGlobalVar("ytNow", str_ri);
         return true;
     }//Execute()

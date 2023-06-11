@@ -22,7 +22,7 @@ public class CPHInline
             args["targetUserDisplayName"].ToString()
         };
         bool_so = CPH.GetGlobalVar<bool>("globalSoActive", false);
-        
+
         //Log it
         CPH.LogInfo("『SHOUTOUT』Active: " + bool_so);
 
@@ -44,11 +44,9 @@ public class CPHInline
             //... otherwise inform the broadcaster to wait.
             CPH.SendMessage("/me DataFingerbang Shoutout is still ongoing! DataFingerbang", true);
         }//else
-        
-        CPH.SendMessage("/me !so " + str_usr[1]);
-        CPH.SendMessage("/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @" + str_usr[0] +
-            " lickL , follow 'em at ​https://twitch.tv/" + str_usr[1] +
-            " and improve your quuminL function.", true);
+
+        CPH.SendMessage($"/me !so {str_usr[1]}");
+        CPH.SendMessage($"/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @{str_usr[0]} lickL , follow 'em at ​https://twitch.tv/{str_usr[1]} and improve your quuminL function.");
 
         return true;
     }//Execute()

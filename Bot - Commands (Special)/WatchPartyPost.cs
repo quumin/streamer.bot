@@ -25,9 +25,9 @@ public class CPHInline
 
 
         //Check Browser Source
-        if (CPH.ObsIsSourceVisible(str_src[0], str_src[0]))
+        if (CPH.ObsIsSourceVisible(str_src[0], str_src[1]))
         {
-            str_msg = "/me The Q-Mander is watching: " + str_url + " FeelsAmazingMan PopcornTime";
+            str_msg = $"/me The Q-Mander is watching: {str_url} FeelsAmazingMan PopcornTime";
         }//if
 
         CPH.SendMessage(str_msg);

@@ -33,20 +33,20 @@ public class CPHInline
                 //... first/only entry.
                 if (i == 0)
                 {
-                    str_build += list_squad[i] + " ";
+                    str_build += $"{list_squad[i]}";
                 }//if
                  //... last entry.
                 else if (i == int_total - 1)
                 {
-                    str_build += " & " + list_squad[i] + " ";
+                    str_build += $" & {list_squad[i]}";
                 }//else if
                  //... subsequent entries.
                 else
                 {
-                    str_build += list_squad[i] + ", ";
+                    str_build += $"{list_squad[i]}, ";
                 }//else
             }//for
-            str_build += "ButtBooty";
+            str_build += " ButtBooty";
         }//if
         else
         {

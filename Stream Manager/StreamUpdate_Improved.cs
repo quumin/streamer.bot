@@ -89,7 +89,8 @@ public class CPHInline
             "Standard",
             "Standard - Sounds",
             "GS - DD2",
-            "GS - PoE"
+            "GS - PoE",
+            "GS - Horror"
         };
         str_scene = new string[]
         {
@@ -118,12 +119,17 @@ public class CPHInline
         //Disable Game Specific Rewards.
         switch (int_id)
         {
+            //	Hellblade
+            case 461410:
+            //	Amnesia: The Dark Descent
+            case 27127:
             //	Unforgiving - A Northern Hymn
             case 500453:
             //	Bramble: The Mountain King
             case 796671761:
             //	Resident Evil 4: Remake
             case 322503446:
+                CPH.TwitchRewardGroupEnable(str_rewardGroups[4]);
                 bool_srs = true;
                 break;
             //	Path of Exile
@@ -160,8 +166,8 @@ public class CPHInline
                 CPH.DisableAction(s);
             }//foreach
 
-            //... Disable all Rewards.
-            for (int i = 0; i < str_rewardGroups.Length; i++)
+            //... Disable all Rewards except Horror
+            for (int i = 0; i < str_rewardGroups.Length - 1; i++)
             {
                 CPH.TwitchRewardGroupDisable(str_rewardGroups[i]);
             }//for
