@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using QminBotDLL;
 
 /*Change Games
  * 
@@ -10,6 +11,12 @@ using System.Collections.Generic;
 
 public class CPHInline
 {
+    public void Init()
+    {
+        //Set Static Class in QnamicLib to active instance of CPH
+        QnamicLib.CPH = CPH;
+    }//Init()
+
     public bool Execute()
     {
         //Declarations
@@ -17,7 +24,7 @@ public class CPHInline
         string str_choice, str_usr, str_redeem, str_reward, str_msg;
 
         //Initializations
-        list_games = gameLoad();
+        list_games = QnamicLib.GameLoad();
         str_choice = args["rawInput"].ToString();
         str_usr = args["userName"].ToString();
         str_redeem = str_reward = "";
@@ -56,35 +63,5 @@ public class CPHInline
 
         return true;
     }//Execute()
-    List<string> gameLoad()
-    {
-        //Declarations
-        List<string> list_games;
 
-        //Initializations
-        list_games = new List<string>();
-
-        try
-        {
-            //Try to find the file and read from it...
-            using (var reader = new StreamReader(@".\\external_files\\GamesList.csv"))
-            {
-                //Populate the List
-                while (!reader.EndOfStream)
-                {
-                    var line = reader.ReadLine();
-                    list_games.Add(line);
-                }//while
-
-                CPH.LogInfo("『G A M E S』 Loaded Successfully.");
-            }//using
-        }//try
-        catch (Exception ex) when (ex is FileNotFoundException || ex is DirectoryNotFoundException)
-        {
-            //Catch when the directory and/or file is incorrect.
-            CPH.LogWarn("『G A M E S』 Games File failed to load!");
-            CPH.SendMessage("/me dataHuh The Games file could not be found, sir.");
-        }//catch
-        return list_games;
-    }//gameLoad()
 }//CPHInline

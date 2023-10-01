@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using QminBotDLL;
 
 /*Stream State
  * 
@@ -10,6 +11,12 @@ using System.Collections.Generic;
 
 public class CPHInline
 {
+    public void Init()
+    {
+        //Set Static Class in QnamicLib to active instance of CPH
+        QnamicLib.CPH = CPH;
+    }//Init()
+
     public bool Execute()
     {
         //Declarations
@@ -20,7 +27,7 @@ public class CPHInline
         //Initializations
         gg_AutoShout();
         gg_Sounds();
-        gg_Media();
+        QnamicLib.gg_Media("W:\\Streaming\\Media\\Sounds\\", 0.15f);
 
         list_actions = CPH.GetGlobalVar<List<string>>("autoShouts");
         str_timers = new string[]
@@ -146,24 +153,4 @@ public class CPHInline
         //Set Global
         CPH.SetGlobalVar("soundInteractActions", list_actions, true);
     }//gg_Sounds()
-    void gg_Media()
-    {
-        /*Generate Globals - Media
-		 * 
-		 *  Generate the global variables for all media.
-		 * 
-		 */
-
-        //Declarations
-        string str_path;
-        float f_vol;
-
-        //Initializations
-        str_path = "W:\\Streaming\\Media\\Sounds\\";
-        f_vol = 0.15f;
-        
-        //Set Global
-        CPH.SetGlobalVar("mediaRoot", str_path, true);
-        CPH.SetGlobalVar("mediaVolume", f_vol, true);
-    }//gg_Media()
 }//CPHInline
