@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /*Set Title
  * 
  *  Set the title of your stream, retaining options after parentheses.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -28,8 +29,8 @@ public class CPHInline
 		};
         str_special = new string[]
         {
-            CPH.GetGlobalVar<string>("beerCurrent"),
-            CPH.GetGlobalVar<string>("wineCurrent")
+            CPH.GetGlobalVar<string>("qminBeerCurrent"),
+            CPH.GetGlobalVar<string>("qminWineCurrent")
         };
         str_delims = new string[]
         {
@@ -47,7 +48,7 @@ public class CPHInline
 			false							//Poll
 		};
 
-        list_squad = CPH.GetGlobalVar<List<string>>("squadCurrent");
+        list_squad = CPH.GetGlobalVar<List<string>>("qminSquadCurrent");
         str_nbs = "- No Backseating, Please quuminL";
         str_alwaysIn = " (!7tv, !discord";
         int_tcl = 140;

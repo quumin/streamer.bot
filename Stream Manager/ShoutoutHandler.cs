@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /*Shoutout Handler
  * 
  *  Check username and run a shoutouts if the user exists and if there is not currently a shoutout ongoing.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -12,29 +13,29 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] str_usr;
-        bool bool_so;
+        string[] userInfo;
+        bool shoutoutActive;
 
         //Initializations
-        str_usr = new string[]
+        userInfo = new string[]
         {
             args["targetUserLogin"].ToString(),
             args["targetUserDisplayName"].ToString()
         };
-        bool_so = CPH.GetGlobalVar<bool>("globalSoActive", false);
+        shoutoutActive = CPH.GetGlobalVar<bool>("qminSoActive", false);
 
         //Log it
-        CPH.LogInfo("『SHOUTOUT』Active: " + bool_so);
+        CPH.LogInfo("『SHOUTOUT』Active: " + shoutoutActive);
 
         //If a shoutout is not active...
-        if (!bool_so)
+        if (!shoutoutActive)
         {
             //... if streaming...
             if (CPH.ObsIsStreaming())
             {
                 //... send shoutout and start warning timer.
-                CPH.TwitchSendShoutoutByLogin(str_usr[0]);
-                CPH.SetGlobalVar("globalSoActive", true, false);
+                CPH.TwitchSendShoutoutByLogin(userInfo[0]);
+                CPH.SetGlobalVar("qminSoActive", true, false);
                 CPH.EnableTimer("soTimer");
             }//if
 
@@ -45,8 +46,8 @@ public class CPHInline
             CPH.SendMessage("/me DataFingerbang Shoutout is still ongoing! DataFingerbang", true);
         }//else
 
-        CPH.SendMessage($"/me !so {str_usr[1]}");
-        CPH.SendMessage($"/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @{str_usr[0]} lickL , follow 'em at ​https://twitch.tv/{str_usr[1]} and improve your quuminL function.");
+        CPH.SendMessage($"/me !so {userInfo[1]}");
+        CPH.SendMessage($"/me DetectedAnomaly2 The Q-mander would like to bring your attention to  lickR @{userInfo[0]} lickL , follow 'em at ​https://twitch.tv/{userInfo[1]} and improve your quuminL function.");
 
         return true;
     }//Execute()

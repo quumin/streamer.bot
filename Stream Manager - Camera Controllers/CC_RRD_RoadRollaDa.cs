@@ -3,6 +3,7 @@ using System;
 /*Cam Controller - Road Rolla Da
  * 
  *  Smash me into a pulp no matter which scene I'm in.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -27,9 +28,9 @@ public class CPHInline
             "SS_KP_NF"
         };
         str_src = "Road_Rolla_Da";
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
         str_scene = CPH.ObsGetCurrentScene();
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         switch (str_scene)
         {

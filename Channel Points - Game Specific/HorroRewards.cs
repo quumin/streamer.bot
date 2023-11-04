@@ -4,6 +4,7 @@ using System.IO;
 /*Horror Game Rewards Handler
  * 
  *  Handle the rewards when redeemed from PoE.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -24,7 +25,7 @@ public class CPHInline
         str_ss = "SS_Alerts_Text";
         str_redeem = args["redemptionId"].ToString();
         str_media = "";
-        str_path = CPH.GetGlobalVar<string>("mediaRoot") + "\\Jumpscares\\";
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot") + "\\Jumpscares\\";
         str_src = new string[]
         {
             "Username",
@@ -42,7 +43,7 @@ public class CPHInline
             Convert.ToInt32(args["userCounter"].ToString())
         };
         int_wait = 5000;
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Select the reward that's relevant
         switch (str_reward[0])

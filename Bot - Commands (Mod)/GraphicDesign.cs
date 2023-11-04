@@ -4,6 +4,7 @@ using System.Globalization;
 /*Graphic Design
  * 
  *  Timeout bots.
+ *  LU: 04-nov-23
  * 
  */
 
@@ -19,7 +20,7 @@ public class CPHInline
         //Initializations
         str_usr = args["userName"].ToString();
         str_msg = "Oh no, not again... Ban incoming.";
-        bool_serious = CPH.GetGlobalVar<bool>("seriousMode");
+        bool_serious = CPH.GetGlobalVar<bool>("qminSeriousMode");
 
         try
         {

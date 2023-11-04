@@ -3,6 +3,7 @@
 /*Deck - Nuke
  * 
  *  YAMERO the chat until you say otherwise.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         str_marker = "『SOUNDBOARD』 " + "NUKE";
         str_msg = "/me monkaTOS Time to STOP boys disGUSTING";
         str_media = "Jojo_ZaWarudo.mp3";

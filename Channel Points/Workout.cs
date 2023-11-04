@@ -4,6 +4,7 @@ using System.IO;
 /*LIFT!
  * 
  *  Add workout from Raw Input and write to file.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -12,55 +13,55 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] str_meta, str_src, str_path, str_cond, str_format, str_reward;
-        int[] int_cnt;
-        string str_ss, str_d;
-        int int_wait;
-        float f_vol;
+        string[] metaData, obsSource, filePaths, controlCondition, formatString, rewardList;
+        int[] counters;
+        string obsScene, deLim;
+        int waitTimer;
+        float mediaVol;
 
         //Initializations 
-        str_meta = new string[]
+        metaData = new string[]
         {
             "",
             "",
             args["__source"].ToString()
         };
-        str_src = new string[]
+        obsSource = new string[]
         {
             "Username",
             "Action"
         };
-        str_path = new string[]
+        filePaths = new string[]
         {
-            $"{CPH.GetGlobalVar<string>("mediaRoot")}LetsGetSalty.mp3",
+            $"{CPH.GetGlobalVar<string>("qminMediaRoot")}",
             @".\\external_files\\Exercise.txt",
             @".\\external_files\\Exercise.csv"
         };
-        str_d = " |d| ";
-        str_format = new string[2];
-        str_reward = new string[3];
-        int_cnt = new int[2];
-        str_ss = "SS_Alerts_Text";
-        int_wait = 5000;
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        deLim = " |d| ";
+        formatString = new string[2];
+        rewardList = new string[3];
+        counters = new int[2];
+        obsScene = "SS_Alerts_Text";
+        waitTimer = 5000;
+        mediaVol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Check which source triggered the redeem
-        switch (str_meta[2])
+        switch (metaData[2])
         {
             //  Channel Points Reward
             case "TwitchRewardRedemption":
-                str_reward = new string[]
+                rewardList = new string[]
                 {
                     args["rewardId"].ToString(),
                     args["rewardName"].ToString(),
                     args["redemptionId"].ToString()
                 };
-                int_cnt = new int[]
+                counters = new int[]
                 {
                     Convert.ToInt32(args["counter"].ToString()),
                     Convert.ToInt32(args["userCounter"].ToString())
                 };
-                str_meta = new string[]
+                metaData = new string[]
                 {
                     args["user"].ToString(),
                     args["rawInput"].ToString(),
@@ -70,7 +71,7 @@ public class CPHInline
             //  Testing
             case "HotKeyPress":
             case "CommandMessage":
-                str_reward = new string[]
+                rewardList = new string[]
                 {
                     /*Reward ID's
                      * Non Death-Counter:
@@ -83,15 +84,15 @@ public class CPHInline
                     "LIFT!",
                     "redeemID"
                 };
-                int_cnt = new int[]
+                counters = new int[]
                 {
                     1,
                     2
                 };
-                str_meta = new string[]
+                metaData = new string[]
                 {
                     "quumin",
-                    $"This is a test{str_d}5",
+                    $"This is a test{deLim}5",
                     args["__source"].ToString()
                 };
                 CPH.SendMessage("Testing Workout dataMask", true);
@@ -101,70 +102,70 @@ public class CPHInline
                 break;
         }//switch
 
-        str_cond = str_meta[1].Split(new string[] { str_d }, StringSplitOptions.None);
+        controlCondition = metaData[1].Split(new string[] { deLim }, StringSplitOptions.None);
 
         //If the delimiter was used incorrectly...
-        if ((str_cond.Length > 2) && (str_reward[0] == "0d8161d7-1689-49a3-97ca-f5769ecb1b75"))
+        if ((controlCondition.Length > 2) && (rewardList[0] == "0d8161d7-1689-49a3-97ca-f5769ecb1b75"))
         {
-            CPH.SendMessage($"/me {str_meta[0]} you used the delimiter too many times... disGUSTING ");
+            CPH.SendMessage($"/me {metaData[0]} you used the delimiter too many times... disGUSTING ");
             //... and if I'm live...
             if (CPH.ObsIsStreaming())
             {
                 //... refund them.
-                CPH.TwitchRedemptionCancel(str_reward[0], str_reward[2]);
+                CPH.TwitchRedemptionCancel(rewardList[0], rewardList[2]);
             }//if
             return true;
         }//if
          //If the delimiter was used correctly...
-        else if ((str_cond.Length == 2) && (str_reward[0] == "0d8161d7-1689-49a3-97ca-f5769ecb1b75"))
+        else if ((controlCondition.Length == 2) && (rewardList[0] == "0d8161d7-1689-49a3-97ca-f5769ecb1b75"))
         {
             //... prompt user & enable death counter.
-            CPH.SendMessage($"/me @{str_meta[0]} - Death Counter is enabled! Use \'!died\' to increase your counter! WICKED");
+            CPH.SendMessage($"/me @{metaData[0]} - Death Counter is enabled! Use \'!died\' to increase your counter! WICKED");
             CPH.EnableAction("Workout - Death Counter");
-            str_format = new string[]
+            formatString = new string[]
             {
-                $"[_]: {str_meta[0]} [{int_cnt[1]}]/[{int_cnt[0]}] - \'{str_cond[0]}\' ({str_cond[1]})",
-                $"{str_meta[0]};{int_cnt[1]};{int_cnt[0]};{str_cond[0]};{str_cond[1]};{str_reward[2]}"
+                $"[_]: {metaData[0]} [{counters[1]}]/[{counters[0]}] - \'{controlCondition[0]}\' ({controlCondition[1]})",
+                $"{metaData[0]};{counters[1]};{counters[0]};{controlCondition[0]};{controlCondition[1]};{rewardList[2]}"
             };
-            CPH.DisableReward(str_reward[0]);
+            CPH.DisableReward(rewardList[0]);
             CPH.EnableCommand("9b23991e-ac4b-48bf-afc4-bce82ad3d674");
             CPH.EnableCommand("69e5a7a8-8d90-4064-b8dd-68a7a63268d1");
             CPH.EnableCommand("d3422d01-3041-49ac-bed8-1d72c9d12dec");
             CPH.EnableCommand("567a1801-dd6e-4a08-9639-e250a89403ba");
-            CPH.AddUserToGroup(str_meta[0], "WorkOut Starter");
+            CPH.AddUserToGroup(metaData[0], "WorkOut Starter");
         }//else if
         else
         {
             //... send normal workout.
-            str_format = new string[]
+            formatString = new string[]
             {
-                $"[_]: {str_meta[0]} [{int_cnt[1]}]/[{int_cnt[0]}] - \'{str_cond[0]}\'",
-                $"{str_meta[0]};{int_cnt[1]};{int_cnt[0]};{str_cond[0]};;{str_reward[2]}"
+                $"[_]: {metaData[0]} [{counters[1]}]/[{counters[0]}] - \'{controlCondition[0]}\'",
+                $"{metaData[0]};{counters[1]};{counters[0]};{controlCondition[0]};;{rewardList[2]}"
             };
         }//else
 
         //Feedback
-        CPH.PlaySound(str_path[0], f_vol, false);
-        CPH.SendMessage($"/me 『LIFT!』 LETSGO Thank {str_meta[0]} and flex them muscles Q-mander kumaPls");
-        CPH.ObsSetGdiText(str_ss, str_src[0], str_meta[0]);
-        CPH.ObsSetGdiText(str_ss, str_src[1], str_reward[1]);
-        CPH.ObsShowSource(str_ss, str_src[0]);
-        CPH.ObsShowSource(str_ss, str_src[1]);
-        CPH.Wait(int_wait);
-        CPH.ObsHideSource(str_ss, str_src[1]);
-        CPH.ObsHideSource(str_ss, str_src[0]);
+        CPH.PlaySound($"{filePaths[0]}LetsGetSalty.mp3", mediaVol, false);
+        CPH.SendMessage($"/me 『LIFT!』 LETSGO Thank {metaData[0]} and flex them muscles Q-mander kumaPls");
+        CPH.ObsSetGdiText(obsScene, obsSource[0], metaData[0]);
+        CPH.ObsSetGdiText(obsScene, obsSource[1], rewardList[1]);
+        CPH.ObsShowSource(obsScene, obsSource[0]);
+        CPH.ObsShowSource(obsScene, obsSource[1]);
+        CPH.Wait(waitTimer);
+        CPH.ObsHideSource(obsScene, obsSource[1]);
+        CPH.ObsHideSource(obsScene, obsSource[0]);
 
         //Write to .txt (Visible on Stream)
-        using (StreamWriter sw = File.AppendText(str_path[1]))
+        using (StreamWriter sw = File.AppendText(filePaths[1]))
         {
-            sw.WriteLine(str_format[0]);
+            sw.WriteLine(formatString[0]);
             sw.Flush();
         }//using
 
         //Write to .csv (Not visible on Stream)
-        using (StreamWriter sw = File.AppendText(str_path[2]))
+        using (StreamWriter sw = File.AppendText(filePaths[2]))
         {
-            sw.WriteLine(str_format[1]);
+            sw.WriteLine(formatString[1]);
             sw.Flush();
         }//using
         return true;

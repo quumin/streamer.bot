@@ -5,6 +5,7 @@ using System.Linq;
 /*Qnami Codes
  * 
  *  Play sound effects when the audience triggers the right commands.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -19,13 +20,13 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
         str_media = "";
         str_cmd = args["commandId"].ToString();
         str_usr = args["user"].ToString();
         list_msg = new List<string>();
         int_wait = 0;
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //See which reward it is...
         switch (str_cmd)

@@ -3,6 +3,7 @@ using System;
 /*Camera Controller
  * 
  *  Adjust the location of the camera (and others) using OBS Move Plugin.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,7 +16,7 @@ public class CPHInline
         string[] str_scene, str_filter, str_postfix;
 
         //Initializations
-        int_pos = CPH.GetGlobalVar<int>("globalMove");
+        int_pos = CPH.GetGlobalVar<int>("qminGlobalMove");
         str_scene = new string[]
         {
             "SS_KiyoPro_FancyCam",

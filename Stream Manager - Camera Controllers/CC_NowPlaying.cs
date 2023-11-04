@@ -3,42 +3,45 @@ using System;
 /*Camera Controller - Now Playing
  * 
  *	Check if Spotify is playing and update the camera and/or alert text based on this.
+ *	LU: 4-nov-2023
  * 
  */
 
 public class CPHInline
 {
-	public bool Execute()
-	{
-		//Declarations
-		int int_pos, int_ln;
-		string[] str_scene, str_filter, str_postfix;
-		
-		//Initializations
-		int_pos = CPH.GetGlobalVar<int>("globalMove");
-		int_ln = Int32.Parse(args["lineCount"].ToString());
-		str_scene = new string[]
-		{
-			"SS_KiyoPro_FancyCam",
-			"SS_NowPlaying"
-		};
-		str_filter = new string[]
-		{
-			"",
-			""
-		};
+    public bool Execute()
+    {
+        //Declarations
+        int int_pos, int_ln;
+        string[] str_scene, str_filter, str_postfix;
+        bool bool_np;
+
+        //Initializations
+        int_pos = CPH.GetGlobalVar<int>("qminGlobalMove");
+        bool_np = CPH.GetGlobalVar<bool>("qminNowPlayingBool");
+
+        str_scene = new string[]
+        {
+            "SS_KiyoPro_FancyCam",
+            "SS_NowPlaying"
+        };
+        str_filter = new string[]
+        {
+            "",
+            ""
+        };
         str_postfix = new string[]
-		{
+        {
             "_NP",
             ""
-		};
+        };
 
         //Check Position
         switch (int_pos)
         {
             //	Top Left
             case 1:
-				str_filter[0] = "TL";
+                str_filter[0] = "TL";
                 str_filter[1] = "TL";
                 break;
             //	Top Middle
@@ -74,21 +77,21 @@ public class CPHInline
                 break;
         }//switch
 
-		//If Snip.txt is empty...
-		if (int_ln == 0)
-		{
-			//... hide Now Playing.
-			CPH.ObsHideSource(str_scene[0], str_scene[1]);
-			//... move Alerts_Text away from cam.
-			str_postfix[1] = "_NP-Gone";
-		}//if
-		else
-		{
-			//... show Now Playing.
-			CPH.ObsShowSource(str_scene[0], str_scene[1]);
-			//... bring Alerts_Text closer to cam.
-			str_postfix[1] = "_AT-NP";
-		}//else
+        //If Snip.txt is empty...
+        if (!bool_np)
+        {
+            //... hide Now Playing.
+            CPH.ObsHideSource(str_scene[0], str_scene[1]);
+            //... move Alerts_Text away from cam.
+            str_postfix[1] = "_NP-Gone";
+        }//if
+        else
+        {
+            //... show Now Playing.
+            CPH.ObsShowSource(str_scene[0], str_scene[1]);
+            //... bring Alerts_Text closer to cam.
+            str_postfix[1] = "_AT-NP";
+        }//else
 
         //Show
         for (int i = 0; i < str_filter.Length; i++)

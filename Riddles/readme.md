@@ -18,7 +18,7 @@ Be sure to update the location in `Riddles - Load`.
 
 ## What if I Already Have a Chat Event, though?
 
-If you have an active Chat Event that you want to preserve, you can adapt `Riddles - Chat Event` or your own existing chat event by utilizing the `chatState` Global Variable.
+If you have an active Chat Event that you want to preserve, you can adapt `Riddles - Chat Event` or your own existing chat event by utilizing the `qminChatState` Global Variable.
  - `riddle_on` is the state to check for riddles. 
 
 ### Example

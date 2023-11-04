@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /*Update Special Commands
  * 
  *   Update beer, wine, and squad commands.
+ *   LU: 4-nov-2023
  * 
  */
 
@@ -12,31 +13,31 @@ public class CPHInline
     public bool Execute()
     {
         //Initializations
-        List<string> list_squad;
-        string str_cmd, str_add, str_set, str_act;
+        List<string> squadList;
+        string commandType, squadAdd, globalName, actionName;
 
         //Declarations
-        str_cmd = args["command"].ToString();
-        str_add = str_set = "";
-        str_act = "Special - ";
+        commandType = args["command"].ToString();
+        squadAdd = globalName = "";
+        actionName = "Special - ";
 
         //Select the Special Case
-        switch (str_cmd)
+        switch (commandType)
         {
             // Beer
             case string s when s.Contains("beer"):
-                str_set = "beerCurrent";
-                str_act += "Beer";
+                globalName = "qminBeerCurrent";
+                actionName += "Beer";
                 break;
             //	Wine
             case string s when s.Contains("wine"):
-                str_set = "wineCurrent";
-                str_act += "Wine";
+                globalName = "qminWineCurrent";
+                actionName += "Wine";
                 break;
             //	Squad
             case string s when s.Contains("squad"):
-                str_set = "squadCurrent";
-                str_act += "Squad";
+                globalName = "qminSquadCurrent";
+                actionName += "Squad";
                 break;
             //	Error
             default:
@@ -45,37 +46,37 @@ public class CPHInline
         }//switch (str_cmd)
 
         //Select Add or Reset
-        switch (str_cmd)
+        switch (commandType)
         {
             //	Reset
             case string s when s.Contains("reset"):
-                CPH.UnsetGlobalVar(str_set);
-                CPH.DisableAction(str_act);
+                CPH.UnsetGlobalVar(globalName);
+                CPH.DisableAction(actionName);
                 break;
             //	Add
             case string s when s.Contains("add"):
-                str_add = args["rawInput"].ToString();
+                squadAdd = args["rawInput"].ToString();
                 //If command contains squad...
                 if (s.Contains("!squad"))
                 {
                     //... then add to list and set list.
                     try
                     {
-                        list_squad = CPH.GetGlobalVar<List<string>>(str_set);
-                        list_squad.Add(str_add);
+                        squadList = CPH.GetGlobalVar<List<string>>(globalName);
+                        squadList.Add(squadAdd);
                     }//try
                     catch (Exception e)
                     {
-                        list_squad = new List<string>() { str_add };
+                        squadList = new List<string>() { squadAdd };
                     }//catch
-                    CPH.SetGlobalVar(str_set, list_squad);
+                    CPH.SetGlobalVar(globalName, squadList);
                 }//if
                 else
                 {
                     //... else set global string.
-                    CPH.SetGlobalVar(str_set, str_add);
+                    CPH.SetGlobalVar(globalName, squadAdd);
                 }//else
-                CPH.EnableAction(str_act);
+                CPH.EnableAction(actionName);
                 break;
         }//switch (str_cmd)
 

@@ -3,6 +3,7 @@ using System;
 /*Cam Controller - Road Rolla Da - Stop Time
  * 
  *	Stop Time and rule the world.
+ *	LU: 4-nov-2023
  * 
  */
 
@@ -22,10 +23,10 @@ public class CPHInline
             "Freeze"
         };
 		str_src = "ZaWarudo";
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
         str_scene = CPH.ObsGetCurrentScene();
         str_ss = "SS_Alerts";
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Check the scene
         switch (str_scene)

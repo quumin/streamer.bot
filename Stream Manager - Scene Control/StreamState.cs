@@ -6,6 +6,7 @@ using QminBotDLL;
 /*Stream State
  * 
  *  Start the stream.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -25,11 +26,11 @@ public class CPHInline
         string str_state, str_msg;
 
         //Initializations
-        gg_AutoShout();
-        gg_Sounds();
-        QnamicLib.gg_Media("W:\\Streaming\\Media\\Sounds\\", 0.15f);
+        LoadAutoShout();
+        LoadSoundActions();
+        QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.15f);
 
-        list_actions = CPH.GetGlobalVar<List<string>>("autoShouts");
+        list_actions = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
         str_timers = new string[]
         {
             "AdultRemind",
@@ -83,7 +84,7 @@ public class CPHInline
         return true;
     }//Execute()
 
-    void gg_AutoShout()
+    void LoadAutoShout()
     {
         /*Generate Globals - Shout Outs
 		 * 
@@ -118,10 +119,10 @@ public class CPHInline
         };
 
         //Set Global
-        CPH.SetGlobalVar("autoShouts", list_actions, true);
+        CPH.SetGlobalVar("qminAutoShouts", list_actions, true);
     }//gg_AutoShout()
 
-    void gg_Sounds()
+    void LoadSoundActions()
     {
         /*Generate Globals - Sounds
 		* 
@@ -151,6 +152,6 @@ public class CPHInline
         };
 
         //Set Global
-        CPH.SetGlobalVar("soundInteractActions", list_actions, true);
+        CPH.SetGlobalVar("qminSoundInteractions", list_actions, true);
     }//gg_Sounds()
 }//CPHInline

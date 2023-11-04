@@ -3,6 +3,7 @@ using System;
 /*Adulting Timer
  * 
  *  Check if streaming and then remind me to take a break.
+ *  LU: 04-nov-23
  * 
  */
 
@@ -16,15 +17,15 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        bool_srs = CPH.GetGlobalVar<bool>("seriousMode");
-        str_path = CPH.GetGlobalVar<string>("mediaRoot") + "Adulting.mp3";
+        bool_srs = CPH.GetGlobalVar<bool>("qminSeriousMode");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot") + "Adulting.mp3";
         str_msg = "/me marinHey ";
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Try to get the Global Stored AdultRemind
-        if (!string.IsNullOrEmpty(CPH.GetGlobalVar<string>("adultRemind")))
+        if (!string.IsNullOrEmpty(CPH.GetGlobalVar<string>("qminAdultRemind")))
         {
-            str_msg += CPH.GetGlobalVar<string>("adultRemind");
+            str_msg += CPH.GetGlobalVar<string>("qminAdultRemind");
         }//if
         else
         {

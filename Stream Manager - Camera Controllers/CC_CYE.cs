@@ -2,7 +2,8 @@ using System;
 
 /*Cam Controller - Curb your Enthusiasm
  * 
- *  Adjust the camera with Curb Your Enthusiasm. 
+ *  Adjust the camera with Curb Your Enthusiasm.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,7 +16,7 @@ public class CPHInline
         string str_scene, str_filter, str_postfix;
 
         //Initializations
-        int_pos = CPH.GetGlobalVar<int>("globalMove");
+        int_pos = CPH.GetGlobalVar<int>("qminGlobalMove");
         str_scene = "SS_KiyoPro_FancyCam";
         str_filter = "";
         str_postfix = "_CYE";

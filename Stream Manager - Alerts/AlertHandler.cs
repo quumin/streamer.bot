@@ -3,6 +3,7 @@
 /*Alert Handler
  * 
  *  Handle the Alerts for stream.
+ *  LU: 04-nov-23
  * 
  */
 
@@ -21,7 +22,7 @@ public class CPHInline
         //Initializations
         str_event = args["__source"].ToString();
         str_snd = str_img = str_alias = str_usr = str_msg = "";
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
         str_ss = new string[]
         {
             "SS_Alerts_Text",
@@ -36,10 +37,10 @@ public class CPHInline
             "quuminL"
         };
         str_txt = new string[3];
-        bool_sers = CPH.GetGlobalVar<bool>("seriousMode");
+        bool_sers = CPH.GetGlobalVar<bool>("qminSeriousMode");
         int_wait = new int[] { 2000, 2000, 2000 };
         int_tcl = 200;
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Check the event type.
         switch (str_event)

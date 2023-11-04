@@ -4,6 +4,7 @@ using System.IO;
 /*Path of Exile Rewards Handler
  * 
  *  Handle the rewards when redeemed from PoE.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -37,7 +38,7 @@ public class CPHInline
         };
         str_path = new string[]
         {
-            CPH.GetGlobalVar<string>("mediaRoot") + "Channel Points\\ChangePlaces.mp3",
+            CPH.GetGlobalVar<string>("qminMediaRoot") + "Channel Points\\ChangePlaces.mp3",
             "W:\\Streaming\\PoE Log.txt"
         };
         int_cnt = new int[]
@@ -46,7 +47,7 @@ public class CPHInline
             Convert.ToInt32(args["userCounter"].ToString())
         };
         int_wait = 5000;
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Select the reward that's relevant
         switch (str_reward[0])

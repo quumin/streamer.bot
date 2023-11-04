@@ -3,6 +3,7 @@
 /*Deck - Oh No!
  * 
  *  Johnathan Joestar is scared monkaW
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         str_marker = "『SOUNDBOARD』 " + "Oh No!";
         str_msg = "/me Menacing NOOOOOOOOOO Menacing";
         str_media = "Jojo_OhNo.mp3";

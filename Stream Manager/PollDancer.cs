@@ -6,6 +6,7 @@ using QminBotDLL;
 /*Poll Dancer
  * 
  *  Create a poll to select what you do next based on your currently installed games.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -21,17 +22,18 @@ public class CPHInline
     {
         //Declarations
         Random rnd_index;
-        List<string> list_opt, list_games;
+        List<string>[] list_games;
+        List<string> list_opt;
         string str_question;
         int int_index, int_dur, int_cp;
 
         //Initializations
         rnd_index = new Random();
         list_opt = new List<string>();
-        list_games = QnamicLib.GameLoad();
+        list_games = QnamicLib.LoadGameLibrary();
         str_question = "What should Q do next?";
         int_index = 0;
-        int_dur = 60;
+        int_dur = 90;
         int_cp = 0;
 
         //Create Baseline Poll Options.
@@ -41,21 +43,21 @@ public class CPHInline
         //Generate Games.
         for (int i = 0; i < 3; i++)
         {
-            int_index = rnd_index.Next(list_games.Count);
-            CPH.LogInfo($"『P O L L』 Polled games #{int_index}: {list_games[int_index]}");
+            int_index = rnd_index.Next(list_games[0].Count);
+            CPH.LogInfo($"『P O L L』 Polled games #{int_index}: {list_games[0][int_index]}");
             
             //If the selected index is not empty...
-            if (list_games[int_index] != null)
+            if (list_games[0][int_index] != null)
             {
                 //... then add to options and remove from the list to prevent duplicates.
-                list_opt.Add(list_games[int_index]);
-                list_games.RemoveAt(int_index);
+                list_opt.Add(list_games[0][int_index]);
+                list_games[0].RemoveAt(int_index);
             }//if
             else
             {
                 //... else decrement index by 1 to handle an empty newline.
-                list_opt.Add(list_games[int_index - 1]);
-                list_games.RemoveAt(int_index - 1);
+                list_opt.Add(list_games[0][int_index - 1]);
+                list_games[0].RemoveAt(int_index - 1);
             }//else
 
         }//for

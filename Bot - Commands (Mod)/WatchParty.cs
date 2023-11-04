@@ -3,6 +3,7 @@ using System;
 /*Watch Party
  * 
  *  Upload YT videos as links to Stream.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -17,14 +18,9 @@ public class CPHInline
 
         //Initializations
         str_ri = args["rawInput"].ToString();
-        str_src = new string[]
-        {
-            "SS_MidScreen",
-            "WatchParty"
-        };
 
         //Update Show
-        CPH.SetGlobalVar("ytNow", str_ri);
+        CPH.SetGlobalVar("qminYouTube", str_ri);
         return true;
     }//Execute()
 }//CPHInline

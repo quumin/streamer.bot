@@ -3,6 +3,7 @@
 /*Deck - Vine Boom
  * 
  *  Play the vine boom sound.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         str_marker = "『SOUNDBOARD』 " + "BOOM";
         str_media = "VineBoom.mp3";
 

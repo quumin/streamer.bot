@@ -3,6 +3,7 @@
 /*Deck - Super Mario Death
  * 
  *  Use TTS and inform everyone what they just saw was intentional Kappa
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         str_marker = "『SOUNDBOARD』 " + "Died Horribly";
         str_msg = "Oh no no no quuminQQ";
         str_media = "SuperMarioDeath.mp3";

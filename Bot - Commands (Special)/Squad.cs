@@ -4,6 +4,7 @@ using System.Collections.Generic;
 /*Squad Builder
  * 
  *  Build a list of people you're playing with from the Squad Global.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -17,7 +18,7 @@ public class CPHInline
         int int_total;
 
         //Initializations
-        list_squad = CPH.GetGlobalVar<List<string>>("squadCurrent");
+        list_squad = CPH.GetGlobalVar<List<string>>("qminSquadCurrent");
         str_build = "/me ";
         int_total = list_squad.Count;
 

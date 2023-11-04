@@ -3,6 +3,7 @@ using System;
 /*Babe is Here
  * 
  *  Trigger when Mrs. Q is here.
+ *  LU: 03-nov-23
  * 
  */
 
@@ -19,7 +20,7 @@ public class CPHInline
         str_ss = "SS_Alerts";
         str_media = "BabesHerePog";
         int_wait = 2300;
-        bool_srs = CPH.GetGlobalVar<bool>("seriousMode");
+        bool_srs = CPH.GetGlobalVar<bool>("qminSeriousMode");
 
         //Send message
         CPH.SendMessage("/me Hey it's @whymusticryy! Thank-Q for coming by you sexy human quuminL you are Q's thiqq or die quuminL");

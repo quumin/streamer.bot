@@ -19,11 +19,11 @@ public class CPHInline
 
         /*List of QnamicLib Methods:
          * 
-         * public List<String> GameLoad()
+         * public List<String>[] LoadGameLibrary(int int_col = 7, char chr_delim = ';')
          * 
-         * public static void gg_Media(string str_path, float f_vol)
+         * public static void MediaLoad(string str_path, float f_vol)
          * 
-         * 
+         * public bool[] CheckCPHActions(string[] str_au)
          * 
          */
 

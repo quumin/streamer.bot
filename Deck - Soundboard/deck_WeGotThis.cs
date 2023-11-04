@@ -3,6 +3,7 @@
 /*Deck - Kill Da Ho
  * 
  *  Echoes Act 3! LETSGO
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
 		float f_vol;
 
 		//Initializations
-		str_path = CPH.GetGlobalVar<string>("mediaRoot");
-		f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+		str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+		f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 		str_marker = "『SOUNDBOARD』 " + "LETSGO";
 		str_msg = "/me LETSGO We got this boys PauseChamp";
 		str_media = "Jojo_KillDaHo.mp3";

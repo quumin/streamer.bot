@@ -3,6 +3,7 @@ using System;
 /*Cooler Master
  * 
  *  Handle CoolerMaster Message.
+ *  LU: 04-nov-23
  * 
  */
 
@@ -16,10 +17,10 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
         str_media = "CoolCoolerCoolest.mp3";
-        bool_serious = CPH.GetGlobalVar<bool>("seriousMode");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        bool_serious = CPH.GetGlobalVar<bool>("qminSeriousMode");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Send message
         CPH.SendMessage("/me Pog Q is an Coolermaster Affiliate PogU https://t.co/OhdqhTMT1l <- Click the link to get some cool deals TricksterWink");

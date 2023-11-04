@@ -3,6 +3,7 @@
 /*Deck - Jojo Nice
  * 
  *  Play the sound where Joseph is looking at totally not his mom Keepo
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         str_marker = "『SOUNDBOARD』 " + "N I C E";
         str_msg = "/me !showemote Nice";
         str_media = "Jojo_Nice.mp3";

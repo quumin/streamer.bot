@@ -3,6 +3,7 @@
 /*Raid
  * 
  *  Play me out Data!
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,10 +16,10 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot") + "SH_Raid.mp3";
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot") + "SH_Raid.mp3";
         str_marker = "『RAID』";
         str_usr = args["raidUser"].ToString();
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         CPH.CreateStreamMarker(str_marker);
         CPH.PlaySound(str_path, f_vol, false);

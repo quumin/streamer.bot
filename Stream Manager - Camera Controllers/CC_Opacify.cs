@@ -3,6 +3,7 @@
 /*Cam Controller - Opacify
  * 
  *  Adjust opacity.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -16,7 +17,7 @@ public class CPHInline
         string[] str_src, str_filter;
 
         //Initializations
-        int_state = CPH.GetGlobalVar<int>("globalOpacity");
+        int_state = CPH.GetGlobalVar<int>("qminGlobalOpacity");
         str_ss = "SS_KiyoPro_FancyCam";
         str_postfix = "_Opacity";
         str_src = new string[]

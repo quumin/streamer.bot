@@ -4,8 +4,9 @@ using System.Collections.Generic;
 
 /*Riddle Load
  * 
- *  Load riddles from riddles.csv
- * 
+ *  Load riddles from ./external_files/riddles.csv.
+ *  LU: 31-oct-2023
+ *
  */
 
 public class CPHInline
@@ -13,10 +14,24 @@ public class CPHInline
     public bool Execute()
     {
         //Decalarations
+        string[] str_uG;
         List<string>[] list_riddle;
         string str_msg;
 
         //Initializations
+        // Global List
+        str_uG = new string[]
+        {
+            "qminRiddleLineOne",
+            "qminRiddleLineTwo",
+            "qminRiddleLineThree",
+            "qminRiddleLineFour",
+            "qminRiddleLineFive",
+            "qminRiddleLineSix",
+            "qminRiddleLineSeven",
+            "qminRiddleAnswers",
+        };
+        // Specific
         list_riddle = new List<string>[8];
         for (int i = 0; i < list_riddle.Length; i++)
             list_riddle[i] = new List<string>();
@@ -34,18 +49,12 @@ public class CPHInline
                     var values = line.Split(';');
 
                     for (int i = 0; i < list_riddle.Length; i++)
+                    {
                         list_riddle[i].Add(values[i]);
-                }//while
+                        CPH.SetGlobalVar(str_uG[i], list_riddle[0]);
+                    }
 
-                //Store the Globals
-                CPH.SetGlobalVar("questionsOne", list_riddle[0]);
-                CPH.SetGlobalVar("questionsTwo", list_riddle[1]);
-                CPH.SetGlobalVar("questionsThr", list_riddle[2]);
-                CPH.SetGlobalVar("questionsFou", list_riddle[3]);
-                CPH.SetGlobalVar("questionsFiv", list_riddle[4]);
-                CPH.SetGlobalVar("questionsSix", list_riddle[5]);
-                CPH.SetGlobalVar("questionsSev", list_riddle[6]);
-                CPH.SetGlobalVar("ansWer", list_riddle[7]);
+                }//while
 
                 //Feedback
                 CPH.LogInfo("『R I D D L E S』 Riddles Loaded Successfully.");

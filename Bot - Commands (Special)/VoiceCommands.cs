@@ -3,6 +3,7 @@
 /*Voice Commands
  * 
  *  Run the right voice command.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -22,12 +23,12 @@ public class CPHInline
             "SS_Alerts",
             ""
         };
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
         str_media = str_act = str_tts = "";
         str_marker = "『🎙』 ";
         str_msg = "/me ";
         str_cmd = args["spokenCommand"].ToString();
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         int_wait = 0;
 
         //See which reward it is...

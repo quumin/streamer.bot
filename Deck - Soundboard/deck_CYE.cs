@@ -3,6 +3,7 @@
 /*Deck - Curb Your Enthusiasm
  * 
  *  Use the camera to zoom in on your abject failure.
+ *  LU: 4-nov-2023
  * 
  */
 
@@ -15,8 +16,8 @@ public class CPHInline
         float f_vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("mediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("mediaVolume");
+        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
+        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         str_marker = "『SOUNDBOARD』 " + "CME";
         str_msg = "Wow, what was that...";
         str_media = "CYE.mp3";
