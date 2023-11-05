@@ -74,7 +74,7 @@ namespace QminBotDLL
             CPH.SetGlobalVar("qminMediaVolume", mediaVol, true);
         }//MediaLoad()
 
-        public static bool[] CheckCPHActions(string[] actionsUsed)
+        public static bool[] CheckCPHActions(string[] usedActions)
         {
             /*Check CPH Action
              * 
@@ -85,23 +85,23 @@ namespace QminBotDLL
             int countActions;
             bool[] actionsExist;
             //Initializations
-            countActions = actionsUsed.Length;
+            countActions = usedActions.Length;
             actionsExist = new bool[countActions];
             //For every index in the actions used array...
             for (int i = 0; i < countActions; i++)
             {
                 //... check if the action exists.
-                actionsExist[i] = CPH.ActionExists(actionsUsed[i]);
+                actionsExist[i] = CPH.ActionExists(usedActions[i]);
                 //... if it doesn't...
                 if (!actionsExist[i])
                 {
                     //... Log an error.
-                    CPH.LogError($"『A C T』: \'{actionsUsed[i]}\' does NOT exist!");
+                    CPH.LogError($"『A C T』: \'{usedActions[i]}\' does NOT exist!");
                 } //if
                 else
                 {
                     //... Log verbose.
-                    CPH.LogVerbose($"『A C T』: \'{actionsUsed[i]}\' exists.");
+                    CPH.LogVerbose($"『A C T』: \'{usedActions[i]}\' exists.");
                 } //else
             } //for
 
