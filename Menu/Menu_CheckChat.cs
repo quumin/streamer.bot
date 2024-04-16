@@ -20,136 +20,158 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] str_uG, str_au, str_prompt, str_game, str_resp;
-        string str_ri, str_eamer, str_usr, str_delim, str_type;
-        bool[] bool_au_ex;
-        int int_count;
+        string[] usedGlobals, usedActions, menuPrompt, currentGame, promptResponse;
+        string rawInput, trimmedPrompt, streamer, userName, deLim, menuType, retryMsg, promptOption, nextAction, chatState, quitOptionLettter;
+        bool[] usedActionsExist;
+        int promptLength;
 
         //Initializations
         // Global List
-        str_uG = new string[]
+        usedGlobals = new string[]
         {
             "qminMenuPrompt",
             "qminMenuType",
             "qminChatState",
             "qminCurrentGame"
         };
-        str_prompt = CPH.GetGlobalVar<string[]>(str_uG[0]);
-        str_type = CPH.GetGlobalVar<string>(str_uG[1]);
-        str_game = CPH.GetGlobalVar<string[]>(str_uG[3]);
+        menuPrompt = CPH.GetGlobalVar<string[]>(usedGlobals[0]);
+        menuType = CPH.GetGlobalVar<string>(usedGlobals[1]);
+        currentGame = CPH.GetGlobalVar<string[]>(usedGlobals[3]);
         // Actions Used
-        str_au = new string[]
+        usedActions = new string[]
         {
             "Menu - Post Prompt",
             "Menu - Add Game to Library"
         };
-        bool_au_ex = QnamicLib.CheckCPHActions(str_au);
+        usedActionsExist = QnamicLib.CheckCPHActions(usedActions);
         // SB Args
-        str_ri = args["rawInput"].ToString();
-        str_usr = args["userName"].ToString();
-        str_eamer = args["broadcastUserName"].ToString();
+        rawInput = args["rawInput"].ToString();
+        userName = args["userName"].ToString();
+        streamer = args["broadcastUserName"].ToString();
         // Specific
-        str_delim = ";";
-        int_count = str_prompt.Length;
+        deLim = ";";
+        promptLength = menuPrompt.Length;
+        retryMsg = "Qmander, apologies, but I did not understand...";
+        promptOption = trimmedPrompt = nextAction = "";
+        quitOptionLettter = menuPrompt[promptLength].Substring(4));
+        chatState = "menu_on";
 
         //Switch responses based on type of menu
-        switch (str_type)
+        switch (menuType)
         {
             //  Game
             case "gameType":
-                str_resp = new string[]
+                promptResponse = new string[]
                 {
                     "Game Type: ",
-                    $"Sir? Oh, ok... \'{str_game[0]}\' will not be added to the Library (Type).",
-                    "Sorry sir, I did not understand..."
+                    $"Understood sir, \'{currentGame[0]}\' has no special traits.",
                 };
                 break;
             //  Platform
             case "platForm":
-                str_resp = new string[]
+                promptResponse = new string[]
                 {
                     $"Platform: ",
-                    $"Sir? Oh, ok... \'{str_game[0]}\' will not be added to the Library (Platform).",
-                    "Sorry sir, I did not understand..."
+                    $"Understood sir, \'{currentGame[0]}\' is not on one of these platforms.",
+                };
+                break;
+            case "streamSetup":
+                promptResponse = new string[]
+                {
+                    $"Stream Setup: ",
+                    $"Very well, the stream will start without any special settings.",
+                };
+                break;
+            case "menuYesNo":
+                promptResponse = new string[]
+                {
+                    $"Yes/No: ",
+                    "",
                 };
                 break;
             //  Error
             default:
-                CPH.SendMessage($"Something went wrong!");
+                CPH.SendMessage("Something went wrong (Menu - Check Chat)!");
                 return true;
                 break;
-        } //switch()
+        }//switch()
 
         //If the user is the streamer...
-        if (str_usr.Equals(str_eamer))
+        if (userName.Equals(streamer))
         {
-            //... switch action based on type of menu.
-            switch (str_type)
+
+            //... iterate through prompts...
+            for (int i = 0; i < promptLength; i++)
             {
-                //  Game
-                case "gameType":
-                    for (int i = 0; i < int_count; i++)
+                promptOption = menuPrompt[i].Substring(1, 1);
+                //... debug text.
+                CPH.SendMessage($"Test: {promptOption}");
+                //... if the input is OK and not the quit option...
+                if (rawInput.Equals(promptOption) && !rawInput.Equals(quitOptionLettter))
+                {
+                    //... give feedback on selection.
+                    trimmedPrompt = menuPrompt[i].Substring(4);
+                    CPH.SendMessage($"{promptResponse[0]}\'{trimmedPrompt}\' selected!");
+                    //... switch action based on type of menu...
+                    switch (menuType)
                     {
-                        if (str_ri.Equals($"{i + 1}"))
-                        {
-                            str_game[3] = "TRUE";
-                            if (i != 0)
-                                str_game[3 + i] = "TRUE";
-                            CPH.SendMessage(str_resp[0] + $"\'{str_prompt[i].Substring(4)}\' selected!");
-                            CPH.SetGlobalVar(str_uG[3], str_game);
-                            str_type = "platForm";
-                            CPH.SetGlobalVar(str_uG[1], str_type);
-                            if (bool_au_ex[0])
+                        //  Game
+                        case "gameType":
+                            //... set 'Installed' to TRUE.
+                            currentGame[3] = "TRUE";
+                            //... if the input is not the final option...
+                            if (i != promptLength)
                             {
-                                //... run it.
-                                CPH.RunAction(str_au[0]);
-                            } //if
-                            return true;
-                        } //if
-                    } //for
-
-                    break;
-                //  Platform
-                case "platForm":
-                    for (int i = 0; i < int_count; i++)
-                    {
-                        if (str_ri.Equals($"{i + 1}"))
-                        {
-                            str_game[2] = $"\'{str_prompt[i].Substring(4)}\'";
-                            CPH.SendMessage(str_resp[0] + $"\'{str_prompt[i].Substring(4)}\' selected!");
-                            CPH.SetGlobalVar(str_uG[2], "default");
-                            CPH.SetGlobalVar(str_uG[3], str_game);
-                            str_type = "gameType";
-                            CPH.SetGlobalVar(str_uG[1], str_type);
-                            CPH.RunAction(str_au[1]);
-                            return true;
-                        } //if
-                    } //for
-
-                    break;
-                //  Error
-                default:
-                    CPH.SendMessage($"Something went wrong!");
+                                //... set the flag for gametype to true.
+                                currentGame[4 + i] = "TRUE";
+                            }//if()
+                            //... store to the 'qminCurrentGame' global.
+                            CPH.SetGlobalVar(usedGlobals[3], currentGame);
+                            //... update menu type and store the next action to be used.
+                            menuType = "platForm";
+                            nextAction = usedActions[0];
+                            break;
+                        //  Platform
+                        case "platForm":
+                            //... store to the 'qminCurrentGame' global.
+                            currentGame[2] = $"\'{trimmedPrompt}\'";
+                            CPH.SetGlobalVar(usedGlobals[3], currentGame);
+                            //... update menu type and store the next action to be used.
+                            menuType = "gameType";
+                            nextAction = usedActions[1];
+                            //... set chat state back to normal.
+                            chatState = "default";
+                            break;
+                        case "streamSetup":
+                            //To Do
+                            break;
+                        //  Error
+                        default:
+                            // Set to Default (ToBeFixed)
+                            menuType = "gameType";
+                            break;
+                    } //switch()
+                    CPH.SetGlobalVar(usedGlobals[1], menuType);
+                    CPH.SetGlobalVar(usedGlobals[2], chatState);
+                    CPH.RunAction(nextAction);
                     return true;
-                    break;
-            } //switch()
-
-            //... applies to all.
-            if (str_ri.Equals("Q"))
-            {
-                CPH.SendMessage(str_resp[1]);
-                CPH.SetGlobalVar(str_uG[2], "default");
-                return true;
-            }//if
-            else if (bool_au_ex[0])
-            {
-                //... re-display the prompt.
-                CPH.SendMessage(str_resp[2]);
-                CPH.RunAction(str_au[0]);
-            }//else if
-        }//if
-
+                }//if()
+                else if (rawInput.Equals(quitOptionLettter))
+                {
+                    //... give response and set chat state back to normal.
+                    chatState = "default";
+                    CPH.SendMessage(promptResponse[1]);
+                    CPH.SetGlobalVar(usedGlobals[2], chatState);
+                    return true;
+                }//if
+                else
+                {
+                    //... re-display the prompt.
+                    CPH.SendMessage(retryMsg);
+                    CPH.RunAction(usedActions[0]);
+                }//else if()
+            }//if()
+        }//for()
         return true;
     }//Execute()
-
 } //CPHInline

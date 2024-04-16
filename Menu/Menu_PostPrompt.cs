@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 
 /*Menu - Post Prompt
  * 
  *  Develop a prompt and output it to the chat, then change the chat state to watch for response from the streamer.
- *  LU: 31-oct-2023
+ *  LU: 6-nov-2023
  *  
  */
 
@@ -12,82 +12,89 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_fLine, str_eamer, str_quit, str_type, str_game;
-        string[] str_prompt, str_uG;
+        string firstLine, streamer, menuType, currentGame;
+        string[] menuPrompt, usedGlobals;
 
         //Intializations
         // Global List
-        str_uG = new string[]
+        usedGlobals = new string[]
         {
             "qminMenuPrompt",
             "qminMenuType",
-            "qminChatState"
+            "qminChatState",
+            "qminBroadCaster",
+            "qminCurrentGame"
         };
         // SB Args
-        str_eamer = args["broadcastUserName"].ToString();
-        str_game = args["gameName"].ToString();
-        // Specific
-        str_quit = "[Q] Quit";
-
-        //Try to get global qminMenuPrompt.
-        try
-        {
-            str_type = CPH.GetGlobalVar<string>(str_uG[0]);
-        }//try
-        catch
-        {
-            // Otherwise, enforce.
-            str_type = "gameType";
-            CPH.SetGlobalVar(str_uG[0], str_type);
-        }//catch
+        menuType = CPH.GetGlobalVar<string>(usedGlobals[1]);
+        streamer = CPH.GetGlobalVar<string>(usedGlobals[3]);
+        currentGame = CPH.GetGlobalVar<string[]>(usedGlobals[4])[0];
 
         //Switch prompt based on type of menu (scalable).
-        switch (str_type)
+        switch (menuType)
         {
             //	Game
             case "gameType":
-                str_prompt = new string[]
+                firstLine = $"What type of game is {currentGame} @{streamer}?";
+                menuPrompt = new string[]
                 {
-                    "[1] Normal Game",
-                    "[2] Serious Game",
-                    "[3] Horror",
-                    "[4] Unique"
+                    "[1] Serious Game",
+                    "[2] Horror",
+                    "[3] Unique",
+                    "[Q] Normal Game"
                 };
-                str_fLine = $"What type of game is {str_game} @{str_eamer}?";
                 break;
             //	Platform
             case "platForm":
-                str_prompt = new string[]
+                firstLine = $"What platform is {currentGame} on @{streamer}?";
+                menuPrompt = new string[]
                 {
                     "[1] Steam",
                     "[2] Xbox Game Pass",
                     "[3] EPIC Games",
                     "[4] Nintendo Switch",
-                    "[5] Other (PC)"
+                    "[Q] Other (PC)"
                 };
-                str_fLine = $"What platform is {str_game} on @{str_eamer}?";
+                break;
+            //  Stream Setup
+            case "streamSetup":
+                firstLine = $"Before starting, what setting(s) would you like to enable @{streamer}?";
+                menuPrompt = new string[]
+                {
+                    "[1] Record the Stream",
+                    "[2] Timed Poll",
+                    "[3] Backseating Allowed",
+                    "[Q] None (Normal Stream)"
+                };
+                break;
+            //  Yes/No
+            case "menuYesNo":
+                firstLine = $"Are you sure @{streamer}?";
+                menuPrompt = new string[]
+                {
+                    "[Y] Yes",
+                    "[Q] No"
+                };
                 break;
             //	Error
             default:
-                CPH.SendMessage("Something went wrong making the menu!");
+                CPH.SendMessage($"dataHuh Q-Mander, you did not set the global \'{usedGlobals[1]}\' ");
                 return true;
                 break;
         }//switch()
 
 
         //Send first line.
-        CPH.SendMessage(str_fLine, true);
+        CPH.SendMessage(firstLine, true);
         //Send each next line.
-        for (int i = 0; i < str_prompt.Length; i++)
+        for (int i = 0; i < menuPrompt.Length; i++)
         {
-            CPH.SendMessage(str_prompt[i], true);
+            CPH.SendMessage(menuPrompt[i], true);
         }//for()
-        //Send quit line.
-        CPH.SendMessage(str_quit, true);
 
         //Update globals qminMenuType anbd qminChatState.
-        CPH.SetGlobalVar(str_uG[1], str_prompt);
-        CPH.SetGlobalVar(str_uG[2], "menu_on");
+        CPH.SetGlobalVar(usedGlobals[0], menuPrompt);
+        CPH.SetGlobalVar(usedGlobals[2], "menu_on");
 
         return true;
     }//Execute()

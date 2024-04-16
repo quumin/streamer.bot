@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections.Generic;
+using System.Timers;
 using QminBotDLL;
 
 /*Stream Update
@@ -67,6 +68,11 @@ public class CPHInline
             CPH.LogInfo("『MARKER』: GAME_UPDATE");
             //... run Game Handler.
             msgOut += gameHandler();
+            if (msgOut.Contains("_error_"))
+            {
+                CPH.SendMessage("Sir, the gameHandler() method has thrown an exception! dataMask");
+                return true;
+            }
         }//if()
 
         //Check Serious Mode Global
@@ -94,9 +100,9 @@ public class CPHInline
         List<TwitchReward> twitchRewards;
         string[] usedGlobals, usedActions, currentGame, rewGroups, obsScenes, obsSources, gameMetadata;
         string msgOut;
-        int gameId, waitTime, iterAtor;
+        int gameId, waitTime, iterAtor, timeoutTime;
         bool[] usedActionsExist;
-        bool srsMode, inLibrary;
+        bool srsMode, inLibrary, usrResponds;
 
         //Initializations
         //  Global List
@@ -157,9 +163,10 @@ public class CPHInline
         msgOut = "";
         waitTime = 5000;
         iterAtor = 0;
+        timeoutTime = 5000;
         srsMode = false;
         inLibrary = false;
-
+        usrResponds = false;
 
         //Iterate through the Library
         foreach (string str in gamesLibrary[1])
@@ -167,6 +174,7 @@ public class CPHInline
             //	... if the game is in the library...
             if (str.Equals(currentGame[1]))
             {
+                //... flag it and get the stored info.
                 inLibrary = true;
                 for (int j = 2; j < currentGame.Length; j++)
                 {
@@ -177,22 +185,29 @@ public class CPHInline
             iterAtor++;
         }//foreach()
 
-        //CPH.SendMessage($"{sa_game[1]} | {sa_gameInfo[4]}");
-
+        //Set the gameinfo we have.
         CPH.SetGlobalVar(usedGlobals[1], currentGame);
 
+        //If the game is in the library...
         if (inLibrary)
         {
+            //... log it.
             CPH.LogInfo($"『G A M E S』 \'{currentGame[0]}\' is already in the library.");
         }//if
         else
         {
+            //... prompt the streamer for the missing info and add it to the library.
             CPH.LogInfo($"『G A M E S』 \'{currentGame[0]}\' is not yet in the library.");
+            CPH.SetGlobalVar(usedGlobals[2], "gameType");
+            CPH.SetGlobalVar(usedGlobals[3], "menu_on");
             CPH.RunAction(usedActions[0], true);
-            while (!CPH.GetGlobalVar<string>(usedGlobals[3]).Equals("default"))
+
+            //... wait until a response from the user.
+            while (!usrResponds)
             {
-                //Wait... need to figure out how to time this out.
+                usrResponds = CPH.GetGlobalVar<string>(usedGlobals[3]).Equals("default");
             }//while()
+
             //.. update Variable after Processing.
             currentGame = CPH.GetGlobalVar<string[]>(usedGlobals[1]);
         }//else
