@@ -3,7 +3,7 @@
 /*Menu - Post Prompt
  * 
  *  Develop a prompt and output it to the chat, then change the chat state to watch for response from the streamer.
- *  LU: 6-nov-2023
+ *  LU: 06-may-2023
  *  
  */
 
@@ -89,6 +89,7 @@ public class CPHInline
         //Send each next line.
         for (int i = 0; i < menuPrompt.Length; i++)
         {
+            CPH.Wait(500);
             CPH.SendMessage(menuPrompt[i], true);
         }//for()
 

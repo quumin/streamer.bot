@@ -6,7 +6,7 @@ using QminBotDLL;
 /*Stream State
  * 
  *  Start the stream.
- *  LU: 4-nov-2023
+ *  LU: 06-may-2024
  * 
  */
 
@@ -28,7 +28,7 @@ public class CPHInline
         //Initializations
         LoadAutoShout();
         LoadSoundActions();
-        QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.15f);
+        QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.45f);
 
         list_actions = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
         str_timers = new string[]

@@ -5,7 +5,7 @@ using QminBotDLL;
 /*Menu - Check Chat
  * 
  *	Check the chat for the answer to the menu prompt from the streamer.
- *  LU: 31-oct-23
+ *  LU: 06-may-24
  * 
  */
 public class CPHInline
@@ -53,7 +53,7 @@ public class CPHInline
         promptLength = menuPrompt.Length;
         retryMsg = "Qmander, apologies, but I did not understand...";
         promptOption = trimmedPrompt = nextAction = "";
-        quitOptionLettter = menuPrompt[promptLength].Substring(4));
+        quitOptionLettter = menuPrompt[promptLength].Substring(4);
         chatState = "menu_on";
 
         //Switch responses based on type of menu
@@ -103,6 +103,7 @@ public class CPHInline
             //... iterate through prompts...
             for (int i = 0; i < promptLength; i++)
             {
+                CPH.Wait(500);
                 promptOption = menuPrompt[i].Substring(1, 1);
                 //... debug text.
                 CPH.SendMessage($"Test: {promptOption}");

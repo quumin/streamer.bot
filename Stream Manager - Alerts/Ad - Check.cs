@@ -3,7 +3,8 @@ using System;
 /*Ad Check
  * 
  *  Manage what type of ads are running.
- * 
+ *  LU: 06-may-2024
+ *  
  */
 
 public class CPHInline
@@ -47,8 +48,12 @@ public class CPHInline
             int_msgs = 3;
         }//else
 
+        //Send each next line.
         for (int i = 0; i < int_msgs; i++)
+        {
+            CPH.Wait(500);
             CPH.SendMessage(str_msg[i]);
+        }//for
 
         return true;
     }//Execute()

@@ -5,7 +5,8 @@ using System.Collections.Generic;
 /*Riddle Post
  * 
  *  Grab & post a riddle.
- *  LU: 31-oct-2023
+ *  LU: 06-may-2024
+ *  
  */
 
 public class CPHInline
@@ -41,7 +42,8 @@ public class CPHInline
         };
         // Specific
         rnd = new Random();
-        str_ridOut = str_ans = "/me ";
+        str_ridOut = "/me ";
+        str_ans = "";
         int_index = 0;
         list_riddles = new List<string>[8];
         for (int b = 0; b < list_riddles.Length; b++)
@@ -96,6 +98,7 @@ public class CPHInline
                 i != 7)
             {
                 //... send the (comma-delimited) response.
+                CPH.Wait(500);
                 CPH.SendMessage(str_ridOut);
             }//if
 
