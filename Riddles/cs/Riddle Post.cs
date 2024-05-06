@@ -98,7 +98,7 @@ public class CPHInline
                 i != 7)
             {
                 //... send the (comma-delimited) response.
-                CPH.Wait(1500);
+                CPH.Wait(750);
                 CPH.SendMessage(str_ridOut);
             }//if
 
@@ -117,10 +117,12 @@ public class CPHInline
         CPH.LogInfo($"『R I D D L E S』 Riddle posted succesfully - answer is: \'{str_ans}\'.");
 
         //Enable Timer and Start the Game
+        CPH.SendMessage("/me You have 60 seconds to respond. Glory to the victor!");
         CPH.SetGlobalVar(str_uG[9], str_ans);
         CPH.SetGlobalVar(str_uG[0], "riddle_on");
-        CPH.SendMessage("/me You have 60 seconds to respond. Glory to the victor!");
         CPH.EnableTimer(str_uT[0]);
+        //Delay to wait for Twitch response.
+        CPH.Wait(750);
         return true;
     }//Execute()
 
