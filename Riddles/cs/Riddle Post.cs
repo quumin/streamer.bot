@@ -98,7 +98,7 @@ public class CPHInline
                 i != 7)
             {
                 //... send the (comma-delimited) response.
-                CPH.Wait(500);
+                CPH.Wait(1500);
                 CPH.SendMessage(str_ridOut);
             }//if
 
