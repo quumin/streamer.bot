@@ -3,10 +3,10 @@ using System.IO;
 using System.Collections.Generic;
 using QminBotDLL;
 
-/*Stream State
+/*State Checker
  * 
- *  Start the stream.
- *  LU: 06-may-2024
+ *  Check what's going on after the state of the stream is triggered.
+ *  LU: 09-may-2024
  * 
  */
 
@@ -21,66 +21,64 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        List<string> list_actions;
-        string[] str_timers;
-        string str_state, str_msg;
+        List<string> actionList;
+        string[] timerList;
+        string msgOut;
+        bool isStream;
 
         //Initializations
         LoadAutoShout();
         LoadSoundActions();
         QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.45f);
-
-        list_actions = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
-        str_timers = new string[]
+        isStream = CPH.ObsIsStreaming();
+        actionList = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
+        timerList = new string[]
         {
             "AdultRemind",
             "Uptime Watcher",
             "Random Shouts"
         };
-        str_state = args["obsEvent.outputState"].ToString();
-        str_msg = "/me ";
+        msgOut = "/me ";
 
-        //Check the state of OBS
-        switch (str_state)
+        //Check the state of OBS...
+        if (isStream)
         {
-            //	Output Starting
-            case "OBS_WEBSOCKET_OUTPUT_STARTING":
-                CPH.ObsSetScene("Starter");
-                CPH.TwitchEmoteOnly(false);
+            //... if the stream is started:
+            //  Set scene to Starting Scene
+            CPH.ObsSetScene("Starter");
+            //  Turn off Emote Only, in case it's on
+            CPH.TwitchEmoteOnly(false);
 
-                //Enable all Shoutouts
-                //... Disable Sound Actions.
-                foreach (string s in list_actions)
-                {
-                    CPH.EnableAction(s);
-                }//foreach
+            //  Enable all Shoutouts.
+            foreach (string s in actionList)
+            {
+                CPH.EnableAction(s);
+            }//foreach
 
-                //Load the Riddles
-                CPH.RunAction("Riddles - Load File");
+            //  Load the Riddles
+            CPH.RunAction("Riddles - Load File");
 
-                //Start Timers
-                for (int i = 0; i < str_timers.Length; i++)
-                    CPH.EnableTimer(str_timers[i]);
+            //  Start the Timers
+            for (int i = 0; i < timerList.Length; i++)
+                CPH.EnableTimer(timerList[i]);
 
-                //Feedback
-                str_msg += "All systems go Q-Mander! DataFingerbang";
-                CPH.LogInfo("『MARKER』: START_OF_STREAM");
-                break;
-            //	Output Stopping
-            case "OBS_WEBSOCKET_OUTPUT_STOPPING":
-                str_msg += "It was a pleasure to serve you Q-mander, see you next time!";
-                //Stop Timers
-                for (int i = 0; i < str_timers.Length; i++)
-                    CPH.DisableTimer(str_timers[i]);
-                break;
-            //	Other
-            default:
-                return true;
-        }//switch
+            //  Feedback
+            msgOut += "All systems go Q-Mander! DataFingerbang";
+            CPH.CreateStreamMarker("Start of Stream");
+            CPH.LogInfo("『MARKER』: START_OF_STREAM");
+        }//if
+        else
+        {
+            //... if the stream is stopped:
+            //  Feedback
+            msgOut += "It was a pleasure to serve you Q-mander, see you next time!";
+            //  Stop the Timers
+            for (int i = 0; i < timerList.Length; i++)
+                CPH.DisableTimer(timerList[i]);
+        }//else
 
         //Send message
-        CPH.SendMessage(str_msg);
-
+        CPH.SendMessage(msgOut);
         return true;
     }//Execute()
 
