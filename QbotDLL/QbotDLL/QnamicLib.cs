@@ -11,7 +11,7 @@ namespace QminBotDLL
         //Static to Handle CPH Methods
         public static IInlineInvokeProxy CPH;
 
-        public static List<String>[] LoadGameLibrary(int colNum = 7, char deLim = ';')
+        public static List<String>[] LoadGameLibrary(int colNum = 12, char deLim = ';')
         {
             //Declarations
             List<string>[] gamesList;
@@ -22,13 +22,18 @@ namespace QminBotDLL
             for (int i = 0; i < gamesList.Length; i++)
             {
                 /*Games Library
-                 *	0 - Game
-                 *	1 - ID
-                 *	2 - Platform
-                 *	3 - Installed
-                 *	4 - Serious
-                 *	5 - Horror
-                 *	6 - Special
+                 *	0   Game
+                 *	1   ID
+                 *	2   Platform
+                 *	3   Installed
+                 *	4   Serious
+                 *	5   Horror
+                 *	6   Special
+                 *	7   No Back Seating
+                 *	8   Completed
+                 *	9   Q-Quotient
+                 *	10  Twitch VOD Link
+                 *	11  YouTube Link
                  */
                 gamesList[i] = new List<string>();
             }//for
