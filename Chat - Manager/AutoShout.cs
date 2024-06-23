@@ -3,7 +3,8 @@ using System;
 /*AutoShout Handler
  * 
  *	Run the action that matches the username.
- * 
+ *  LU: 23-jun-2024
+ *  
  */
 
 public class CPHInline
@@ -11,13 +12,13 @@ public class CPHInline
 	public bool Execute()
 	{
 		//Declarations
-		string str_usr;
+		string usrName;
 
         //Initializations
-        str_usr = args["userName"].ToString();
+        usrName = args["userName"].ToString();
 
-        CPH.RunAction(str_usr);
-		CPH.DisableAction(str_usr);
+        CPH.RunAction(usrName);
+		CPH.DisableAction(usrName);
 		return true;
 	}//Execute()
 }//CPHInline

@@ -3,7 +3,7 @@ using System;
 /*Cam Controller - Curb your Enthusiasm
  * 
  *  Adjust the camera with Curb Your Enthusiasm.
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,17 +12,17 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        int int_pos;
-        string str_scene, str_filter, str_postfix;
+        int cameraPos;
+        string obScene, obFilter, postFix;
 
         //Initializations
-        int_pos = CPH.GetGlobalVar<int>("qminGlobalMove");
-        str_scene = "SS_KiyoPro_FancyCam";
-        str_filter = "";
-        str_postfix = "_CYE";
+        cameraPos = CPH.GetGlobalVar<int>("qminGlobalMove");
+        obScene = "SS_KiyoPro_FancyCam";
+        obFilter = "";
+        postFix = "_CYE";
 
         //Check Position
-        switch (int_pos)
+        switch (cameraPos)
         {
             //	Top Left
             case 1:
@@ -32,7 +32,7 @@ public class CPHInline
             case 7:
             //	Middle Left
             case 8:
-                str_filter = "L";
+                obFilter = "L";
                 break;
             //	Top Right
             case 3:
@@ -42,18 +42,18 @@ public class CPHInline
             case 5:
             //	Bottom Middle
             case 6:
-                str_filter = "R";
+                obFilter = "R";
                 break;
 
         }//switch
 
-        str_filter += str_postfix;
+        obFilter += postFix;
 
         //If the filter exists...
-        if (str_filter != str_postfix)
+        if (obFilter != postFix)
         {
             //... show it.
-            CPH.ObsShowFilter(str_scene, str_filter);
+            CPH.ObsShowFilter(obScene, obFilter);
         }//if
 
         return true;

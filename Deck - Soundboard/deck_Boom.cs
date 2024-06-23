@@ -3,7 +3,7 @@
 /*Deck - Vine Boom
  * 
  *  Play the vine boom sound.
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,23 +12,23 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_path, str_marker, str_media;
-        float f_vol;
+        string filePath, markerInfo, mediaOut;
+        float vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
-        str_marker = "『SOUNDBOARD』 " + "BOOM";
-        str_media = "VineBoom.mp3";
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot");
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        markerInfo = "『SOUNDBOARD』 " + "BOOM";
+        mediaOut = "VineBoom.mp3";
 
         //If I'm live...
         if (CPH.ObsIsStreaming())
         {
             //... create a marker.
-            CPH.CreateStreamMarker(str_marker);
+            CPH.CreateStreamMarker(markerInfo);
         }//if
 
-        CPH.PlaySound(str_path + str_media, f_vol, true);
+        CPH.PlaySound(filePath + mediaOut, vol, true);
 
         return true;
     }//Execute

@@ -3,7 +3,7 @@ using System;
 /*Adulting Timer
  * 
  *  Check if streaming and then remind me to take a break.
- *  LU: 04-nov-23
+ *  LU: 21-jun-24
  * 
  */
 
@@ -12,36 +12,36 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        bool bool_srs;
-        string str_path, str_msg;
-        float f_vol;
+        bool srs;
+        string filePath, msgOut;
+        float vol;
 
         //Initializations
-        bool_srs = CPH.GetGlobalVar<bool>("qminSeriousMode");
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot") + "Adulting.mp3";
-        str_msg = "/me marinHey ";
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        srs = CPH.GetGlobalVar<bool>("qminSeriousMode");
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot") + "Adulting.mp3";
+        msgOut = "/me marinHey ";
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Try to get the Global Stored AdultRemind
         if (!string.IsNullOrEmpty(CPH.GetGlobalVar<string>("qminAdultRemind")))
         {
-            str_msg += CPH.GetGlobalVar<string>("qminAdultRemind");
+            msgOut += CPH.GetGlobalVar<string>("qminAdultRemind");
         }//if
         else
         {
-            str_msg += "Why don't you take a small break and do something you been meaning to?";
+            msgOut += "Why don't you take a small break and do something you been meaning to?";
         }//else
 
         //If OBS is streaming...
         if (CPH.ObsIsStreaming())
         {
             //... send the mesage.
-            CPH.SendMessage($"{str_msg} peepoJoJo");
+            CPH.SendMessage($"{msgOut} peepoJoJo");
             //... if Serious Mode is disabled...
-            if (!bool_srs)
+            if (!srs)
             {
                 //... play the sound.
-                CPH.PlaySound($"{str_path}", f_vol);
+                CPH.PlaySound($"{filePath}", vol);
             }//if
         }//if
 

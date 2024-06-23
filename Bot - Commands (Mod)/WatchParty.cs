@@ -3,24 +3,25 @@ using System;
 /*Watch Party
  * 
  *  Upload YT videos as links to Stream.
- *  LU: 4-nov-2023
+ *  LU: 21-jun-2024
  * 
  */
+
+//Seems deprecated, but I know I will use it later.
 
 public class CPHInline
 {
     public bool Execute()
     {
         //Declarations
-        string str_ri;
-        string[] str_src;
+        string rawInput;
 
 
         //Initializations
-        str_ri = args["rawInput"].ToString();
+        rawInput = args["rawInput"].ToString();
 
         //Update Show
-        CPH.SetGlobalVar("qminYouTube", str_ri);
+        CPH.SetGlobalVar("qminYouTube", rawInput);
         return true;
     }//Execute()
 }//CPHInline

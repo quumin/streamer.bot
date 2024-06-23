@@ -3,7 +3,7 @@ using System;
 /*Cam Controller - Road Rolla Da
  * 
  *  Smash me into a pulp no matter which scene I'm in.
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,27 +12,27 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] str_filters, str_cam;
-        string str_src, str_path, str_scene, str_ss;
-        float f_vol;
+        string[] usedFilters, usedCams;
+        string obSource, filePath, obScene, obSubScene;
+        float vol;
 
         //Initializations
-        str_filters = new string[]
+        usedFilters = new string[]
         {
             "Apply LUT",
             "Freeze"
         };
-        str_cam = new string[]
+        usedCams = new string[]
         {
             "SS_KiyoPro_FancyCam",
             "SS_KP_NF"
         };
-        str_src = "Road_Rolla_Da";
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
-        str_scene = CPH.ObsGetCurrentScene();
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        obSource = "Road_Rolla_Da";
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot");
+        obScene = CPH.ObsGetCurrentScene();
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
-        switch (str_scene)
+        switch (obScene)
         {
             //	All Camera Scenes
             case "Game_CC":
@@ -40,24 +40,24 @@ public class CPHInline
             case "ScreenShare":
             case "PC_Game":
                 //Start the Clock... in stopped... time?
-                CPH.ObsHideFilter(str_scene, str_filters[1]);
-                CPH.ObsShowFilter(str_cam[1], str_filters[0]);
-                CPH.ObsShowFilter(str_cam[1], str_filters[1]);
-                CPH.ObsShowFilter(str_cam[0], str_src);
-                CPH.PlaySound(str_path + "Jojo_DioCountdown.mp3", f_vol, true);
-                CPH.ObsShowSource(str_cam[0], str_src);
+                CPH.ObsHideFilter(obScene, usedFilters[1]);
+                CPH.ObsShowFilter(usedCams[1], usedFilters[0]);
+                CPH.ObsShowFilter(usedCams[1], usedFilters[1]);
+                CPH.ObsShowFilter(usedCams[0], obSource);
+                CPH.PlaySound(filePath + "Jojo_DioCountdown.mp3", vol, true);
+                CPH.ObsShowSource(usedCams[0], obSource);
                 CPH.Wait(5039);
 
                 //WRYYYYYY
-                CPH.ObsHideSource(str_cam[0], str_src);
-                CPH.ObsHideSource(str_scene, str_cam[0]);
-                CPH.PlaySound(str_path + "Jojo_Wryy.mp3", f_vol, true);
+                CPH.ObsHideSource(usedCams[0], obSource);
+                CPH.ObsHideSource(obScene, usedCams[0]);
+                CPH.PlaySound(filePath + "Jojo_Wryy.mp3", vol, true);
 
                 //Recover
-                CPH.ObsHideFilter(str_cam[1], str_filters[1]);
-                CPH.ObsShowSource(str_scene, str_cam[0]);
-                CPH.ObsShowFilter(str_scene, str_filters[1]);
-                CPH.ObsHideFilter(str_cam[1], str_filters[0]);
+                CPH.ObsHideFilter(usedCams[1], usedFilters[1]);
+                CPH.ObsShowSource(obScene, usedCams[0]);
+                CPH.ObsShowFilter(obScene, usedFilters[1]);
+                CPH.ObsHideFilter(usedCams[1], usedFilters[0]);
                 CPH.RunAction("Road Roller Da (TimeMoves)");
                 break;
             //	Other

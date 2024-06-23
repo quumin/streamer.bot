@@ -3,7 +3,7 @@
 /*Beer
  * 
  *  Tell the audience what I'm drinking.
- *  LU: 4-nov-2023
+ *  LU: 21-jun-2024
  * 
  */
 
@@ -12,16 +12,16 @@ public class CPHInline
     public bool Execute()
     {
         //Initializations
-        string str_beer, str_path;
-        float f_vol;
+        string beerInfo, filePath;
+        float vol;
 
         //Declarations
-        str_beer = CPH.GetGlobalVar<string>("qminBeerCurrent");
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot") + "CheersMate.mp3";
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        beerInfo = CPH.GetGlobalVar<string>("qminBeerCurrent");
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot") + "CheersMate.mp3";
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
-        CPH.PlaySound(str_path, f_vol);
-        CPH.SendMessage($"/me The Q-mander is currently drinking a {str_beer}");
+        CPH.PlaySound(filePath, vol);
+        CPH.SendMessage($"/me The Q-mander is currently drinking a {beerInfo}");
         CPH.SendMessage("/me Proost! (\"Cheers\" 🇳🇱 )");
 
         return true;

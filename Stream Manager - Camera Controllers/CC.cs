@@ -3,7 +3,7 @@ using System;
 /*Camera Controller
  * 
  *  Adjust the location of the camera (and others) using OBS Move Plugin.
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,69 +12,69 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        int int_pos;
-        string[] str_scene, str_filter, str_postfix;
+        int cameraPos;
+        string[] obScene, obFilter, postFix;
 
         //Initializations
-        int_pos = CPH.GetGlobalVar<int>("qminGlobalMove");
-        str_scene = new string[]
+        cameraPos = CPH.GetGlobalVar<int>("qminGlobalMove");
+        obScene = new string[]
         {
             "SS_KiyoPro_FancyCam",
             "SS_MidScreen"
         };
-        str_filter = new string[]
+        obFilter = new string[]
         {
             "",
             ""
         };
-        str_postfix = new string[]
+        postFix = new string[]
         {
             "_Busta",
             "_WatchParty"
         };
 
         //Check Position
-        switch (int_pos)
+        switch (cameraPos)
         {
             //	Top Left
             case 1:
-                str_filter[0] = "TL";
-                str_filter[1] = "BR";
+                obFilter[0] = "TL";
+                obFilter[1] = "BR";
                 break;
             //	Top Middle
             case 2:
-                str_filter[0] = "TM";
-                str_filter[1] = "BR";
+                obFilter[0] = "TM";
+                obFilter[1] = "BR";
                 break;
             //	Top Right
             case 3:
-                str_filter[0] = "TR";
-                str_filter[1] = "BL";
+                obFilter[0] = "TR";
+                obFilter[1] = "BL";
                 break;
             //	Middle Right
             case 4:
-                str_filter[0] = "MR";
-                str_filter[1] = "BL";
+                obFilter[0] = "MR";
+                obFilter[1] = "BL";
                 break;
             //	Bottom Right
             case 5:
-                str_filter[0] = "BR";
-                str_filter[1] = "TL";
+                obFilter[0] = "BR";
+                obFilter[1] = "TL";
                 break;
             //	Bottom Middle
             case 6:
-                str_filter[0] = "BM";
-                str_filter[1] = "TL";
+                obFilter[0] = "BM";
+                obFilter[1] = "TL";
                 break;
             //	Bottom Left
             case 7:
-                str_filter[0] = "BL";
-                str_filter[1] = "TR";
+                obFilter[0] = "BL";
+                obFilter[1] = "TR";
                 break;
             //	Middle Left
             case 8:
-                str_filter[0] = "ML";
-                str_filter[1] = "TR";
+                obFilter[0] = "ML";
+                obFilter[1] = "TR";
                 break;
             //  Other
             default:
@@ -84,10 +84,10 @@ public class CPHInline
         }//switch
 
         //Show
-        for (int i = 0; i < str_filter.Length; i++)
+        for (int i = 0; i < obFilter.Length; i++)
         {
-            str_filter[i] += str_postfix[i];
-            CPH.ObsShowFilter(str_scene[i], str_filter[i]);
+            obFilter[i] += postFix[i];
+            CPH.ObsShowFilter(obScene[i], obFilter[i]);
         }//for
 
         //Run the Spotify checker to move Now Playing.

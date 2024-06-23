@@ -3,7 +3,7 @@
 /*Raid
  * 
  *  Play me out Data!
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,18 +12,18 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_path, str_marker, str_usr;
-        float f_vol;
+        string filePath, markerInfo, usrName;
+        float vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot") + "SH_Raid.mp3";
-        str_marker = "『RAID』";
-        str_usr = args["raidUser"].ToString();
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot") + "SH_Raid.mp3";
+        markerInfo = "『RAID』";
+        usrName = args["raidUser"].ToString();
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
-        CPH.CreateStreamMarker(str_marker);
-        CPH.PlaySound(str_path, f_vol, false);
-        CPH.SendMessage($"/me  quuminPOG Q has started a raid on {str_usr}! Copy/paste the following to show some quuminL !");
+        CPH.CreateStreamMarker(markerInfo);
+        CPH.PlaySound(filePath, vol, false);
+        CPH.SendMessage($"/me  quuminPOG Q has started a raid on {usrName}! Copy/paste the following to show some quuminL !");
         CPH.SendMessage("/ me For subs: quuminL QMIN IN TO SPICE UP YOUR LIFE quuminL");
         CPH.SendMessage("/ me For non-subs: <3 QMIN IN TO SPICE UP YOUR LIFE <3");
 

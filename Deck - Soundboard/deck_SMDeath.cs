@@ -3,7 +3,7 @@
 /*Deck - Super Mario Death
  * 
  *  Use TTS and inform everyone what they just saw was intentional Kappa
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,27 +12,27 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_path, str_marker, str_msg, str_media;
-        float f_vol;
+        string filePath, markerInfo, msgOut, mediaOut;
+        float vol;
 
         //Initializations
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
-        str_marker = "『SOUNDBOARD』 " + "Died Horribly";
-        str_msg = "Oh no no no quuminQQ";
-        str_media = "SuperMarioDeath.mp3";
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot");
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        markerInfo = "『SOUNDBOARD』 " + "Died Horribly";
+        msgOut = "Oh no no no quuminQQ";
+        mediaOut = "SuperMarioDeath.mp3";
 
         //If I'm live...
         if (CPH.ObsIsStreaming())
         {
             //... create a marker.
-            CPH.CreateStreamMarker(str_marker);
+            CPH.CreateStreamMarker(markerInfo);
         }//if
 
 
-        CPH.PlaySound(str_path + str_media, f_vol, false);
-        CPH.SendMessage("/me " + str_msg);
-        CPH.TtsSpeak("Takumi", str_msg, true);
+        CPH.PlaySound(filePath + mediaOut, vol, false);
+        CPH.SendMessage("/me " + msgOut);
+        CPH.TtsSpeak("Takumi", msgOut, true);
 
         return true;
     }//Execute

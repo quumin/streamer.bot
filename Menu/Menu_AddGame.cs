@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.IO;
 
 /*Menu - Add Game to Library
  * 
  *  Add the game with the selected settings to the Library.
- *  LU: 31-oct-2023
+ *  LU: 23-jun-2024
  *  
  */
 
@@ -14,22 +14,23 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] str_uG, str_game;
-        string str_delim, str_path, str_file;
+        string[] usedGlobals, currentGame;
+        string deLim, filePath, openFile;
 
         //Initializations
         // Global List
-        str_uG = new string[]
+        usedGlobals = new string[]
         {
             "qminCurrentGame"
         };
-        str_game = CPH.GetGlobalVar<string[]>(str_uG[0]);
+        currentGame = CPH.GetGlobalVar<string[]>(usedGlobals[0]);
         // Specific
-        str_delim = ";";
-        str_path = @".\\external_files\\";
-        str_file = "GamesList.csv";
+        deLim = ";";
+        filePath = @".\\external_files\\";
+        openFile = "GamesList.csv";
 
-        File.AppendAllText($"{str_path}{str_file}", string.Join(str_delim, str_game) + Environment.NewLine);
+        File.AppendAllText($"{filePath}{openFile}", string.Join(deLim, currentGame) + Environment.NewLine);
+        CPH.LogVerbose($"『MENU』: Game {currentGame[0]} successfully added to \'{filePath}{openFile}\'!");
         return true;
     }//Execute()
 }//CPHInline

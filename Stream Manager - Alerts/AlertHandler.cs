@@ -3,7 +3,7 @@
 /*Alert Handler
  * 
  *  Handle the Alerts for stream.
- *  LU: 04-nov-23
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,24 +12,24 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_event, str_snd, str_img, str_alias, str_usr, str_msg, str_path;
-        string[] str_ss, str_src, str_txt;
+        string str_event, str_snd, str_img, str_alias, usrName, msgOut, filePath;
+        string[] obSubScene, obSource, str_txt;
         bool bool_sers;
-        int[] int_wait;
-        int int_tcl;
-        float f_vol;
+        int[] waitTime;
+        int charLimit;
+        float vol;
 
         //Initializations
         str_event = args["__source"].ToString();
-        str_snd = str_img = str_alias = str_usr = str_msg = "";
-        str_path = CPH.GetGlobalVar<string>("qminMediaRoot");
-        str_ss = new string[]
+        str_snd = str_img = str_alias = usrName = msgOut = "";
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot");
+        obSubScene = new string[]
         {
             "SS_Alerts_Text",
             "SS_Alerts",
             "SS_KP_PreHex"
         };
-        str_src = new string[]
+        obSource = new string[]
         {
             "Username",
             "Action",
@@ -38,9 +38,9 @@ public class CPHInline
         };
         str_txt = new string[3];
         bool_sers = CPH.GetGlobalVar<bool>("qminSeriousMode");
-        int_wait = new int[] { 2000, 2000, 2000 };
-        int_tcl = 200;
-        f_vol = CPH.GetGlobalVar<float>("qminMediaVolume");
+        waitTime = new int[] { 2000, 2000, 2000 };
+        charLimit = 200;
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
         //Check the event type.
         switch (str_event)
@@ -48,32 +48,32 @@ public class CPHInline
             //  Follow
             case "TwitchFollow":
                 //Defaults
-                str_usr = args["user"].ToString();
+                usrName = args["user"].ToString();
                 str_img = "SaltBae";
                 str_snd = "CarelessWhisper.mp3";
                 //Waits
-                int_wait[0] = 1130;
-                int_wait[1] = 2000;
-                int_wait[2] = 5870;
+                waitTime[0] = 1130;
+                waitTime[1] = 2000;
+                waitTime[2] = 5870;
                 //Update Texts & Messages
-                str_txt[0] = str_usr;
+                str_txt[0] = usrName;
                 str_txt[1] = "just salted me with some ";
                 str_txt[2] = "quuminL";
-                str_msg = "/me SaltBae ";
+                msgOut = "/me SaltBae ";
                 // While message is less than character limit...
-                while (str_msg.Length < int_tcl)
+                while (msgOut.Length < charLimit)
                 {
                     //... add quuminL.
-                    str_msg += "quuminL ";
+                    msgOut += "quuminL ";
                 }//while
 
                 break;
             //  Welcome
             case "TwitchFirstWord":
                 //Defaults
-                str_usr = args["userName"].ToString();
+                usrName = args["userName"].ToString();
                 // Check if user should be ignored before continuing.
-                switch (str_usr)
+                switch (usrName)
                 {
                     case "ltqmanderdata":
                     case "whymusticryy":
@@ -87,52 +87,52 @@ public class CPHInline
 
                 str_img = "Welcome";
                 //Wait
-                int_wait[0] = 6070;
+                waitTime[0] = 6070;
                 //Update Texts
-                str_txt[0] = str_usr;
+                str_txt[0] = usrName;
                 str_txt[1] = "welcome to the stream, son";
                 break;
             //  Sub
             case "TwitchSub":
                 //Defaults
-                str_usr = args["user"].ToString();
+                usrName = args["user"].ToString();
                 str_img = "BB Subscribe";
                 str_alias = "Brian";
-                str_msg = args["rawInput"].ToString();
+                msgOut = args["rawInput"].ToString();
                 string str_tier = args["tier"].ToString();
                 //Wait
-                int_wait[1] = 11000;
+                waitTime[1] = 11000;
                 //Update Texts
-                str_txt[0] = str_usr;
+                str_txt[0] = usrName;
                 str_txt[1] = "cooked up a " + str_tier + " sub";
                 str_txt[2] = "... BITCH.";
                 break;
             //  Resub
             case "TwitchReSub":
                 //Defaults
-                str_usr = args["user"].ToString();
+                usrName = args["user"].ToString();
                 str_img = "Spicy";
                 str_snd = "WelcomeBack.mp3";
                 str_alias = "Brian";
-                str_msg = args["rawInput"].ToString();
+                msgOut = args["rawInput"].ToString();
                 //Wait
-                int_wait[1] = 5464;
+                waitTime[1] = 5464;
                 //Update Texts
-                str_txt[0] = str_usr;
+                str_txt[0] = usrName;
                 str_txt[1] = "returned for za spice";
                 str_txt[2] = "... BITCH.";
                 break;
             //  Raid
             case "TwitchRaid":
                 //Defaults
-                str_usr = args["user"].ToString();
+                usrName = args["user"].ToString();
                 str_img = "Raid";
                 str_snd = "CrabRAID.mp3";
                 str_alias = "Brian";
                 string str_viewers = args["viewers"].ToString();
                 //Update Texts & Messages
-                str_msg = str_usr + " brought " + str_viewers + " for a hot pantsu raid!";
-                str_txt[0] = str_usr;
+                msgOut = usrName + " brought " + str_viewers + " for a hot pantsu raid!";
+                str_txt[0] = usrName;
                 str_txt[1] = "thanks for bringing " + str_viewers;
                 break;
             //  Bits
@@ -141,23 +141,23 @@ public class CPHInline
                 str_img = "Spare Change";
                 str_snd = "Shulk_Bitties.mp3";
                 str_alias = "Takumi";
-                str_msg = args["message"].ToString();
+                msgOut = args["message"].ToString();
                 string str_bit = args["bits"].ToString();
                 bool bool_anon = Convert.ToBoolean(args["anonymous"]);
                 //If they are not anonymous...
                 if (!bool_anon)
                 {
                     //... use the username.
-                    str_usr = args["user"].ToString();
+                    usrName = args["user"].ToString();
                 } //if
                 else
                 {
                     //... otherwise use anonymous.
-                    str_usr = "Anonymous";
+                    usrName = "Anonymous";
                 }//else
 
                 //Update Texts
-                str_txt[0] = str_usr + " gave Q-min";
+                str_txt[0] = usrName + " gave Q-min";
                 str_txt[1] = str_bit;
                 //If plural...
                 if (str_bit == "1")
@@ -184,70 +184,70 @@ public class CPHInline
         if (!bool_sers)
         {
             //... update the common text.
-            CPH.ObsSetGdiText(str_ss[0], str_src[0], str_txt[0]); //Username
-            CPH.ObsSetGdiText(str_ss[0], str_src[1], str_txt[1]); //Action
+            CPH.ObsSetGdiText(obSubScene[0], obSource[0], str_txt[0]); //Username
+            CPH.ObsSetGdiText(obSubScene[0], obSource[1], str_txt[1]); //Action
             //... show the sources.
-            CPH.ObsShowSource(str_ss[0], str_src[0]); //Username
-            CPH.ObsShowSource(str_ss[0], str_src[1]); //Action
-            CPH.ObsShowSource(str_ss[1], str_img); //Alert Media
+            CPH.ObsShowSource(obSubScene[0], obSource[0]); //Username
+            CPH.ObsShowSource(obSubScene[0], obSource[1]); //Action
+            CPH.ObsShowSource(obSubScene[1], str_img); //Alert Media
             //... show event specifics.
             switch (str_event)
             {
                 //  Follow
                 case "TwitchFollow":
                     //Show quuminL and SaltBae
-                    CPH.ObsShowSource(str_ss[0], str_src[3]);
-                    CPH.ObsShowSource(str_ss[2], str_img);
+                    CPH.ObsShowSource(obSubScene[0], obSource[3]);
+                    CPH.ObsShowSource(obSubScene[2], str_img);
                     //Play Sound
-                    CPH.PlaySound(str_path + str_snd, f_vol);
+                    CPH.PlaySound(filePath + str_snd, vol);
                     //Wait until the Salt Appears & Send Message		
-                    CPH.Wait(int_wait[1]);
-                    CPH.SendMessage(str_msg, true);
+                    CPH.Wait(waitTime[1]);
+                    CPH.SendMessage(msgOut, true);
                     break;
                 //  Sub
                 case "TwitchSub":
                 //  Resub
                 case "TwitchReSub":
                     //Update, Wait, & Show Gotcha
-                    CPH.ObsSetGdiText(str_ss[0], str_src[2], str_txt[2]);
-                    CPH.Wait(int_wait[1]);
-                    CPH.ObsShowSource(str_ss[0], str_src[2]);
-                    CPH.TtsSpeak(str_alias, str_msg, true);
+                    CPH.ObsSetGdiText(obSubScene[0], obSource[2], str_txt[2]);
+                    CPH.Wait(waitTime[1]);
+                    CPH.ObsShowSource(obSubScene[0], obSource[2]);
+                    CPH.TtsSpeak(str_alias, msgOut, true);
                     break;
                 //  Other
                 default:
                     //Sounds & Image/Video
-                    CPH.PlaySound(str_path + str_snd, f_vol, true);
-                    CPH.TtsSpeak(str_alias, str_msg, true);
+                    CPH.PlaySound(filePath + str_snd, vol, true);
+                    CPH.TtsSpeak(str_alias, msgOut, true);
                     break;
             } //switch
 
             //... use common delay.
-            CPH.Wait(int_wait[0]);
+            CPH.Wait(waitTime[0]);
             //... hide the common media.
-            CPH.ObsHideSource(str_ss[1], str_img);
+            CPH.ObsHideSource(obSubScene[1], str_img);
             //... hide event specifics.
             switch (str_event)
             {
                 //  Follow
                 case "TwitchFollow":
                     //Hide SaltBae on cam & wait to let quuminL linger
-                    CPH.ObsHideSource(str_ss[2], str_img);
-                    CPH.Wait(int_wait[2]);
-                    CPH.ObsHideSource(str_ss[0], str_src[3]);
+                    CPH.ObsHideSource(obSubScene[2], str_img);
+                    CPH.Wait(waitTime[2]);
+                    CPH.ObsHideSource(obSubScene[0], obSource[3]);
                     break;
                 //  Sub
                 case "TwitchSub":
                 //  Resub
                 case "TwitchReSub":
                     //Hide Gotcha
-                    CPH.ObsHideSource(str_ss[0], str_src[2]);
+                    CPH.ObsHideSource(obSubScene[0], obSource[2]);
                     break;
             }//switch
 
             //... hide the common text.
-            CPH.ObsHideSource(str_ss[0], str_src[1]);
-            CPH.ObsHideSource(str_ss[0], str_src[0]);
+            CPH.ObsHideSource(obSubScene[0], obSource[1]);
+            CPH.ObsHideSource(obSubScene[0], obSource[0]);
         } //if
         else
         {

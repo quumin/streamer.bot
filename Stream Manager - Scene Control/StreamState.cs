@@ -6,7 +6,7 @@ using QminBotDLL;
 /*State Checker
  * 
  *  Check what's going on after the state of the stream is triggered.
- *  LU: 09-may-2024
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -23,14 +23,16 @@ public class CPHInline
         //Declarations
         List<string> actionList;
         string[] timerList;
-        string msgOut;
-        bool isStream;
+        string msgOut, logOut, trigTxt;
+        bool isStream, isRecord;
 
         //Initializations
         LoadAutoShout();
         LoadSoundActions();
         QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.45f);
         isStream = CPH.ObsIsStreaming();
+        isRecord = CPH.ObsIsRecording();
+        trigTxt = args["triggerName"].ToString();
         actionList = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
         timerList = new string[]
         {
@@ -39,46 +41,76 @@ public class CPHInline
             "Random Shouts"
         };
         msgOut = "/me ";
+        logOut = "『STREAM STATE』: ";
 
-        //Check the state of OBS...
-        if (isStream)
+        //Check Case of Trigger
+        switch (trigTxt)
         {
-            //... if the stream is started:
-            //  Set scene to Starting Scene
-            CPH.ObsSetScene("Starter");
-            //  Turn off Emote Only, in case it's on
-            CPH.TwitchEmoteOnly(false);
+            // Stream Start
+            case "Streaming Started":
+                //	Send first feedback to chat
+                CPH.SendMessage("/me Powering on all Systems Q-Mander... Warp5 ");
+                //	Set scene to Starting Scene
+                CPH.ObsSetScene("Starter");
+                //  Turn off Emote Only, in case it's on
+                CPH.TwitchEmoteOnly(false);
+                //	Enable all Shoutout Actions
+                foreach (string s in actionList)
+                {
+                    CPH.EnableAction(s);
+                }//foreach
 
-            //  Enable all Shoutouts.
-            foreach (string s in actionList)
-            {
-                CPH.EnableAction(s);
-            }//foreach
+                //	Load the Riddles
+                CPH.RunAction("Riddles - Load File");
 
-            //  Load the Riddles
-            CPH.RunAction("Riddles - Load File");
+                //	Start the Timers
+                for (int i = 0; i < timerList.Length; i++)
+                {
+                    CPH.EnableTimer(timerList[i]);
+                }//for
 
-            //  Start the Timers
-            for (int i = 0; i < timerList.Length; i++)
-                CPH.EnableTimer(timerList[i]);
+                //	Feedback
+                msgOut += "All systems go Q-Mander! DataFingerbang";
+                logOut += "START_OF_STREAM";
+                break;
+            // Stream Stop
+            case "Streaming Stopped":
+                //  Feedback
+                msgOut += "It was a pleasure to serve you Q-mander, see you next time! VulkanSalute";
+                //  Stop the Timers
+                for (int i = 0; i < timerList.Length; i++)
+                {
+                    CPH.DisableTimer(timerList[i]);
+                }//for
+                break;
+            // Record Start
+            case "Recording Started":
+                msgOut += "VOD Security Systems enabled Q-Mander! DataFingerbang";
+                logOut += "START_OF_RECORD";
+                break;
+            // Record Stop
+            case "Recording Stopped":
+                msgOut += "SirGasp VOD Security Systems disabled Q-Mander!";
+                logOut += "RECORD_STOP";
+                break;
+            // Error
+            default:
+                CPH.LogError("Something went wrong with \'State Checker\'!");
+                break;
+        }//switch
 
-            //  Feedback
-            msgOut += "All systems go Q-Mander! DataFingerbang";
-            CPH.CreateStreamMarker("Start of Stream");
-            CPH.LogInfo("『MARKER』: START_OF_STREAM");
+        //If I'm live...
+        if (CPH.ObsIsStreaming())
+        {
+            //... create a marker.
+            CPH.CreateStreamMarker($"STATE - \'{trigTxt}\'");
         }//if
-        else
-        {
-            //... if the stream is stopped:
-            //  Feedback
-            msgOut += "It was a pleasure to serve you Q-mander, see you next time!";
-            //  Stop the Timers
-            for (int i = 0; i < timerList.Length; i++)
-                CPH.DisableTimer(timerList[i]);
-        }//else
 
-        //Send message
+
+        //Send Feedback Message
         CPH.SendMessage(msgOut);
+        //Update Logfile
+        CPH.LogInfo(logOut);
         return true;
     }//Execute()
 

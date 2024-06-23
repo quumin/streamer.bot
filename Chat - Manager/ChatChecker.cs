@@ -3,7 +3,7 @@ using System;
 /*ChatChecker
  * 
  *  Check the chat based on the global state.
- *  LU: 4-nov-2023
+ *  LU: 22-jun-2024
  * 
  */
 
@@ -11,48 +11,48 @@ public class CPHInline
 {
     public bool Execute()
     {
-        string[] str_uG, str_uA;
-        string str_bot, str_eamer, str_state, str_usr;
+        string[] usedGlobals, usedActions;
+        string botName, broadCaster, chatState, usrName;
 
         //Initializations
         // Global List
-        str_uG = new string[]
+        usedGlobals = new string[]
         {
             "qminChatState"
         };
-        str_state = CPH.GetGlobalVar<string>(str_uG[0]);
+        chatState = CPH.GetGlobalVar<string>(usedGlobals[0]);
         // Actions List
-        str_uA = new string[]
+        usedActions = new string[]
         {
             "Chat - AutoShouts (Code)",
             "Riddles - Check Chat",
             "Menu - Check Chat"
         };
         // SB Args
-        str_eamer = args["broadcastUserName"].ToString();
-        str_usr = args["userName"].ToString();
+        broadCaster = args["broadcastUserName"].ToString();
+        usrName = args["userName"].ToString();
 
         // Specific
-        str_bot = "ltqmanderdata";
+        botName = "ltqmanderdata";
 
-        if (str_usr.Equals(str_bot))
+        if (usrName.Equals(botName))
         {
             return true;
         }//if()
 
-        switch (str_state)
+        switch (chatState)
         {
             //	Riddles
             case "riddle_on":
-                CPH.RunAction(str_uA[1]);
+                CPH.RunAction(usedActions[1]);
                 break;
             // 	Menu
             case "menu_on":
-                CPH.RunAction(str_uA[2]);
+                CPH.RunAction(usedActions[2]);
                 break;
         }//switch()
 
-        CPH.RunAction(str_uA[0]);
+        CPH.RunAction(usedActions[0]);
 
         return true;
     }//Execute()

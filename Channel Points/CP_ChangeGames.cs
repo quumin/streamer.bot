@@ -6,7 +6,7 @@ using QminBotDLL;
 /*Channel Points - Change Games
  * 
  *  Change the game from the channel points.
- *  LU: 31-oct-2023
+ *  LU: 23-jun-2024
  *  
  */
 
@@ -21,55 +21,55 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        List<string>[] list_games;
-        string[] str_uT;
-        string str_ri, str_usr, str_redeem, str_reward, str_msg;
+        List<string>[] gamesList;
+        string[] usedTimers;
+        string rawInput, usrName, redemptionId, rewardId, msgOut;
 
         //Initializations
         //  QnamicLib
-        list_games = QnamicLib.LoadGameLibrary();
+        gamesList = QnamicLib.LoadGameLibrary();
         //  Timer List
-        str_uT = new string[]
+        usedTimers = new string[]
         {
             "GameChanger"
         };
         //  SB Args
-        str_ri = args["rawInput"].ToString();
-        str_usr = args["userName"].ToString();
+        rawInput = args["rawInput"].ToString();
+        usrName = args["userName"].ToString();
         //      If streaming...
         if (CPH.ObsIsStreaming())
         {
             //... get reward info.
-            str_redeem = args["redemptionId"].ToString();
-            str_reward = args["rewardId"].ToString();
+            redemptionId = args["redemptionId"].ToString();
+            rewardId = args["rewardId"].ToString();
         }//if
         //  Specifc
-        str_redeem = "";
-        str_reward = "";
-        str_msg = "/me ";
+        redemptionId = "";
+        rewardId = "";
+        msgOut = "/me ";
 
         //If that choice is in the Installed Games List...
-        if (list_games[0].Contains(str_ri))
+        if (gamesList[0].Contains(rawInput))
         {
-            CPH.LogInfo($"『G A M E S』 \'{str_ri}\' found!");
-            str_msg += $"thinkingJojo so uh... Q, you gonna change to {str_ri} like @{str_usr} asked, or...? Ghost";
-            CPH.SetChannelGame(str_ri);
-            CPH.EnableTimer(str_uT[0]);
+            CPH.LogInfo($"『G A M E S』 \'{rawInput}\' found!");
+            msgOut += $"thinkingJojo so uh... Q, you gonna change to {rawInput} like @{usrName} asked, or...? Ghost";
+            CPH.SetChannelGame(rawInput);
+            CPH.EnableTimer(usedTimers[0]);
         }//if
         else
         {
-            CPH.LogInfo($"『G A M E S』 \'{str_ri}\' not found!");
-            str_msg += $"WTFF Sorry @{str_usr}, \"{str_ri}\" was not found! dataHuh Don't worry, your points have been refunded! Saved Please check the list below PointDown and try again.";
+            CPH.LogInfo($"『G A M E S』 \'{rawInput}\' not found!");
+            msgOut += $"WTFF Sorry @{usrName}, \"{rawInput}\" was not found! dataHuh Don't worry, your points have been refunded! Saved Please check the list below PointDown and try again.";
             //... if streaming...
             if (CPH.ObsIsStreaming())
             {
                 //... cancel the redemption.
-                CPH.TwitchRedemptionCancel(str_reward, str_redeem);
+                CPH.TwitchRedemptionCancel(rewardId, redemptionId);
             }//if
         }//else
 
         //Send message.
-        CPH.SendMessage(str_msg);
+        CPH.SendMessage(msgOut);
 
         return true;
     }//Execute()

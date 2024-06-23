@@ -4,6 +4,7 @@ using System.IO;
 /*Workout Clear
  * 
  *  Clear the workout files and variables.
+ *  LU: 22-jun-2024
  * 
  */
 
@@ -12,11 +13,11 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] str_path;
-        FileStream fs_open;
+        string[] filePath;
+        FileStream workoutFile;
 
         //Initializations 
-        str_path = new string[]
+        filePath = new string[]
         {
             @".\\external_files\\Exercise.txt",
             @".\\external_files\\Exercise.csv"
@@ -25,14 +26,14 @@ public class CPHInline
         CPH.UnsetGlobalVar("deathCounter");
 
         //Clear .txt
-        fs_open = File.Open(str_path[0], FileMode.Open);
-        fs_open.SetLength(0);
-        fs_open.Close();
+        workoutFile = File.Open(filePath[0], FileMode.Open);
+        workoutFile.SetLength(0);
+        workoutFile.Close();
 
         //Clear .csv
-        fs_open = File.Open(str_path[1], FileMode.Open);
-        fs_open.SetLength(0);
-        fs_open.Close();
+        workoutFile = File.Open(filePath[1], FileMode.Open);
+        workoutFile.SetLength(0);
+        workoutFile.Close();
 
         CPH.SendMessage("/me Workout Files cleared Q-Mander NODDERS");
 

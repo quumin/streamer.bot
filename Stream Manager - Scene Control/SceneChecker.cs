@@ -3,6 +3,7 @@ using System;
 /*Scene Checker
  * 
  *	Check which scene we're currently in and make adjustments.
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -11,19 +12,19 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string str_scene, str_ss;
-        bool bool_creds;
-        int int_wait, int_com;
+        string obScene, obSubScene;
+        bool rollCredits;
+        int waitTime, commercialTime;
 
         //Initializations
-        str_scene = CPH.ObsGetCurrentScene();
-        str_ss = "SS_MidScreen";
-        bool_creds = false;
-        int_wait = 12000;
-        int_com = 180;
-        CPH.LogDebug("SCENE: " + str_scene);
+        obScene = CPH.ObsGetCurrentScene();
+        obSubScene = "SS_MidScreen";
+        rollCredits = false;
+        waitTime = 12000;
+        commercialTime = 180;
+        CPH.LogDebug("SCENE: " + obScene);
 
-        switch (str_scene)
+        switch (obScene)
         {
             //	OVERLAYS
 
@@ -35,21 +36,21 @@ public class CPHInline
                 if (CPH.ObsIsStreaming())
                 {
                     //... run 3 mins of commercial.
-                    CPH.TwitchRunCommercial(int_com);
+                    CPH.TwitchRunCommercial(commercialTime);
                 }//if
                 break;
             case "Ender":
-                bool_creds = true;
+                rollCredits = true;
                 break;
 
             //	CONTENT
             case "StreamRaiders":
                 CPH.RunAction("Cam Controller");
-                CPH.Wait(int_wait);
+                CPH.Wait(waitTime);
                 //Check Scene again
-                str_scene = CPH.ObsGetCurrentScene();
+                obScene = CPH.ObsGetCurrentScene();
                 //If the Scene is still Stream Raiders...
-                if (str_scene == "StreamRaiders")
+                if (obScene == "StreamRaiders")
                 {
                     //... warn me.
                     CPH.SendMessage("/me monkaW Uhm - Qmander, Streamraiders is still showing... is that intentional? LULdata");
@@ -67,13 +68,13 @@ public class CPHInline
         }//switch
 
         //Handle Credits
-        CPH.ObsSetSourceVisibility(str_ss, "Credits", bool_creds);
+        CPH.ObsSetSourceVisibility(obSubScene, "Credits", rollCredits);
 
         //If I'm live...
         if (CPH.ObsIsStreaming())
         {
             //... create a marker.
-            CPH.CreateStreamMarker("Scene changed to: " + str_scene);
+            CPH.CreateStreamMarker("Scene changed to: " + obScene);
         }//if
 
         return true;

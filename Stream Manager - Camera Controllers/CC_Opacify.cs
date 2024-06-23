@@ -3,7 +3,7 @@
 /*Cam Controller - Opacify
  * 
  *  Adjust opacity.
- *  LU: 4-nov-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -12,47 +12,47 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        int int_state;
-        string str_ss, str_postfix;
-        string[] str_src, str_filter;
+        int currentOpacity;
+        string obScene, postFix;
+        string[] obSource, obFilter;
 
         //Initializations
-        int_state = CPH.GetGlobalVar<int>("qminGlobalOpacity");
-        str_ss = "SS_KiyoPro_FancyCam";
-        str_postfix = "_Opacity";
-        str_src = new string[]
+        currentOpacity = CPH.GetGlobalVar<int>("qminGlobalOpacity");
+        obScene = "SS_KiyoPro_FancyCam";
+        postFix = "_Opacity";
+        obSource = new string[]
         {
             "Camera",
             "Streamboss",
             "Chatbox"
         };
-        str_filter = new string[]
+        obFilter = new string[]
         {
-            "1" + str_postfix,
-            "2" + str_postfix,
-            "3" + str_postfix
+            "1" + postFix,
+            "2" + postFix,
+            "3" + postFix
         };
 
         //Turn off all Opacity First
-        for (int i = 0; i < str_src.Length; i++)
+        for (int i = 0; i < obSource.Length; i++)
         {
-            for (int j = 0; j < str_filter.Length; j++)
+            for (int j = 0; j < obFilter.Length; j++)
             {
-                CPH.ObsHideFilter(str_ss, str_src[i], str_filter[j]);
+                CPH.ObsHideFilter(obScene, obSource[i], obFilter[j]);
             }//for
         }//for
 
         //If Opacify is enabled...
-        if (int_state != 4)
+        if (currentOpacity != 4)
         {
             //... turn on Specific Opacity.
-            for (int i = 0; i < str_src.Length; i++)
+            for (int i = 0; i < obSource.Length; i++)
             {
-                CPH.ObsShowFilter(str_ss, str_src[i], str_filter[int_state - 1]);
+                CPH.ObsShowFilter(obScene, obSource[i], obFilter[currentOpacity - 1]);
             }//for
 
             //Feedback
-            CPH.LogInfo("『C C』 Opacity changed to \'" + str_filter[int_state - 1] + "\' successfully!");
+            CPH.LogInfo("『C C』 Opacity changed to \'" + obFilter[currentOpacity - 1] + "\' successfully!");
         }//if
         else
         {

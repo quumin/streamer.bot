@@ -6,7 +6,7 @@ using QminBotDLL;
 /*Menu - New Game
  * 
  *  Check if game is installed or mentioned as Installed in the Library.
- *  LU: 31-oct-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -21,48 +21,48 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        List<string>[] list_games;
-        string[] str_uG, str_game;
-        bool bool_inLib;
-        int int_i;
+        List<string>[] gamesList;
+        string[] usedGlobals, currentGame;
+        bool inLib;
+        int i;
 
         //Intializations
-        str_uG = new string[]
+        usedGlobals = new string[]
         {
             "qminCurrentGame"
         };
-        list_games = QnamicLib.LoadGameLibrary();
-        str_game = new string[7];
-        str_game[0] = args["gameName"].ToString();
-        str_game[1] = args["gameId"].ToString();
-        bool_inLib = false;
-        int_i = 0;
+        gamesList = QnamicLib.LoadGameLibrary();
+        currentGame = new string[7];
+        currentGame[0] = args["gameName"].ToString();
+        currentGame[1] = args["gameId"].ToString();
+        inLib = false;
+        i = 0;
 
-        foreach (string str in list_games[1])
+        foreach (string str in gamesList[1])
         {
-            if (str.Equals(str_game[1]))
+            if (str.Equals(currentGame[1]))
             {
-                bool_inLib = true;
-                for (int j = 2; j < str_game.Length; j++)
+                inLib = true;
+                for (int j = 2; j < currentGame.Length; j++)
                 {
-                    str_game[j] = list_games[j][int_i];
-                    CPH.LogVerbose($"『G A M E S』 \'{str_game[0]}\' | {str_game[j]}");
+                    currentGame[j] = gamesList[j][i];
+                    CPH.LogVerbose($"『G A M E S』 \'{currentGame[0]}\' | {currentGame[j]}");
                 }//for()
             }//if()
-            int_i++;
+            i++;
         }//foreach()
 
-        if (bool_inLib)
+        if (inLib)
         {
             //Run "Check Game Type"
-            CPH.LogInfo($"『G A M E S』 \'{str_game[0]}\' is already in the library.");
+            CPH.LogInfo($"『G A M E S』 \'{currentGame[0]}\' is already in the library.");
         }
         else
         {
-            CPH.LogInfo($"『G A M E S』 \'{str_game[0]}\' is not yet in the library.");
+            CPH.LogInfo($"『G A M E S』 \'{currentGame[0]}\' is not yet in the library.");
             CPH.RunAction("Menu - Post Prompt");
         }
-        CPH.SetGlobalVar(str_uG[0], str_game);
+        CPH.SetGlobalVar(usedGlobals[0], currentGame);
         return true;
     }//Execute()
 

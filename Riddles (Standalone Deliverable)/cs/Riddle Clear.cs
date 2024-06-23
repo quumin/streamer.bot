@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /*Riddle Clear
  * 
  *  Clear riddles for debugging.
- *  LU: 30-oct-2023
+ *  LU: 23-jun-2024
  * 
  */
 
@@ -14,12 +14,12 @@ public class CPHInline
     public bool Execute()
     {
         //Decalarations
-        string[] str_uG;
-        List<string>[] list_riddle;
+        string[] usedGlobals;
+        List<string>[] riddleLists;
 
         //Initializations
         // Global List
-        str_uG = new string[]
+        usedGlobals = new string[]
         {
             "qminRiddleLineOne",
             "qminRiddleLineTwo",
@@ -31,12 +31,12 @@ public class CPHInline
             "qminRiddleAnswers",
         };
         // Specific
-        list_riddle = new List<string>[8];
+        riddleLists = new List<string>[8];
         
-        for (int b = 0; b < list_riddle.Length; b++)
+        for (int b = 0; b < riddleLists.Length; b++)
         {
-            list_riddle[b] = new List<string>();
-            CPH.SetGlobalVar(str_uG[b], list_riddle[b]);
+            riddleLists[b] = new List<string>();
+            CPH.SetGlobalVar(usedGlobals[b], riddleLists[b]);
         }//for()
 
         //Post Debug Info
