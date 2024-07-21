@@ -2,10 +2,10 @@
 using System.IO;
 using System.Collections.Generic;
 
-/*Riddle Clear
+/*Riddles - Clear Globals
  * 
  *  Clear riddles for debugging.
- *  LU: 23-jun-2024
+ *  LU: 21-jul-2024
  * 
  */
 
@@ -13,13 +13,17 @@ public class CPHInline
 {
     public bool Execute()
     {
-        //Decalarations
-        string[] usedGlobals;
+        //Log Execution Started
+        CPH.LogInfo("『RIDDLES』 \'Riddles - Clear\' EXECUTING...");
+        //Declarations
+        //  Common Variables
+        string[] qminRiddle;
+        //  Specific
         List<string>[] riddleLists;
 
         //Initializations
-        // Global List
-        usedGlobals = new string[]
+        //  Common Variables     
+        qminRiddle = new string[]
         {
             "qminRiddleLineOne",
             "qminRiddleLineTwo",
@@ -29,19 +33,21 @@ public class CPHInline
             "qminRiddleLineSix",
             "qminRiddleLineSeven",
             "qminRiddleAnswers",
+            "qminRiddleCorrect"
         };
-        // Specific
+        //  Specific
         riddleLists = new List<string>[8];
-        
+
+        //Clear all the lists.
         for (int b = 0; b < riddleLists.Length; b++)
         {
             riddleLists[b] = new List<string>();
-            CPH.SetGlobalVar(usedGlobals[b], riddleLists[b]);
+            CPH.SetGlobalVar(qminRiddle[b], riddleLists[b]);
         }//for()
 
-        //Post Debug Info
-        CPH.LogInfo("『R I D D L E S』 Riddles Cleared Successfully.");
-
+    //Log Execution Ended
+    qminEndAction:
+        CPH.LogInfo("『RIDDLES』 \'Riddles - Clear\' EXECUTED!");
         return true;
     }//Execute()
 }//CPHInline
