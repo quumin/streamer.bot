@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 
-/*Riddles - Check Chat
+/*Riddle Check
  * 
  *	Check the chat for the answer to the riddle.
- *  LU: 21-jul-2024
+ *  LU: 23-jun-2024
  *  
  */
 
@@ -12,42 +12,36 @@ public class CPHInline
 
     public bool Execute()
     {
-        //Log Execution Started
-        CPH.LogInfo("『RIDDLES』 \'Riddles - Check Chat\' EXECUTING...");
         //Declarations
-        //  Common Variables
-        string qminChatState;
-        string qminRiddleCorrect;
-        string[] usedTimers;
-        //  Specific
-        string user, rawInput, correctAns;
+        string[] usedGlobals, usedTimers;
+        string usrName, rawInput, correctAns;
 
         //Initializations
-        //  Common Variables        
-        qminChatState = "qminChatState";
-        qminRiddleCorrect = "qminRiddleCorrect";
+        // Global List
+        usedGlobals = new string[]
+        {
+            "qminChatState",
+            "qminRiddleCorrect"
+        };
+        correctAns = CPH.GetGlobalVar<string>(usedGlobals[1]);
+        // Timer List
         usedTimers = new string[]
         {
-            "Riddles - Timer"
+            "RiddleTimer"
         };
-        //  Specific
-        user = args["user"].ToString();
+        // SB Args
         rawInput = args["rawInput"].ToString();
-        correctAns = CPH.GetGlobalVar<string>(qminRiddleCorrect);
-
+        usrName = args["user"].ToString();
 
         //If the answer is correct...
         if (string.Compare(rawInput, correctAns, StringComparison.CurrentCultureIgnoreCase) == 0)
         {
             //... end the game.
-            CPH.SendMessage($"/me {user} wins! Nerdge The correct answer was: \"{correctAns}\"! EZ Clap");
-            CPH.SetGlobalVar(qminChatState, "default");
+            CPH.SendMessage("/me " + usrName + " wins! Nerdge The correct answer was: \"" + correctAns + "!\" EZ Clap");
+            CPH.SetGlobalVar(usedGlobals[0], "default");
             CPH.DisableTimer(usedTimers[0]);
         }//if
 
-    //Log Execution Ended
-    qminEndAction:
-        CPH.LogInfo("『RIDDLES』 \'Riddles - Check Chat\' EXECUTED!");
         return true;
     }//Execute()
 }//CPHInline
