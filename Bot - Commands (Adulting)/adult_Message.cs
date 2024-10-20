@@ -1,9 +1,9 @@
 using System;
 
-/*Adulting Timer
+/*Adulting - Message Out
  * 
  *  Check if streaming and then remind me to take a break.
- *  LU: 21-jun-24
+ *  LU: 20-oct-24
  * 
  */
 
@@ -18,18 +18,20 @@ public class CPHInline
 
         //Initializations
         srs = CPH.GetGlobalVar<bool>("qminSeriousMode");
-        filePath = CPH.GetGlobalVar<string>("qminMediaRoot") + "Adulting.mp3";
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot");
         msgOut = "/me marinHey ";
         vol = CPH.GetGlobalVar<float>("qminMediaVolume");
 
-        //Try to get the Global Stored AdultRemind
+        //If the global has something in it...
         if (!string.IsNullOrEmpty(CPH.GetGlobalVar<string>("qminAdultRemind")))
         {
+            //.... then update the message accordingly.
             msgOut += CPH.GetGlobalVar<string>("qminAdultRemind");
         }//if
         else
         {
-            msgOut += "Why don't you take a small break and do something you been meaning to?";
+            //... otherwise go for default text.
+            msgOut += "Why don't you take a small break or drink some water?";
         }//else
 
         //If OBS is streaming...
@@ -41,7 +43,7 @@ public class CPHInline
             if (!srs)
             {
                 //... play the sound.
-                CPH.PlaySound($"{filePath}", vol);
+                CPH.PlaySound($"{filePath}Adulting.mp3", vol);
             }//if
         }//if
 
