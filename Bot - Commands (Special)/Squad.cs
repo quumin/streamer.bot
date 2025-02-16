@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 /*Squad Builder
  * 
  *  Build a list of people you're playing with from the Squad Global.
- *  LU: 21-jun-2024
+ *  LU: 07-oct-2024
  * 
  */
 
@@ -21,6 +21,7 @@ public class CPHInline
         squadCurrent = CPH.GetGlobalVar<List<string>>("qminSquadCurrent");
         squadAdd = "/me ";
         squadCount = squadCurrent.Count;
+        CPH.LogInfo($"『SPECIAL』 Squad Count: {squadCount}");
 
         //If the list has entries...
         if (squadCount > 0)
@@ -39,12 +40,17 @@ public class CPHInline
                  //... last entry.
                 else if (i == squadCount - 1)
                 {
+                    //... oxford comma if 1 > squadCount >= 3.
+                    if (squadCount != 2)
+                    {
+                        squadAdd += ", ";
+                    }
                     squadAdd += $" & {squadCurrent[i]}";
                 }//else if
                  //... subsequent entries.
                 else
                 {
-                    squadAdd += $"{squadCurrent[i]}, ";
+                    squadAdd += $", {squadCurrent[i]}";
                 }//else
             }//for
             squadAdd += " ButtBooty";

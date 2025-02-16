@@ -11,7 +11,7 @@ namespace QminBotDLL
         //Static to Handle CPH Methods
         public static IInlineInvokeProxy CPH;
 
-        public static List<String>[] LoadGameLibrary(int colNum = 12, char deLim = ';')
+        public static List<String>[] LoadGameLibrary(int colNum = 11, char deLim = ';')
         {
             //Declarations
             List<string>[] gamesList;
@@ -37,7 +37,7 @@ namespace QminBotDLL
                  */
                 gamesList[i] = new List<string>();
             }//for
-            externalFilePath = @".\\external_files\\";
+            externalFilePath = ".\\external_files\\";
             gamesFile = "GamesList.csv";
 
             try

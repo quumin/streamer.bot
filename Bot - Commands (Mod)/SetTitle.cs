@@ -1,10 +1,10 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 /*Set Title
  * 
  *  Set the title of your stream, retaining options after parentheses.
- *  LU: 21-jun-2024
+ *  LU: 21-sep-2024
  * 
  */
 
@@ -13,89 +13,95 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string[] metaInfo, specialInfo, deLim, bothOptions;
-        bool[] splitFlag;
+        //  Common Variables
+        string qminBeerCurrent, qminWineCurrent, qminSquadCurrent, qminCurrentGame;
+        //  Specific
+        string[] currentGame, bothOptions;
         List<string> squadCurrent;
-        string streamTitle, noBackseating, alwaysIn;
+        string streamTitle, noBackseating, alwaysIn, deLim;
+        string beerCurrent, wineCurrent, user, rawInput, command, currentTitle;
         int charLimit;
 
         //Initializations
-        metaInfo = new string[]
-        {
-            args["user"].ToString(),		//User
-        	args["rawInput"].ToString(),	//Raw Input (Title)
-			args["command"].ToString(),		//Command (!settitle, !setboth)
-			args["currentTitle"].ToString()	//Old Title
-		};
-        specialInfo = new string[]
-        {
-            CPH.GetGlobalVar<string>("qminBeerCurrent"),
-            CPH.GetGlobalVar<string>("qminWineCurrent")
-        };
-        deLim = new string[]
-        {
-            " || ",							//Both
-			" |bs| ",						//Backseating
-			" |p| "							//Poll
-		};
-
-        //Split out Both from Raw Input
-        bothOptions = metaInfo[1].Split(new string[] { deLim[0] }, StringSplitOptions.None);
-
-        splitFlag = new bool[]
-        {
-            false,							//Backseating
-			false							//Poll
-		};
-
-        squadCurrent = CPH.GetGlobalVar<List<string>>("qminSquadCurrent");
-        noBackseating = "- No Backseating, Please quuminL";
+        //  Common Variables
+        qminBeerCurrent = "qminBeerCurrent";
+        qminSquadCurrent = "qminSquadCurrent";
+        qminWineCurrent = "qminWineCurrent";
+        qminCurrentGame = "qminCurrentGame";
+        beerCurrent = CPH.GetGlobalVar<string>(qminBeerCurrent);
+        squadCurrent = CPH.GetGlobalVar<List<string>>(qminSquadCurrent);
+        wineCurrent = CPH.GetGlobalVar<string>(qminWineCurrent);
+        currentGame = CPH.GetGlobalVar<string[]>(qminCurrentGame);
+        //  Specific
+        user = args["user"].ToString();
+        currentTitle = args["currentTitle"].ToString();
+        CPH.LogVerbose("Debug: currentTitle OK");
+        deLim = " || ";
+        noBackseating = "- No Backseating!";
         alwaysIn = " (!7tv, !discord";
         charLimit = 140;
+        streamTitle = "";
 
-        //Split out the Poll Optiion
-        (streamTitle, splitFlag[1]) = nbs_Breakdown(bothOptions[0], deLim[2]);
-
-        //Split out the Backseating Option
-        (streamTitle, splitFlag[0]) = nbs_Breakdown(streamTitle, deLim[1]);
-
-        //Check the source of the trigger...
-        switch (metaInfo[2])
+        try
         {
-            //	Set Title
-            case "!settitle":
-                //Do nothing, title will be built in a moment.
-                break;
-            //	Set Both
-            case "!setboth":
-                //If the input splits correctly...
-                if (bothOptions.Length > 2)
+            //Check if it was a command...
+            rawInput = args["rawInput"].ToString();
+            command = args["command"].ToString();
+
+            //Split out Both from Raw Input
+            bothOptions = rawInput.Split(new string[] { deLim }, StringSplitOptions.None);
+            CPH.LogVerbose("『STATUS UPDATE』 Input:");
+
+            if (bothOptions.Length > 1)
+            {
+                for (int j = 0; j < bothOptions.Length - 1; j++)
                 {
-                    CPH.SendMessage($"/me dataHuh @{metaInfo[0]} you used too many \'{deLim[0]}\'!");
+                    CPH.LogVerbose($"『STATUS UPDATE』 Input #{j + 1}: {bothOptions[j]}");
+                }//for
+            }//if
+            else
+            {
+                CPH.LogVerbose($"『STATUS UPDATE』 Input 1: {bothOptions[0]}");
+            }//else
+
+
+            //Check the source of the trigger...
+            switch (command)
+            {
+                //	Set Title
+                case "!settitle":
+                    streamTitle = bothOptions[0];
+                    break;
+                //	Set Both
+                case "!setboth":
+                    //If the input splits correctly...
+                    if (bothOptions.Length > 2)
+                    {
+                        CPH.SendMessage($"/me dataHuh @{user} you used too many \'{deLim}\'!");
+                        return true;
+                    }//if
+                    else
+                    {
+                        //... set the title and game accordingly.
+                        streamTitle = bothOptions[0];
+                        CPH.SetChannelGame(bothOptions[1]);
+                        CPH.Wait(1000);
+                        currentGame = CPH.GetGlobalVar<string[]>(qminCurrentGame);
+                    }//if
+                    break;
+                //	Other
+                default:
+                    CPH.LogVerbose("『STATUS UPDATE』 Error setting the title!");
                     return true;
-                }//if
-                else if (bothOptions[0] != streamTitle)
-                {
-                    //... set the title and game accordingly.
-                    CPH.SetChannelGame(bothOptions[1]);
-                }//if
-                else
-                {
-                    //... delimiter used incorrectly!
-                    CPH.SendMessage($"/me dataHuh @{metaInfo[0]} you used the wrong delimiter, try \'{deLim[0]}\'!");
-                    return true;
-                }//else
-                break;
-            //	Other
-            default:
-                //Split before the basic commands and keep that.
-                streamTitle = metaInfo[3].Split(new string[] { alwaysIn }, StringSplitOptions.None)[0];
-                if (metaInfo[3].Split(new string[] { alwaysIn }, StringSplitOptions.None)[1].Contains(noBackseating))
-                {
-                    splitFlag[0] = true;
-                }//if
-                break;
-        }//switch
+                    break;
+            }//switch
+        }//try
+        catch (Exception e)
+        {
+            CPH.LogVerbose("『STATUS UPDATE』 Executing non-triggered command.");
+            //Split before the basic commands and keep that.
+            streamTitle = currentTitle.Split(new string[] { alwaysIn }, StringSplitOptions.None)[0];
+        }//catch
 
         //Add in the basic commands
         streamTitle += alwaysIn;
@@ -114,39 +120,44 @@ public class CPHInline
             //Do nothing.
         }//catch
 
-        //Check if is there is a beer...
-        if (!string.IsNullOrEmpty(specialInfo[0]))
-        {
-            //... and add the command
-            streamTitle += ", !beer";
-        }//if
 
-        //Check if is there is a wine...
-        if (!string.IsNullOrEmpty(specialInfo[1]))
+        try
         {
-            //... and add the command
-            streamTitle += ", !wine";
-        }//if
+            //Check if is there is a beer...
+            if (!string.IsNullOrEmpty(beerCurrent))
+            {
+                //... and add the command
+                streamTitle += ", !beer";
+            }//if
+        }//try
+        catch (Exception e)
+        {
+            //Do nothing.
+        }//catch
+
+        try
+        {
+            //Check if is there is a wine...
+            if (!string.IsNullOrEmpty(wineCurrent))
+            {
+                //... and add the command
+                streamTitle += ", !wine";
+            }//if
+        }//try
+        catch (Exception e)
+        {
+            //Do nothing.
+        }//catch
 
         //Enclose basic commands
         streamTitle += ") ";
 
-        //If there's enough space...
-        if (streamTitle.Length < (charLimit - noBackseating.Length) && splitFlag[0])
+        //If the game has the NBS flag...
+        if (string.Compare(currentGame[7], "TRUE") == 0)
         {
             // ... add the backseating message.
             streamTitle += noBackseating;
         }//if
-
-        if (splitFlag[1])
-        {
-            CPH.SendMessage("/me dataMask Poll's enabled, sir!");
-            CPH.EnableTimer("ChangeGames");
-        }//if
-        else
-        {
-            CPH.DisableTimer("ChangeGames");
-        }//else
 
         //Check character limit...
         if (streamTitle.Length < charLimit)
@@ -162,28 +173,4 @@ public class CPHInline
 
         return true;
     }//Execute()
-
-    (string str_trimmed, bool bool_nbs) nbs_Breakdown(string str_title, string deLim)
-    {
-        //Declarations
-        string[] str_full;
-        string str_trimmed;
-        bool bool_nbs;
-
-        //Initializations
-        str_full = str_title.Split(new string[] { deLim }, StringSplitOptions.None);
-        str_trimmed = str_full[0];
-
-        try
-        {
-            bool_nbs = Convert.ToBoolean(str_full[1]);
-        }//try
-        catch
-        {
-            bool_nbs = false;
-        }//catch
-
-        return (str_trimmed, bool_nbs);
-    }//nbs_Breakdown(string str_title)
-
 }//CPHInline
