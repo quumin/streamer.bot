@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /*Set Title
  * 
  *  Set the title of your stream, retaining options after parentheses.
- *  LU: 21-sep-2024
+ *  LU: 22-sep-2024
  * 
  */
 
@@ -20,7 +20,7 @@ public class CPHInline
         List<string> squadCurrent;
         string streamTitle, noBackseating, alwaysIn, deLim;
         string beerCurrent, wineCurrent, user, rawInput, command, currentTitle;
-        int charLimit;
+        int gameId, charLimit;
 
         //Initializations
         //  Common Variables
@@ -32,15 +32,16 @@ public class CPHInline
         squadCurrent = CPH.GetGlobalVar<List<string>>(qminSquadCurrent);
         wineCurrent = CPH.GetGlobalVar<string>(qminWineCurrent);
         currentGame = CPH.GetGlobalVar<string[]>(qminCurrentGame);
+        gameId = Convert.ToInt32(currentGame[1]);
         //  Specific
         user = args["user"].ToString();
         currentTitle = args["currentTitle"].ToString();
-        CPH.LogVerbose("Debug: currentTitle OK");
         deLim = " || ";
         noBackseating = "- No Backseating!";
         alwaysIn = " (!7tv, !discord";
         charLimit = 140;
         streamTitle = "";
+
 
         try
         {
@@ -106,6 +107,39 @@ public class CPHInline
         //Add in the basic commands
         streamTitle += alwaysIn;
 
+        switch (gameId)
+        {
+            //Fallout Fridays
+            //	Fallout
+            case 10767:
+            //	Fallout 2    
+            case 5097:
+            //	Fallout Tactics: Brotherhood of Steel
+            case 5826:
+            //	Fallout 3    
+            case 18763:
+            //	Fallout: New Vegas
+            case 23453:
+            //	Fallout 4
+            case 489776:
+            //	The Outer Worlds
+            case 510580:
+                streamTitle += ", !fallout";
+                break;
+            //	Path of Exile
+            case 29307:
+                streamTitle += ", !poe";
+                break;
+            //	Darkest Dungeon II
+            case 511471:
+                streamTitle += ", !dd2";
+                break;
+            default:
+                //Do nothing...
+                break;
+        }//switch
+
+
         try
         {
             //Check if is there is a squad...
@@ -119,7 +153,6 @@ public class CPHInline
         {
             //Do nothing.
         }//catch
-
 
         try
         {

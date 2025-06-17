@@ -45,7 +45,7 @@ public class CPHInline
         {
             listIndex = rnd.Next(gamesList[0].Count);
             CPH.LogInfo($"『P O L L』 Polled games #{listIndex}: {gamesList[0][listIndex]}");
-            
+
             //If the selected index is not empty...
             if (gamesList[0][listIndex] != null)
             {

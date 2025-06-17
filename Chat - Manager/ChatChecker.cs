@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 
 /*ChatChecker
  * 
@@ -39,6 +39,8 @@ public class CPHInline
         {
             return true;
         }//if()
+
+        CPH.LogVerbose($"『CHAT』: Chat state is \'{chatState}\'.");
 
         switch (chatState)
         {

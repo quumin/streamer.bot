@@ -6,7 +6,7 @@ using QminBotDLL;
 /*Games - Update Visual
  * 
  *	Update the OBS tiles for a visual transition.
- *  LU: 26-jun-2024
+ *  LU: 14-sep-2024
  * 
  */
 
@@ -37,8 +37,10 @@ public class CPHInline
         //  Specific
         gameName = currentGame[0];
         gameBoxArt = args["gameBoxArt"].ToString();
+        gameBoxArt = gameBoxArt.Replace("300.jpg", "450.jpg");
         oldGameName = args["oldGameName"].ToString();
         oldGameBoxArt = args["oldGameBoxArt"].ToString();
+        oldGameBoxArt = oldGameBoxArt.Replace("300.jpg", "450.jpg");
         obSubScenes = new string[]
         {
             "SS_MidScreen",
@@ -60,12 +62,12 @@ public class CPHInline
         if (srsMode)
         {
             //... update message to be "serious game."
-            msgPrefix = "/me 『SERIOUS UPDATE』 ";
+            msgPrefix = "/me 『SERIOUS GAME』 ";
         }//if()
         else
         {
             //... update message to be "serious game."
-            msgPrefix = "/me 『SYSTEM CHECK』 ";
+            msgPrefix = "/me 『GAME』 ";
         }//else
 
         //Show the old game Box Art.
@@ -79,8 +81,6 @@ public class CPHInline
             //... Show Serious Visualizer.
             CPH.ObsShowSource(obSubScenes[1], obSource[1]);
             CPH.ObsHideSource(obSubScenes[1], obSource[2]);
-            CPH.ObsHideSource(obSubScenes[0], obSource[3]);
-            msgOut += "『S E R I O U S』 ";
         }//else if()
         else
         {
@@ -88,7 +88,6 @@ public class CPHInline
             CPH.ObsHideSource(obSubScenes[1], obSource[1]);
             CPH.ObsShowSource(obSubScenes[1], obSource[2]);
             CPH.ObsShowSource(obSubScenes[0], obSource[3]);
-            msgOut += "『G A M E S』 ";
         }//else
 
         //Log stuff.
@@ -110,7 +109,7 @@ public class CPHInline
             CPH.CreateStreamMarker($"CHANGE - {gameName}");
         }//if
 
-        CPH.SendMessage($"{msgPrefix}{msgOut}", true);
+        CPH.SendMessage($"{msgPrefix}{msgOut}");
 
         return true;
     }//Execute()

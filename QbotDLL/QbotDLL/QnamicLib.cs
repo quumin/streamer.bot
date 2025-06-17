@@ -32,7 +32,7 @@ namespace QminBotDLL
                  *	7   No Back Seating
                  *	8   Completed
                  *	9   Q-Quotient
-                 *	10  Twitch VOD Link
+                 *	10  Record
                  *	11  YouTube Link
                  */
                 gamesList[i] = new List<string>();

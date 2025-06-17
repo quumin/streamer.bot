@@ -3,7 +3,7 @@ using System;
 /*Ad Check
  * 
  *  Manage what type of ads are running.
- *  LU: 23-jun-2024
+ *  LU: 29-mar-2025
  *  
  */
 
@@ -14,17 +14,20 @@ public class CPHInline
         //Declarations
         string[] msgOut;
         string str_prime;
-        int int_msgs;
+        int int_msgs, adTime, waitTime;
         bool bool_type;
 
         //Initializations
         msgOut = new string[3];
         str_prime = "/me PrimeMe You can also subscribe for free with a Twitch Prime account owoUwu";
+        adTime = 0;
+        waitTime = 500;
         int_msgs = 2;
         try
         {
             //	to get adScheduled argument.
             bool_type = Convert.ToBoolean(args["adScheduled"]);
+            adTime = Convert.ToInt32("[adLengthMs]");
         }//try
         catch (Exception e)
         {
@@ -51,9 +54,12 @@ public class CPHInline
         //Send each next line.
         for (int i = 0; i < int_msgs; i++)
         {
-            CPH.Wait(500);
+            CPH.Wait(waitTime);
             CPH.SendMessage(msgOut[i]);
         }//for
+
+        CPH.Wait(adTime - (int_msgs) * waitTime);
+        CPH.SendMessage("Ads are all done Qmander, please resume your humorous escapades Kappa");
 
         return true;
     }//Execute()

@@ -23,6 +23,7 @@ public class CPHInline
         waitTime = 12000;
         commercialTime = 180;
         CPH.LogDebug("SCENE: " + obScene);
+        CPH.RunAction("Cam Controller - Now Playing");
 
         switch (obScene)
         {
@@ -74,7 +75,7 @@ public class CPHInline
         if (CPH.ObsIsStreaming())
         {
             //... create a marker.
-            CPH.CreateStreamMarker("Scene changed to: " + obScene);
+            CPH.CreateStreamMarker($"Scene changed to {obScene}");
         }//if
 
         return true;

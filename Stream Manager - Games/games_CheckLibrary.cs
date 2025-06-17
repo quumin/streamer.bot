@@ -80,12 +80,12 @@ public class CPHInline
                 {
                     currentGame[j] = gamesLibrary[j][gameColumnIterator];
                     CPH.LogVerbose($"『G A M E S』 \'{currentGame[0]}\' | {currentGame[j]}");
+                    gameColumnIterator++;
                 }//for()
                 //... update the Global and leave the loop.
                 CPH.SetGlobalVar(qminCurrentGame, currentGame);
                 break;
             }//if()
-            gameColumnIterator++;
         }//foreach()
 
         //If the game is not in the library...

@@ -11,3 +11,5 @@
 /.vs/ProjectSettings.json
 /QbotDLL
 /Stream Manager/StreamUpdate_TimeOut.cs
+/.vs/streamer.bot
+/.vs

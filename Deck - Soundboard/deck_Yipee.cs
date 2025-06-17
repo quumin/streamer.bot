@@ -16,8 +16,8 @@ public class CPHInline
         float vol;
 
         //Initializations
-        filePath = CPH.GetGlobalVar<string>("mediaRoot");
-        vol = CPH.GetGlobalVar<float>("mediaVolume");
+        filePath = CPH.GetGlobalVar<string>("qminMediaRoot");
+        vol = CPH.GetGlobalVar<float>("qminMediaVolume");
         markerInfo = "『SOUNDBOARD』 " + "Yippee!";
         msgOut = "/me !showemote Nerdge";
         mediaOut = "GruntBirthday.mp3";

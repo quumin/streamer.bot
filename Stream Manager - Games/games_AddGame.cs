@@ -24,7 +24,7 @@ public class CPHInline
         filePath = @".\\external_files\\";
         openFile = "GamesList.csv";
 
-        File.AppendAllText($"{filePath}{openFile}", string.Join(deLim, currentGame) + Environment.NewLine);
+        File.AppendAllText($"{filePath}{openFile}", Environment.NewLine + string.Join(deLim, currentGame));
         CPH.LogVerbose($"『MENU』: Game {currentGame[0]} successfully added to \'{filePath}{openFile}\'!");
         return true;
     }//Execute()

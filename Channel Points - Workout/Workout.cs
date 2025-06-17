@@ -4,7 +4,7 @@ using System.IO;
 /*LIFT!
  * 
  *  Add workout from Raw Input and write to file.
- *  LU: 4-nov-2023
+ *  LU: 27-may-2025
  * 
  */
 
@@ -44,6 +44,10 @@ public class CPHInline
         obsScene = "SS_Alerts_Text";
         waitTimer = 5000;
         mediaVol = CPH.GetGlobalVar<float>("qminMediaVolume");
+
+        //Get user type and define the Platform Enum
+        CPH.TryGetArg("userType", out string userType);
+        Enum.TryParse(userType, out Platform platform);
 
         //Check which source triggered the redeem
         switch (metaData[2])
@@ -107,7 +111,7 @@ public class CPHInline
         //If the delimiter was used incorrectly...
         if ((controlCondition.Length > 2) && (rewardList[0] == "0d8161d7-1689-49a3-97ca-f5769ecb1b75"))
         {
-            CPH.SendMessage($"/me {metaData[0]} you used the delimiter too many times... disGUSTING ");
+            CPH.SendMessage($"/me {metaData[0]} you used the delimiter too many times... disGUSTING Your points are refunded.");
             //... and if I'm live...
             if (CPH.ObsIsStreaming())
             {
@@ -132,7 +136,7 @@ public class CPHInline
             CPH.EnableCommand("69e5a7a8-8d90-4064-b8dd-68a7a63268d1");
             CPH.EnableCommand("d3422d01-3041-49ac-bed8-1d72c9d12dec");
             CPH.EnableCommand("567a1801-dd6e-4a08-9639-e250a89403ba");
-            CPH.AddUserToGroup(metaData[0], "WorkOut Starter");
+            CPH.AddUserToGroup(metaData[0], platform, "WorkOut Starter");
         }//else if
         else
         {

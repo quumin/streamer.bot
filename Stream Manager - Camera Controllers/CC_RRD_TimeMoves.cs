@@ -9,8 +9,8 @@ using System;
 
 public class CPHInline
 {
-	public bool Execute()
-	{
+    public bool Execute()
+    {
         //Declarations
         string[] usedFilters;
         string obSource, filePath, obScene, obSubScene;
@@ -30,26 +30,26 @@ public class CPHInline
 
         //Check the scene
         switch (obScene)
-		{
+        {
             //	All Camera Scenes
             case "Game_CC":
-			case "StreamRaiders":
-			case "ScreenShare":
-			case "PC_Game":
-				//End The Madnees, Soshite Toki Ga Ugokidesu
-				CPH.ObsHideFilter(obScene, usedFilters[1]);
-				CPH.RunAction("Cam Controller");
-				CPH.ObsShowSource(obSubScene, obSource);
-				CPH.PlaySound(filePath + "Jojo_TimeMoves.mp3", vol);
-				CPH.ObsShowFilter(obScene, usedFilters[0]);
-				CPH.Wait(1675);
-				CPH.ObsHideFilter(obScene, usedFilters[0]);
-				CPH.ObsHideSource(obSubScene, obSource);
-				break;
+            case "StreamRaiders":
+            case "ScreenShare":
+            case "PC_Game":
+                //End The Madnees, Soshite Toki Ga Ugokidesu
+                CPH.ObsHideFilter(obScene, usedFilters[1]);
+                CPH.RunAction("Cam Controller");
+                CPH.ObsShowSource(obSubScene, obSource);
+                CPH.PlaySound(filePath + "Jojo_TimeMoves.mp3", vol);
+                CPH.ObsShowFilter(obScene, usedFilters[0]);
+                CPH.Wait(1675);
+                CPH.ObsHideFilter(obScene, usedFilters[0]);
+                CPH.ObsHideSource(obSubScene, obSource);
+                break;
             //	Other
             default:
-				break;
-		}//switch
-		return true;
-	}//Execute()
+                break;
+        }//switch
+        return true;
+    }//Execute()
 }//CPHInline
