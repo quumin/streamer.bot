@@ -12,17 +12,25 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string obScene, obSubScene;
+        string obScene, obSubScene, lastScene;
         bool rollCredits;
         int waitTime, commercialTime;
 
         //Initializations
         obScene = CPH.ObsGetCurrentScene();
         obSubScene = "SS_MidScreen";
+        lastScene = CPH.GetGlobalVar<string>("qminLastScene", false) ?? "";
         rollCredits = false;
         waitTime = 12000;
         commercialTime = 180;
         CPH.LogDebug($"[SCENE] - {obScene}");
+
+        //OBS can refire scene events (transitions, StreamState setting the scene); only act on an actual change.
+        if (lastScene == obScene)
+        {
+            return true;
+        }//if
+        CPH.SetGlobalVar("qminLastScene", obScene, false);
 
         switch (obScene)
         {

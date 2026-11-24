@@ -23,15 +23,12 @@ public class CPHInline
         //Declarations
         List<string> actionList;
         string[] timerList;
-        string msgOut, logOut;
-        bool isStream, isRecord;
+        string msgOut, logOut, lastState;
 
         //Initializations
         LoadAutoShout();
         LoadSoundActions();
         QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.45f);
-        isStream = CPH.ObsIsStreaming();
-        isRecord = CPH.ObsIsRecording();
         CPH.TryGetArg("triggerName", out string trigTxt);
         actionList = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
         timerList = new string[]
@@ -42,6 +39,15 @@ public class CPHInline
         };
         msgOut = "/me ";
         logOut = "『STREAM STATE』: ";
+
+        //OBS can fire the same state event twice; only act on an actual change.
+        lastState = CPH.GetGlobalVar<string>("qminLastStreamState", false) ?? "";
+        if (lastState == trigTxt)
+        {
+            CPH.LogInfo(logOut + "duplicate event, ignored.");
+            return true;
+        }//if
+        CPH.SetGlobalVar("qminLastStreamState", trigTxt, false);
 
         //Check Case of Trigger
         switch (trigTxt)
@@ -96,7 +102,7 @@ public class CPHInline
             // Error
             default:
                 CPH.LogError("Something went wrong with \'State Checker\'!");
-                break;
+                return true;
         }//switch
 
         //If I'm live...
