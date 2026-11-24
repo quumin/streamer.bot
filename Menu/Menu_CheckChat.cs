@@ -135,13 +135,13 @@ public class CPHInline
                 //... if index is not updated...
                 if (selectedIndex == 999)
                 {
-
-                    //... log it.
-                    CPH.LogVerbose($"『MENU』 Check input: {rawInput} not found in {menuType}!");
-                    //... re-display the prompt & exit.
-                    CPH.SendMessage(retryMsg);
-                    CPH.RunAction(usedActions[0]);
-                    return true;
+						
+						//... log it.
+						CPH.LogVerbose($"『MENU』 Check input: {rawInput} not found in {menuType}!");
+						//... re-display the prompt & exit.
+						CPH.SendMessage(retryMsg);
+						CPH.RunAction(usedActions[0]);
+						return true;
                 }//if()
             }//else
 
@@ -161,7 +161,7 @@ public class CPHInline
                     //... store to the 'qminCurrentGame' global.
                     CPH.SetGlobalVar(qminCurrentGame, currentGame);
                     //... update menu type to 'platForm' and post the next prompt.
-                    menuType = "platForm";
+                    menuType = "backSeating";
                     nextAction = usedActions[0];
                     break;
                 //  Platform

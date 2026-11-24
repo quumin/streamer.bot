@@ -25,7 +25,6 @@ public class CPHInline
         string qminCurrentGame;
         //  Specific
         string[] currentGame, obSubScenes, obSource;
-        string gameName, gameBoxArt, oldGameName, oldGameBoxArt;
         string msgOut, msgPrefix;
         int waitTime;
         bool srsMode;
@@ -35,11 +34,11 @@ public class CPHInline
         qminCurrentGame = "qminCurrentGame";
         currentGame = CPH.GetGlobalVar<string[]>(qminCurrentGame);
         //  Specific
-        gameName = currentGame[0];
-        gameBoxArt = args["gameBoxArt"].ToString();
+        string gameName = currentGame[0];
+        CPH.TryGetArg("gameBoxArt",out string gameBoxArt);
+        CPH.TryGetArg("oldGameName",out string oldGameName);
+        CPH.TryGetArg("oldGameBoxArt",out string oldGameBoxArt);
         gameBoxArt = gameBoxArt.Replace("300.jpg", "450.jpg");
-        oldGameName = args["oldGameName"].ToString();
-        oldGameBoxArt = args["oldGameBoxArt"].ToString();
         oldGameBoxArt = oldGameBoxArt.Replace("300.jpg", "450.jpg");
         obSubScenes = new string[]
         {

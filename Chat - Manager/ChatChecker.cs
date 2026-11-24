@@ -12,7 +12,7 @@ public class CPHInline
     public bool Execute()
     {
         string[] usedGlobals, usedActions;
-        string botName, broadCaster, chatState, usrName;
+        string botName, chatState;
 
         //Initializations
         // Global List
@@ -29,8 +29,8 @@ public class CPHInline
             "Menu - Check Chat"
         };
         // SB Args
-        broadCaster = args["broadcastUserName"].ToString();
-        usrName = args["userName"].ToString();
+        CPH.TryGetArg("broadcastUserName", out string broadCaster);
+        CPH.TryGetArg("userName", out string usrName);
 
         // Specific
         botName = "ltqmanderdata";

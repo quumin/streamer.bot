@@ -8,11 +8,11 @@ using System;
  */
 
 public class CPHInline
-{
-    public bool Execute()
-    {
-        string[] usedGlobals, usedActions;
-
+{    
+	public bool Execute()
+	{
+		string[] usedGlobals, usedActions;
+		
         //Initializations
         //  Global List
         usedGlobals = new string[]
@@ -21,15 +21,15 @@ public class CPHInline
             "qminChatState"
         };
         CPH.SetGlobalVar(usedGlobals[0], "streamSetup");
-        CPH.SetGlobalVar(usedGlobals[1], "menu_on");
+		CPH.SetGlobalVar(usedGlobals[1], "menu_on");
         //  Actions List
         usedActions = new string[]
         {
             "Menu - Post Prompt"
         };
-
+ 
         CPH.RunAction(usedActions[0], true);
-
-        return true;
-    }//Execute()
+               
+		return true;
+	}//Execute()
 }//public class CPHInline

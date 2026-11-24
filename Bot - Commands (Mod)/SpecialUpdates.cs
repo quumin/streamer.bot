@@ -14,11 +14,11 @@ public class CPHInline
     {
         //Initializations
         List<string> squadList;
-        string commandType, squadAdd, globalName, actionName;
+        string globalName, actionName;
 
         //Declarations
-        commandType = args["command"].ToString();
-        squadAdd = globalName = "";
+        CPH.TryGetArg("command", out string commandType);
+        globalName = "";
         actionName = "Special - ";
 
         //Select the Special Case
@@ -55,7 +55,7 @@ public class CPHInline
                 break;
             //	Add
             case string s when s.Contains("add"):
-                squadAdd = args["rawInput"].ToString();
+                CPH.TryGetArg("rawInput", out string squadAdd);
                 //If command contains squad...
                 if (s.Contains("!squad"))
                 {
@@ -79,10 +79,6 @@ public class CPHInline
                 CPH.EnableAction(actionName);
                 break;
         }//switch (str_cmd)
-
-        //Update the Title
-        CPH.RunAction("Set Title");
-
         return true;
     }//public bool Execute()
 }//public class CPHInline

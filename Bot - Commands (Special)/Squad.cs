@@ -4,7 +4,7 @@ using System.Collections.Generic;
 /*Squad Builder
  * 
  *  Build a list of people you're playing with from the Squad Global.
- *  LU: 07-oct-2024
+ *  LU: 27-apr-2026
  * 
  */
 
@@ -19,9 +19,9 @@ public class CPHInline
 
         //Initializations
         squadCurrent = CPH.GetGlobalVar<List<string>>("qminSquadCurrent");
-        squadAdd = "/me ";
+        squadAdd = "";
         squadCount = squadCurrent.Count;
-        CPH.LogInfo($"『SPECIAL』 Squad Count: {squadCount}");
+		CPH.LogInfo($"『SPECIAL』 Squad Count: {squadCount}");
 
         //If the list has entries...
         if (squadCount > 0)
@@ -41,9 +41,9 @@ public class CPHInline
                 else if (i == squadCount - 1)
                 {
                     //... oxford comma if 1 > squadCount >= 3.
-                    if (squadCount != 2)
+                    if(squadCount != 2)
                     {
-                        squadAdd += ", ";
+						squadAdd += ", ";
                     }
                     squadAdd += $" & {squadCurrent[i]}";
                 }//else if
@@ -57,12 +57,12 @@ public class CPHInline
         }//if
         else
         {
-            squadAdd += "/me The Q-mander did not add anybody to the squad! LULdata";
+            squadAdd += "The Q-mander did not add anybody to the squad! LULdata";
 
         }//else
 
         //Send message.
-        CPH.SendMessage(squadAdd);
+        CPH.SetArgument("messageText", squadAdd);
 
         return true;
     }//Execute()

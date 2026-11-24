@@ -44,9 +44,9 @@ public class CPHInline
         obsScene = "SS_Alerts_Text";
         waitTimer = 5000;
         mediaVol = CPH.GetGlobalVar<float>("qminMediaVolume");
-
-        //Get user type and define the Platform Enum
-        CPH.TryGetArg("userType", out string userType);
+        
+		//Get user type and define the Platform Enum
+        CPH.TryGetArg("userType",out string userType);
         Enum.TryParse(userType, out Platform platform);
 
         //Check which source triggered the redeem

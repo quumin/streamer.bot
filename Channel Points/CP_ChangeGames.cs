@@ -23,7 +23,7 @@ public class CPHInline
         //Declarations
         List<string>[] gamesList;
         string[] usedTimers;
-        string rawInput, usrName, redemptionId, rewardId, msgOut;
+        string msgOut;
 
         //Initializations
         //  QnamicLib
@@ -31,21 +31,15 @@ public class CPHInline
         //  Timer List
         usedTimers = new string[]
         {
-            "GameChanger"
+            "ChangeGames - End of Request"
         };
         //  SB Args
-        rawInput = args["rawInput"].ToString();
-        usrName = args["userName"].ToString();
-        //      If streaming...
-        if (CPH.ObsIsStreaming())
-        {
-            //... get reward info.
-            redemptionId = args["redemptionId"].ToString();
-            rewardId = args["rewardId"].ToString();
-        }//if
+        CPH.TryGetArg("rawInput",out string rawInput);
+        CPH.TryGetArg("userName",out string usrName);
+        CPH.TryGetArg("redemptionId",out string redemptionId);
+        CPH.TryGetArg("rewardId",out string rewardId);
+        
         //  Specifc
-        redemptionId = "";
-        rewardId = "";
         msgOut = "/me ";
 
         //If that choice is in the Installed Games List...

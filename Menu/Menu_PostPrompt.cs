@@ -101,12 +101,12 @@ public class CPHInline
 
         //Send first line.
         CPH.SendMessage(firstLine, true);
-        CPH.Wait(msgWaitTime);
+		CPH.Wait(msgWaitTime);
         //Send each next line.
         for (int i = 0; i < menuPrompt.Length; i++)
         {
             CPH.SendMessage(menuPrompt[i], true);
-            CPH.Wait(msgWaitTime);
+			CPH.Wait(msgWaitTime);
         }//for()
 
         //Update globals qminMenuType anbd qminChatState.

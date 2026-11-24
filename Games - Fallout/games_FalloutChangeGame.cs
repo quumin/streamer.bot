@@ -12,8 +12,8 @@ public class CPHInline
 {
     public bool Execute()
     {
-        int nextFalloutId = CPH.GetGlobalVar<int>("qminNextFalloutId");
-        CPH.SetChannelGameById($"{nextFalloutId}");
+		int nextFalloutId = CPH.GetGlobalVar<int>("qminNextFalloutId");
+		CPH.SetChannelGameById($"{nextFalloutId}");
 
         return true;
     }//Execute()

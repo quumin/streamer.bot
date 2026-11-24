@@ -23,7 +23,7 @@ public class CPHInline
         //Declarations
         List<string> actionList;
         string[] timerList;
-        string msgOut, logOut, trigTxt;
+        string msgOut, logOut;
         bool isStream, isRecord;
 
         //Initializations
@@ -32,7 +32,7 @@ public class CPHInline
         QnamicLib.MediaLoad("W:\\Streaming\\Media\\Sounds\\", 0.45f);
         isStream = CPH.ObsIsStreaming();
         isRecord = CPH.ObsIsRecording();
-        trigTxt = args["triggerName"].ToString();
+        CPH.TryGetArg("triggerName", out string trigTxt);
         actionList = CPH.GetGlobalVar<List<string>>("qminAutoShouts");
         timerList = new string[]
         {

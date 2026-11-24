@@ -35,7 +35,7 @@ public class CPHInline
             23453,      //Fallout: New Vegas
             489776,     //Fallout 4
             510580      //The Outer Worlds
-        };
+        }; 
         falloutTitles = new string[]
         {
             "Fallout",
@@ -83,7 +83,7 @@ public class CPHInline
                 rndIndex = rndGame.Next(numGames);
                 CPH.LogDebug($"FALLOUT: Random Index {rndIndex}");
                 selectedGameId = falloutGameId[rndIndex];
-                CPH.LogDebug($"\t  Game ID = {selectedGameId}");
+				CPH.LogDebug($"\t  Game ID = {selectedGameId}");
                 selectedTitle = falloutTitles[rndIndex];
                 CPH.LogDebug($"\t  Title = {selectedTitle}");
             }

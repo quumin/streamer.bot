@@ -9,16 +9,13 @@ using System;
 
 public class CPHInline
 {
-    public bool Execute()
-    {
-        //Declarations
-        string usrName;
-
+	public bool Execute()
+	{
         //Initializations
-        usrName = args["userName"].ToString();
+        CPH.TryGetArg("userName", out string usrName);
 
         CPH.RunAction(usrName);
-        CPH.DisableAction(usrName);
-        return true;
-    }//Execute()
+		CPH.DisableAction(usrName);
+		return true;
+	}//Execute()
 }//CPHInline

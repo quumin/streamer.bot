@@ -3,7 +3,7 @@ using System;
 /*Nintendo Switch Check
  * 
  *  Check if the Capture Card scene is active when somebody asks for my friend code.
- *  LU: 21-jun-2024
+ *  LU: 27-apr-2026
  * 
  */
 
@@ -16,7 +16,7 @@ public class CPHInline
 
         //Initializations
         obScene = CPH.ObsGetCurrentScene();
-        msgOut = "/me ";
+        msgOut = "";
 
         //If the current scene is captue card...
         if (obScene == "Game_CC")
@@ -31,7 +31,7 @@ public class CPHInline
         }//else
 
         //Send message.
-        CPH.SendMessage(msgOut);
+        CPH.SetArgument("messageText", msgOut);
 
         return true;
     }//Execute()

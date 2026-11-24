@@ -57,8 +57,8 @@ public class CPHInline
             CPH.Wait(waitTime);
             CPH.SendMessage(msgOut[i]);
         }//for
-
-        CPH.Wait(adTime - (int_msgs) * waitTime);
+        
+        CPH.Wait(adTime - (int_msgs)*waitTime);
         CPH.SendMessage("Ads are all done Qmander, please resume your humorous escapades Kappa");
 
         return true;

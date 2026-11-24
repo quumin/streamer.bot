@@ -4,7 +4,7 @@ using System.Globalization;
 /*Graphic Design
  * 
  *  Timeout bots.
- *  LU: 21-jun-24
+ *  LU: 27-apr-26
  * 
  */
 
@@ -13,19 +13,20 @@ public class CPHInline
     public bool Execute()
     {
         //Declarations
-        string usrName, msgOut;
+        string msgOut;
         bool srs;
         int followAge;
 
         //Initializations
-        usrName = args["userName"].ToString();
+        CPH.TryGetArg("userName", out string usrName);
+        CPH.TryGetArg("followAgeSeconds", out string argFollowAge);
         msgOut = "Oh no, not again... Ban incoming.";
         srs = CPH.GetGlobalVar<bool>("qminSeriousMode");
 
         try
         {
             //	to get follow age in seconds.
-            followAge = int.Parse(args["followAgeSeconds"].ToString(), NumberStyles.AllowThousands);
+            followAge = int.Parse(argFollowAge, NumberStyles.AllowThousands);
         }//try
         catch (Exception e)
         {

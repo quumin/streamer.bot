@@ -103,35 +103,35 @@ public class CPHInline
                 CPH.LogInfo($"『G A M E S』 Type: {gameName} | Unique");
                 switch (gameId)
                 {
-                    //Fallout Fridays
-                    //	Fallout
-                    case 10767:
-                    //	Fallout 2    
-                    case 5097:
-                    //	Fallout Tactics: Brotherhood of Steel
-                    case 5826:
-                    //	Fallout 3    
-                    case 18763:
-                    //	Fallout: New Vegas
-                    case 23453:
-                    //	Fallout 4
-                    case 489776:
-                    //	The Outer Worlds
-                    case 510580:
-                        CPH.TwitchRewardGroupDisable(ddRewards);
-                        CPH.TwitchRewardGroupDisable(poeRewards);
+					//Fallout Fridays
+					//	Fallout
+					case 10767:
+					//	Fallout 2    
+					case 5097:      
+					//	Fallout Tactics: Brotherhood of Steel
+					case 5826:
+					//	Fallout 3    
+					case 18763:
+					//	Fallout: New Vegas
+					case 23453:
+					//	Fallout 4
+					case 489776:
+					//	The Outer Worlds
+					case 510580:
+						CPH.TwitchRewardGroupDisable(ddRewards);
+						CPH.TwitchRewardGroupDisable(poeRewards);
                         CPH.TwitchRewardGroupEnable(falloutRewards);
                         break;
                     //	Path of Exile
                     case 29307:
-                        CPH.TwitchRewardGroupDisable(ddRewards);
-                        CPH.TwitchRewardGroupEnable(poeRewards);
+						CPH.TwitchRewardGroupDisable(ddRewards);
+						CPH.TwitchRewardGroupEnable(poeRewards);
                         CPH.TwitchRewardGroupDisable(falloutRewards);
                         break;
                     //	Darkest Dungeon II
                     case 511471:
-                        CPH.TwitchRewardGroupEnable(ddRewards);
-                        CPH.TwitchRewardGroupDisable(poeRewards);
+						CPH.TwitchRewardGroupEnable(ddRewards);
+						CPH.TwitchRewardGroupDisable(poeRewards);
                         CPH.TwitchRewardGroupDisable(falloutRewards);
                         break;
                     default:

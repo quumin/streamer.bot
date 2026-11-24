@@ -24,11 +24,10 @@ public class CPHInline
         //  Common Variables
         List<string>[] gamesLibrary;
         string qminCurrentGame, qminMenuType, qminChatState, qminSeriousMode;
-        string[] usedActions, currentGame;
+        string[] usedActions, currentGame, tagList;
         bool[] usedActionsExist;
         //  Specific
-        string gameName, gameId, rawInput;
-        int gameColumnIterator;
+        int listIterator;
         bool inLibrary, usrResponds, gameInstalled;
 
         //Initializations
@@ -42,59 +41,62 @@ public class CPHInline
         {
             "Games - Trigger Menu"
         };
-        usedActionsExist = QnamicLib.CheckCPHActions(usedActions);
-        //  Specific
-        /*Games Library
-        *	0   Game
-        *	1   ID
-        *	2   Platform
-        *	3   Installed
-        *	4   Serious
-        *	5   Horror
-        *	6   Special
-        *	7   No Back Seating
-        *	8   Completed
-        *	9   Q-Quotient
-        *	10  Twitch VOD Link
-        *	11  YouTube Link
-        */
+        tagList = new string[]
+        {
+            "Game",
+            "ID",
+            "Platform",
+            "Installed",
+            "Serious",
+            "Horror",
+            "Special",
+            "No Back Seating",
+            "Completed",
+            "Q-Quotient",
+            "Record",
+            "YouTube Link"        	
+        };
         currentGame = new string[11];
-        gameName = currentGame[0] = args["gameName"].ToString();
-        gameId = currentGame[1] = args["gameId"].ToString();
+        CPH.TryGetArg("gameName", out string gameName);
+            currentGame[0] = gameName;
+        CPH.TryGetArg("gameId", out string gameId);
+            currentGame[1] = gameId;
         inLibrary = false;
         usrResponds = false;
-        gameColumnIterator = 0;
-        CPH.SetGlobalVar(qminCurrentGame, currentGame);
-
+        listIterator = 0;
+		CPH.SetGlobalVar(qminCurrentGame, currentGame);
+        CPH.SetGlobalVar("qminCurrentGameTitle", gameName);
+		
         //Iterate through the Library
         foreach (string str in gamesLibrary[1])
         {
             //	... if the game is in the library...
+            CPH.LogVerbose($"『G A M E S』 Checkign for: \'{gameName} (#{gameId})\' ... #{listIterator}");
             if (str.Equals(gameId))
             {
                 //... log it.
-                CPH.LogInfo($"『G A M E S』 \'{gameName} (#{gameId})\' is already in the library.");
+                CPH.LogInfo($"『G A M E S』 \'{gameName} (#{gameId})\' is already in the library at line #{listIterator}");
                 //... flag it and get the stored info.
                 inLibrary = true;
-                for (int j = 2; j < currentGame.Length; j++)
+                for (int j = 0; j < currentGame.Length; j++)
                 {
-                    currentGame[j] = gamesLibrary[j][gameColumnIterator];
-                    CPH.LogVerbose($"『G A M E S』 \'{currentGame[0]}\' | {currentGame[j]}");
-                    gameColumnIterator++;
+                    currentGame[j] = gamesLibrary[j][listIterator];
+                    CPH.LogVerbose($"『G A M E S』 \'{currentGame[0]}\' | {tagList[j]} \t| {currentGame[j]} ");
                 }//for()
                 //... update the Global and leave the loop.
                 CPH.SetGlobalVar(qminCurrentGame, currentGame);
+                
                 break;
             }//if()
+            listIterator++;
         }//foreach()
 
         //If the game is not in the library...
-        if (!inLibrary && usedActionsExist[0])
+        if (!inLibrary)
         {
             //... prompt the streamer for the missing info and add it to the library.
             CPH.RunAction(usedActions[0], true);
         }//else
-
 
         return true;
     }//Execute()

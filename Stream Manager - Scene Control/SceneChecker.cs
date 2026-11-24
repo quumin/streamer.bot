@@ -22,8 +22,7 @@ public class CPHInline
         rollCredits = false;
         waitTime = 12000;
         commercialTime = 180;
-        CPH.LogDebug("SCENE: " + obScene);
-        CPH.RunAction("Cam Controller - Now Playing");
+        CPH.LogDebug($"[SCENE] - {obScene}");
 
         switch (obScene)
         {
@@ -43,20 +42,7 @@ public class CPHInline
             case "Ender":
                 rollCredits = true;
                 break;
-
             //	CONTENT
-            case "StreamRaiders":
-                CPH.RunAction("Cam Controller");
-                CPH.Wait(waitTime);
-                //Check Scene again
-                obScene = CPH.ObsGetCurrentScene();
-                //If the Scene is still Stream Raiders...
-                if (obScene == "StreamRaiders")
-                {
-                    //... warn me.
-                    CPH.SendMessage("/me monkaW Uhm - Qmander, Streamraiders is still showing... is that intentional? LULdata");
-                }//if
-                break;
             case "Game_CC":
             case "ScreenShare":
             case "PC_Game":
@@ -75,7 +61,7 @@ public class CPHInline
         if (CPH.ObsIsStreaming())
         {
             //... create a marker.
-            CPH.CreateStreamMarker($"Scene changed to {obScene}");
+            CPH.CreateStreamMarker($"Scene changed to {obScene}.");
         }//if
 
         return true;

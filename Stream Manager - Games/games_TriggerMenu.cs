@@ -12,42 +12,42 @@ using QminBotDLL;
 
 public class CPHInline
 {
-    public void Init()
-    {
-        //Set Static Class in QnamicLib to active instance of CPH
-        QnamicLib.CPH = CPH;
-    }//Init()
+	public void Init()
+	{
+		//Set Static Class in QnamicLib to active instance of CPH
+		QnamicLib.CPH = CPH;
+	}//Init()
 
-    public bool Execute()
-    {
-        //Declarations
-        //  Common Variables
-        string qminMenuType, qminChatState;
-        string[] usedActions;
-        bool[] usedActionsExist;
-        //  Specific
-        bool usrResponds;
+	public bool Execute()
+	{
+		//Declarations
+		//  Common Variables
+		string qminMenuType, qminChatState;
+		string[] usedActions;
+		bool[] usedActionsExist;
+		//  Specific
+		bool usrResponds;
 
-        //Initializations
-        //  Common Variables
-        qminMenuType = "qminMenuType";
-        qminChatState = "qminChatState";
-        usedActions = new string[]
-        {
-            "Menu - Post Prompt"
-        };
-        usedActionsExist = QnamicLib.CheckCPHActions(usedActions);
-        CPH.SetGlobalVar(qminMenuType, "gameType");
-        CPH.SetGlobalVar(qminChatState, "menu_on");
-        usrResponds = true;
-        CPH.RunAction(usedActions[0], true);
+		//Initializations
+		//  Common Variables
+		qminMenuType = "qminMenuType";
+		qminChatState = "qminChatState";
+		usedActions = new string[]
+		{
+			"Menu - Post Prompt"
+		};
+		usedActionsExist = QnamicLib.CheckCPHActions(usedActions);
+		CPH.SetGlobalVar(qminMenuType, "gameType");
+		CPH.SetGlobalVar(qminChatState, "menu_on");
+		usrResponds = true;
+		CPH.RunAction(usedActions[0], true);
 
-        //... wait until a response from the user.
-        while (!usrResponds)
-        {
-            usrResponds = !CPH.GetGlobalVar<string>(qminChatState).Equals("menu_on");
-        }//while()
+		//... wait until a response from the user.
+		while (!usrResponds)
+		{
+			usrResponds = !CPH.GetGlobalVar<string>(qminChatState).Equals("menu_on");
+		}//while()
 
-        return true;
-    }//Execute()
+		return true;
+	}//Execute()
 }//CPHInline
